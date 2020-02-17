@@ -36,5 +36,11 @@ economias = ['Mexico' if files[i].find('Mexico') != -1 else 'United States'
 # Lista con nombres
 indicadores = [files[i][0:files[i].find(' - ')] for i in range(0, len(files))]
 
-# DataFrame con informacion separada
+# DataFrame de control general
 df_ce_g = pd.DataFrame({'ind': indicadores, 'econ': economias})
+
+# -- Generar criterio de eleccion de indicadores
+# base cuantitativa
+# con informacion completa
+# a la misma hora y el mismo dia, que haya sucedido solo 1 indicador
+

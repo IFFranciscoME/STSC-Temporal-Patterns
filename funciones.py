@@ -7,10 +7,18 @@
 # -- ------------------------------------------------------------------------------------ -- #
 
 import pandas as pd                                       # dataframes y utilidades
+import numpy as np                                        # arrays y operaciones numericas
+from os import listdir, path
+from os.path import isfile, join
 from datetime import timedelta                            # diferencia entre datos tipo tiempo
 from oandapyV20 import API                                # conexion con broker OANDA
 import oandapyV20.endpoints.instruments as instruments    # informacion de precios historicos
 
+pd.set_option('display.max_rows', None)                   # sin limite de renglones maximos
+pd.set_option('display.max_columns', None)                # sin limite de columnas maximas
+pd.set_option('display.width', None)                      # sin limite el ancho del display
+pd.set_option('display.expand_frame_repr', False)         # visualizar todas las columnas
+pd.options.mode.chained_assignment = None                 # para evitar el warning enfadoso
 
 # -- --------------------------------------------------------- FUNCION: Descargar precios -- #
 # -- --------------------------------------------------------------------------------------- #
@@ -169,3 +177,80 @@ def f_precios_masivos(p0_fini, p1_ffin, p2_gran, p3_inst, p4_oatk, p5_ginc):
         r_df_final['Close'] = pd.to_numeric(r_df_final['Close'], errors='coerce')
 
         return r_df_final
+
+
+# -- ---------------------------------------------------------- FUNCION: Unir indicadores -- #
+# -- --------------------------------------------------------------------------------------- #
+# -- Unir todos los archivos de indicadores descargados
+
+def f_unir_ind(param_dir):
+    """
+    Parameters
+    ----------
+    param_dir : str : direccion de la carpeta que contiene todos los archivos a unir
+
+    Returns
+    -------
+    salida : pd.DataFrame() : DataFrame con todos los indicadores unidos verticalmente
+
+    Debugging
+    ---------
+    param_dir = path.abspath('datos/files/')
+
+    """
+
+    # archivos descargados de historicos de cada indicador
+    files = [f for f in listdir(param_dir) if isfile(join(param_dir, f))]
+
+    # -- Elegir archivo de indicador de acuerdo a criterio
+
+    # Prueba 1: Tiene, cuando mucho, 2 renglones con "NaNs" en las 3 columnas
+    files_p1 = list()
+    for j in range(0, len(files)):
+        archivo = pd.read_csv(param_dir + '/' + files[j])
+
+        # - prueba de '2 o menos casos con NaNs en todas las columnas'
+        elim1 = np.where(np.isnan(archivo['Actual']) & np.isnan(archivo['Consensus']) &
+                         np.isnan(archivo['Previous']))[0]
+
+        # - prueba de '2 o menos casos con NaNs en columna Actual'
+        elim2 = list(np.where(np.isnan(archivo['Actual']))[0])
+
+        files_p1.append(files[j]) if len(elim1) <= 2 | len(elim2) <= 2 \
+            else '2 o menos casos con NaNs'
+
+    # OPCIONAL: Eliminar indicadores que tengan 5 o mas faltantes en consensus
+    files_p2 = files_p1
+    # files_p2 = list()
+    # for k in range(0, len(files_p1)):
+    #     archivo = pd.read_csv(param_dir + '/' + files_p1[k])
+    #     # - prueba '5 o menos casos sin consensus'
+    #     elim2 = np.where(np.isnan(archivo['Consensus']))
+    #     files_p2.append(files_p1[k]) if len(elim2[0]) <= 5 else '5 o menos sin consensus'
+
+    # Acomodos de datos
+    archivos = list()
+    for k in range(0, len(files_p2)):
+        archivos.append(pd.read_csv(param_dir + '/' + files_p2[k]))
+
+        # Acomodo 1: Separar nombre de indicador y de currency que afecta
+        archivos[k]['Name'] = files_p2[k][0:files_p2[k].find(' - ')]
+        archivos[k]['Currency'] = files_p2[k][files_p2[k].find(' - ')+3:]
+
+        # Acomodo 2: Para 'Previous' == NaN, asignar el valor de 'Actual' de t-1
+        ind_prev = list(np.where(np.isnan(archivos[k]['Previous']))[0])
+        ind_actu = list(np.where(np.isnan(archivos[k]['Previous']))[0] - 1)
+        archivos[k]['Previous'][ind_prev] = list(archivos[k]['Actual'][ind_actu])
+
+        # Acomodo 3: Para 'Consensus' == NaN, asignar el valor de 'Previous'
+        ind_cons = list(np.where(np.isnan(archivos[k]['Consensus']))[0])
+        archivos[k]['Consensus'][ind_cons] = list(archivos[k]['Previous'][ind_cons])
+
+    # Concatenar todos los archivos en un solo DataFrame
+    df_ce = pd.concat([archivos[i] for i in range(0, len(files_p2))])
+
+    # Eliminar columna de "Revised"
+    df_ce.drop("Revised", axis=1, inplace=True)
+    df_ce = df_ce[['DateTime', 'Name', 'Currency', 'Actual', 'Consensus', 'Previous']]
+
+    return df_ce
