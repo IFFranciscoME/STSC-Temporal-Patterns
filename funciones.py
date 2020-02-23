@@ -204,7 +204,7 @@ def f_unir_ind(param_dir):
 
     Debugging
     ---------
-    param_dir = path.abspath('datos/files/')
+    param_dir = path.abspath('datos/econ_files/')
 
     """
 
@@ -259,10 +259,60 @@ def f_unir_ind(param_dir):
     # Concatenar todos los archivos en un solo DataFrame
     df_ce = pd.concat([archivos[i] for i in range(0, len(files_p2))])
 
+    # Renombrar todas las columnas del dataframe con una lista de nombres
+    columns = list(df_ce.columns)
+    columns = [i.lower() for i in columns]
+    df_ce.rename(columns=dict(zip(df_ce.columns[0:], columns)), inplace=True)
+
     # Elegir columnas para data frame final (no se incluye revised)
-    df_ce = df_ce[['DateTime', 'Name', 'Currency', 'Actual', 'Consensus', 'Previous']]
+    df_ce = df_ce[['datetime', 'name', 'currency', 'actual', 'consensus', 'previous']]
 
     return df_ce
 
 
-df_ce_g = f_unir_ind(param_dir=path.abspath('datos/econ_files/'))
+# -- ----------------------------------------------------- FUNCION: Clasificar escenarios -- #
+# -- --------------------------------------------------------------------------------------- #
+# -- Clasificacion de escenarios
+
+def f_escenario(p0_datos):
+    """
+    Parameters
+    ----------
+    p0_datos : pd.DataFrame : con columnas name, actual, consensus, previous
+
+    Returns
+    -------
+    datos : pd.DataFrame :
+
+    Debugging
+    ---------
+    p0_datos = df_ce_g
+
+    """
+
+    # Renombrar todas las columnas del dataframe con una lista de nombres
+    columns = list(p0_datos.columns)
+    columns = [i.lower() for i in columns]
+    p0_datos.rename(columns=dict(zip(p0_datos.columns[0:], columns)), inplace=True)
+
+    # inicializar la columna escenario, habra los siguientes: A, B, C, D
+    p0_datos['escenario'] = 'X'
+
+    # -- -- A: actual >= previous & actual >= consensus & consensus >= previous
+    p0_datos['escenario'][((p0_datos['actual'] >= p0_datos['previous']) &
+                        (p0_datos['actual'] >= p0_datos['consensus']))] = 'A'
+
+    # -- -- B: actual >= previous & actual >= consensus & consensus < Precious
+    p0_datos['escenario'][((p0_datos['actual'] >= p0_datos['previous']) &
+                        (p0_datos['actual'] < p0_datos['consensus']))] = 'B'
+
+    # -- -- C: actual >= previous & actual < consensus & consensus >= previous
+    p0_datos['escenario'][((p0_datos['actual'] < p0_datos['previous']) &
+                        (p0_datos['actual'] >= p0_datos['consensus']))] = 'C'
+
+    # -- -- D: actual >= previous & actual < consensus & consensus < previous
+    p0_datos['escenario'][((p0_datos['actual'] < p0_datos['previous']) &
+                        (p0_datos['actual'] < p0_datos['consensus']))] = 'D'
+
+    return p0_datos
+
