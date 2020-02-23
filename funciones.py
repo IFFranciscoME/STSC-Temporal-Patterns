@@ -29,20 +29,25 @@ def f_precios_masivos(p0_fini, p1_ffin, p2_gran, p3_inst, p4_oatk, p5_ginc):
     """
     Parameters
     ----------
-    p0_fini
-    p1_ffin
-    p2_gran
-    p3_inst
-    p4_oatk
-    p5_ginc
+    p0_fini : str : fecha inicial para descargar precios en formato str o pd.to_datetime
+    p1_ffin : str : fecha final para descargar precios en formato str o pd.to_datetime
+    p2_gran : str : M1, M5, M15, M30, H1, H4, H8, segun formato solicitado por OANDAV20 api
+    p3_inst : str : nombre de instrumento, segun formato solicitado por OANDAV20 api
+    p4_oatk : str : OANDAV20 API
+    p5_ginc : int : cantidad de datos historicos por llamada, obligatorio < 5000
 
     Returns
     -------
-    dc_precios
+    dc_precios : pd.DataFrame : Data Frame con precios TOHLC
 
     Debugging
     ---------
-
+    p0_fini = pd.to_datetime("2019-01-01 00:00:00").tz_localize('GMT')
+    p1_ffin = pd.to_datetime("2019-12-31 00:00:00").tz_localize('GMT')
+    p2_gran = "M1"
+    p3_inst = "USD_MXN"
+    p4_oatk = '8b50d0cc9f97037e5b6e7b28de8be537-bccc5ff454afcd2ace0f774a57534cad'
+    p5_ginc = 4900
     """
 
     def f_datetime_range_fx(p0_start, p1_end, p2_inc, p3_delta):
@@ -50,17 +55,22 @@ def f_precios_masivos(p0_fini, p1_ffin, p2_gran, p3_inst, p4_oatk, p5_ginc):
 
         Parameters
         ----------
-        p0_start
-        p1_end
-        p2_inc
-        p3_delta
+        p0_start : str : fecha inicial
+        p1_end : str : fecha final
+        p2_inc : int : incremento en cantidad de elementos
+        p3_delta : str : intervalo para medir elementos ('minutes', 'hours', 'days')
 
         Returns
         -------
-        ls_resultado
+        ls_result : list : lista con fechas intermedias a frequencia solicitada
 
         Debugging
         ---------
+        p0_start = p0_fini
+        p1_end = p1_ffin
+        p2_inc = p5_ginc
+        p3_delta = 'minutes'
+
         """
 
         ls_result = []
