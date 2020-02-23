@@ -20,6 +20,7 @@ pd.set_option('display.width', None)                      # sin limite el ancho 
 pd.set_option('display.expand_frame_repr', False)         # visualizar todas las columnas
 pd.options.mode.chained_assignment = None                 # para evitar el warning enfadoso
 
+
 # -- --------------------------------------------------------- FUNCION: Descargar precios -- #
 # -- --------------------------------------------------------------------------------------- #
 # -- Descargar precios historicos con OANDA
@@ -254,3 +255,6 @@ def f_unir_ind(param_dir):
     df_ce = df_ce[['DateTime', 'Name', 'Currency', 'Actual', 'Consensus', 'Previous']]
 
     return df_ce
+
+
+df_ce_g = f_unir_ind(param_dir=path.abspath('datos/econ_files/'))

@@ -15,18 +15,25 @@ from os.path import isfile, join
 # -- -------------------------------------------------------- Descarga de precios masivos -- #
 
 oa_ak = '8b50d0cc9f97037e5b6e7b28de8be537-bccc5ff454afcd2ace0f774a57534cad'  # token de OANDA
-oa_in = "EUR_USD"  # Instrumento
+oa_in = "USD_MXN"  # Instrumento
 oa_gn = "M1"       # Granularidad de velas (M1: Minuto, M5: 5 Minutos, M15: 15 Minutos)
 fini = pd.to_datetime("2019-01-01 00:00:00").tz_localize('GMT')  # Fecha inicial
 ffin = pd.to_datetime("2019-12-31 00:00:00").tz_localize('GMT')  # Fecha final
 
-df_pe_19 = fn.f_precios_masivos(p0_fini=fini, p1_ffin=ffin, p2_gran=oa_gn, p3_inst=oa_in,
-                                p4_oatk=oa_ak, p5_ginc=4900)
+# -- solicitar 1 vez la descarga de precios masivos
+# df_pe = fn.f_precios_masivos(p0_fini=fini, p1_ffin=ffin, p2_gran=oa_gn, p3_inst=oa_in,
+#                              p4_oatk=oa_ak, p5_ginc=4900)
+#
+# df_pe.to_csv(r"datos/price_files/USD_MXN_M1.csv", index=False)
+
+# -- cargar archivo con precios 2019
+df_eurusd = pd.read_csv('datos/price_files/EUR_USD_M1.csv')
+df_usdmxn = pd.read_csv('datos/price_files/USD_MXN_M1.csv')
 
 # -- ----------------------------------------- Descarga de indicadores economicos masivos -- #
 
 # lista de todos los archivos dentro del directorio files
-abspath = path.abspath('datos/files')
+abspath = path.abspath('datos/econ_files')
 files = [f for f in listdir(abspath) if isfile(join(abspath, f))]
 
 # Lista con paises
