@@ -52,7 +52,6 @@ def f_precios_masivos(p0_fini, p1_ffin, p2_gran, p3_inst, p4_oatk, p5_ginc):
 
     def f_datetime_range_fx(p0_start, p1_end, p2_inc, p3_delta):
         """
-
         Parameters
         ----------
         p0_start : str : fecha inicial
@@ -70,7 +69,6 @@ def f_precios_masivos(p0_fini, p1_ffin, p2_gran, p3_inst, p4_oatk, p5_ginc):
         p1_end = p1_ffin
         p2_inc = p5_ginc
         p3_delta = 'minutes'
-
         """
 
         ls_result = []
@@ -231,6 +229,7 @@ def f_unir_ind(param_dir):
             else '2 o menos casos con NaNs'
 
     # OPCIONAL: Eliminar indicadores que tengan 5 o mas faltantes en consensus
+
     files_p2 = files_p1
     # files_p2 = list()
     # for k in range(0, len(files_p1)):
@@ -260,8 +259,7 @@ def f_unir_ind(param_dir):
     # Concatenar todos los archivos en un solo DataFrame
     df_ce = pd.concat([archivos[i] for i in range(0, len(files_p2))])
 
-    # Eliminar columna de "Revised"
-    df_ce.drop("Revised", axis=1, inplace=True)
+    # Elegir columnas para data frame final (no se incluye revised)
     df_ce = df_ce[['DateTime', 'Name', 'Currency', 'Actual', 'Consensus', 'Previous']]
 
     return df_ce

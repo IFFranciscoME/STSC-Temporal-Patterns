@@ -9,5 +9,4 @@
 # Importar Precios historicos M1 del 2019
 from datos import df_eurusd, df_ce_g
 
-
 # Importar Calendario Economico
