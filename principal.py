@@ -7,16 +7,14 @@
 # -- ------------------------------------------------------------------------------------ -- #
 
 # Importar Precios historicos M1 del 2019
-# from datos import df_eurusd, df_ce_g
+from datos import df_eurusd, df_ce_2019
 import funciones as fn
-from os import path
 
 # -- -------------------------------------------------------------------- Data generation -- #
 # Importar Calendario Economico
-df_ce_g = fn.f_unir_ind(param_dir=path.abspath('datos/econ_files/'))
 
 # Calcular escenarios para indicadores
-df_ce_g = fn.f_escenario(p0_datos=df_ce_g)
+df_ce_h = fn.f_escenario(p0_datos=df_ce_2019)
 
 # -- ---------------------------------------------------------- Data exploratory analysis -- #
 
@@ -24,12 +22,12 @@ df_ce_g = fn.f_escenario(p0_datos=df_ce_g)
 
 # Scenario statistics visualizations
 
-# -- ------------------------------------------------------ Indicator-Escenario Selection -- #
+# -- ------------------------------------------------------ Indicator-Scenario Selection -- #
 
 # Indicator selection as candidate to potential pattern generation
-
 # Calculate 3 different price metrics to search for invariance in price reactions due to
 # the release of the economic indicator
+
 
 # Create 3 randomly selected groups of at least 20 data for each sceario of each indicator
 

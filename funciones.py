@@ -10,9 +10,9 @@ import pandas as pd                                       # dataframes y utilida
 import numpy as np                                        # arrays y operaciones numericas
 from os import listdir, path
 from os.path import isfile, join
-from datetime import timedelta                            # diferencia entre datos tipo tiempo
 from oandapyV20 import API                                # conexion con broker OANDA
 import oandapyV20.endpoints.instruments as instruments    # informacion de precios historicos
+from datetime import timedelta
 
 pd.set_option('display.max_rows', None)                   # sin limite de renglones maximos
 pd.set_option('display.max_columns', None)                # sin limite de columnas maximas
@@ -266,6 +266,14 @@ def f_unir_ind(param_dir):
 
     # Elegir columnas para data frame final (no se incluye revised)
     df_ce = df_ce[['datetime', 'name', 'currency', 'actual', 'consensus', 'previous']]
+    df_ce.rename(columns={'datetime': 'timestamp'}, inplace=True)
+
+    # Conversion de tipo de dato timestamp
+    df_ce['timestamp'] = pd.to_datetime(list(df_ce['timestamp'])).tz_localize('GMT')
+    df_ce.reset_index(inplace=True, drop=True)
+
+    df_ce['timestamp'] = [df_ce['timestamp'][i].floor('min')
+                          for i in range(0, len(df_ce['timestamp']))]
 
     return df_ce
 
@@ -316,3 +324,94 @@ def f_escenario(p0_datos):
 
     return p0_datos
 
+
+# -- ------------------------------------------------------ FUNCION: Metricas de reaccion -- #
+# -- --------------------------------------------------------------------------------------- #
+# -- Calculo de metricas de precios para pruebas ANOVA
+
+def f_metricas(param_ce, param_ph):
+    """
+    Parameters
+    ----------
+    param_ce : pd.DataFrame : Economic calendar with 'timestamp', 'name', 'actual',
+                              'consensus', 'previous'
+    param_ph : pd.DataFrame : Historical prices 'timestamp', 'open', 'high', 'low', 'close'
+
+    Returns
+    -------
+    r_metricas : pd.DataFrame : para_ce + metricas
+
+    Debugging
+    ---------
+    param_ce = df_ce_h
+    param_ph = df_eurusd
+    """
+
+    def f_reaccion(p0_i, p1_ad, p2_ph, p3_ce):
+        """
+        Parameters
+        ----------
+        p0_i : int : indexador para iterar en los datos de entrada
+        p1_ad : int : cantidad de precios futuros que se considera la ventana (t + p1_ad)
+        p2_ph : pd.DataFrame : precios en OHLC con columnas: timestamp, open, high, low, close
+        p3_ce : DataFrame : calendario economico con columnas: timestamp, name, actual,
+                            consensus, previous
+
+        Returns
+        -------
+        resultado : dict : diccionario con resultado final con 3 elementos como resultado
+
+        Debugging
+        ---------
+        p0_i = lista_ce[0]
+        p1_ad = 30
+        p2_ph = df_eurusd
+        p3_ce = df_ce_h
+        """
+
+        # Debugging y control interno
+        # print(p0_i)
+        # print(' fecha ce: ' + str(p3_ce['timestamp'][p0_i]))
+        mult = 10000
+
+        # Revisión si no encuentra timestamp exacto, recorrer 1 hacia atras iterativamente
+        # hasta encontrar el mismo
+        indice_1 = list(np.where(p2_ph['timestamp'] == p3_ce['timestamp'][p0_i])[0])
+        i = 0
+        while not indice_1:
+            i += 1
+            indice_1 = list(np.where(p2_ph['timestamp'] == (p3_ce['timestamp'][p0_i]) -
+                                     timedelta(minutes=i))[0])
+
+        # Indices de coincidencias
+        indice_1 = indice_1[0]
+        indice_2 = indice_1 + p1_ad
+
+        # Calculo de metricas de reaccion
+        ho = round((max(p2_ph['high'][indice_1:indice_2]) - p2_ph['open'][indice_1])*mult, 2)
+        hl = round((max(p2_ph['high'][indice_1:indice_2]) -
+                    min(p2_ph['low'][indice_1:indice_2])) * mult, 2)
+        ol = round((p2_ph['open'][indice_1] - min(p2_ph['low'][indice_1:indice_2]))*mult, 2)
+        co = round((p2_ph['close'][indice_1] - min(p2_ph['open'][indice_1:indice_2]))*mult, 2)
+
+        # Diccionario con resultado final
+        resultado = {'ho': ho, 'ol': ol, 'co': co, 'hl': hl, 'data': p2_ph[indice_1:indice_2]}
+
+        return resultado
+
+    # Cantidad de precios a futuro a considerar
+    psiguiente = 30
+
+    # Debugging para probar con 2019
+    lista_ce = list(param_ce['timestamp'].index)
+
+    # Reaccion del precio para cada escenario
+    d_reaccion = [f_reaccion(p0_i=i, p1_ad=psiguiente, p2_ph=param_ph, p3_ce=param_ce)
+                  for i in lista_ce]
+
+    # Acomodar resultados en columnas
+    param_ce['ho'] = [d_reaccion[j]['ho'] for j in range(0, len(param_ce['timestamp']))]
+    param_ce['ol'] = [d_reaccion[j]['ol'] for j in range(0, len(param_ce['timestamp']))]
+    param_ce['co'] = [d_reaccion[j]['co'] for j in range(0, len(param_ce['timestamp']))]
+
+    return param_ce

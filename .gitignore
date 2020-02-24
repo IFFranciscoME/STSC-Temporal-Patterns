@@ -1,5 +1,5 @@
 # Propios del proyecto
-datos/files/
+datos/price_files/EUR_USD_M1.csv
 .idea/
 
 # Byte-compiled / optimized / DLL files
