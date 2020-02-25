@@ -1,0 +1,13 @@
+
+# Create 3 randomly selected groups of at least 20 data for each sceario of each indicator
+# Calculate 4 different price metrics to search for invariance in price reactions due to
+# the release of the economic indicator
+
+# analysis of unequal sample size condition for ANOVA test for mean invariance between groups
+
+# Test for invariance in 3 price metrics for each indicator, to look for homogeinity in price
+# response as a potential condition to a pattern presence due to the release of the economic
+# indicator
+
+# subset the EI list with the ones that show invariance in the mean response for the metrics
+

@@ -411,6 +411,7 @@ def f_metricas(param_ce, param_ph):
 
     # Acomodar resultados en columnas
     param_ce['ho'] = [d_reaccion[j]['ho'] for j in range(0, len(param_ce['timestamp']))]
+    param_ce['hl'] = [d_reaccion[j]['hl'] for j in range(0, len(param_ce['timestamp']))]
     param_ce['ol'] = [d_reaccion[j]['ol'] for j in range(0, len(param_ce['timestamp']))]
     param_ce['co'] = [d_reaccion[j]['co'] for j in range(0, len(param_ce['timestamp']))]
 
