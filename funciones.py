@@ -416,3 +416,54 @@ def f_metricas(param_ce, param_ph):
     param_ce['co'] = [d_reaccion[j]['co'] for j in range(0, len(param_ce['timestamp']))]
 
     return param_ce
+
+
+# -- ------------------------------------------------------ FUNCION: Tabla de ocurrencias -- #
+# -- --------------------------------------------------------------------------------------- #
+# -- Tabla de ocurrencias de escenarios para indicadores
+
+def f_tabla_ind(param_ce):
+    """
+    Parameters
+    ----------
+    param_ce : pd.DataFrame : name, escenario
+
+    Returns
+    -------
+    df_ocur : dict : indicador, A, B, C, D, T
+
+    Debugging
+    ---------
+    Param_ce = df_ce_h
+
+    """
+
+    # resetear index de losd datos
+    param_ce.reset_index(inplace=True, drop=True)
+
+    # lista de indicadores
+    inds = list(set(param_ce['name']))
+
+    # Ocurrencias de escenario A en cada indicador
+    l_a = [sum(list(param_ce['escenario'][param_ce['name'] == inds[i]] == 'A'))
+           for i in range(0, len(inds))]
+
+    # Ocurrencias de escenario B en cada indicador
+    l_b = [sum(list(param_ce['escenario'][param_ce['name'] == inds[i]] == 'B'))
+           for i in range(0, len(inds))]
+
+    # Ocurrencias de escenario C en cada indicador
+    l_c = [sum(list(param_ce['escenario'][param_ce['name'] == inds[i]] == 'C'))
+           for i in range(0, len(inds))]
+
+    # Ocurrencias de escenario D en cada indicador
+    l_d = [sum(list(param_ce['escenario'][param_ce['name'] == inds[i]] == 'D'))
+           for i in range(0, len(inds))]
+
+    # Ocurrencias total de cada indicador
+    l_t = [len(param_ce['escenario'][param_ce['name'] == inds[i]]) for i in range(0, len(inds))]
+
+    # DataFrame con los datos finales
+    df_ocur = pd.DataFrame({'indicador': inds, 'A': l_a, 'B': l_b, 'C': l_c, 'D': l_d,
+                            'T': l_t})
+    return df_ocur
