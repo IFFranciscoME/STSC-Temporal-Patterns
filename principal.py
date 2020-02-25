@@ -30,31 +30,31 @@ df_ce = fn.f_metricas(param_ce=df_ce, param_ph=df_usdmxn)
 # -- Boxplot for each indicator_scenario metrics values, for all the 4 metrics
 
 # -- Tabla de ocurrencias de escenario para cada indicador
-df_tabla = fn.f_tabla_ind(param_ce=df_ce)
+df_indes = fn.f_tabla_ind(param_ce=df_ce)
 
 # -- Seleccionar indicadores y escenarios para pruebas ANOVA
 # indicadores con mas de 40 observaciones.
-tabla_com_1 = df_tabla[df_tabla['T'] < 40].index
-df_tabla.drop(tabla_com_1, inplace=True)
-df_tabla.reset_index(inplace=True, drop=True)
+indes_out_1 = df_indes[df_indes['T'] < 40].index
+df_indes.drop(indes_out_1, inplace=True)
+df_indes.reset_index(inplace=True, drop=True)
 
 # escenarios de cada indicador con mas de 12 observaciones
-tabla_com_2 = df_tabla[(df_tabla['A'] < 12) & (df_tabla['B'] < 12) &
-                       (df_tabla['C'] < 12) & (df_tabla['D'] < 12)].index
-df_tabla.drop(tabla_com_2, inplace=True)
-df_tabla.reset_index(inplace=True, drop=True)
+indes_out_2 = df_indes[(df_indes['A'] < 12) & (df_indes['B'] < 12) &
+                       (df_indes['C'] < 12) & (df_indes['D'] < 12)].index
+df_indes.drop(indes_out_2, inplace=True)
+df_indes.reset_index(inplace=True, drop=True)
 
 # -- ------------------------------------------------------- FUNCION: Tabla Pruebas ANOVA -- #
 # -- ------------------------------------------------------------------------------------ -- #
 # -- construir la tabla ANOVA
 
 # -- construir tabla de indicador_escenario con los candidatos
-param_tab = df_tabla
-ind = list(set(df_tabla['indicador']))
+param_tab = df_indes
+ind = list(set(df_indes['indicador']))
 esc = ['A', 'B', 'C', 'D']
 
 # -- seleccionar indicador
-df_tabla[df_tabla['indicador'] == ind[0]]
+df_indes[df_indes['indicador'] == ind[0]]
 # -- -- encontrar el escenario donde hay mas de 30 observaciones
 
 # -- eligir aleatoriamente la misma cantidad de observaciones para 3 grupos distintos
