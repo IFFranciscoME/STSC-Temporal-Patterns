@@ -10,6 +10,7 @@
 from datos import df_usdmxn, df_ce
 import funciones as fn
 import numpy as np
+import pandas as pd
 
 # -- -------------------------------------------------------------------- Data generation -- #
 # Importar Calendario Economico
@@ -70,37 +71,59 @@ tab_anova2 = []
 tab_anova3 = []
 tab_anova4 = []
 
-ind = indicadores[3]
-data = df_indes[df_indes['indicador'] == ind]
-esc = list()
-n_esc = list()
-p_esc = list()
+for ind in indicadores:
+    data = df_indes[df_indes['indicador'] == ind]
+    esc = list()
+    n_esc = list()
+    p_esc = list()
 
-if list(data['A'])[0] >= 30:
-    esc.append('A')
-    n_esc.append(list(data['A'])[0])
-    p_esc.append(int(list(data['A'])[0]/3))
-if list(data['B'])[0] >= 30:
-    esc.append('B')
-    n_esc.append(list(data['B'])[0])
-    p_esc.append(int(list(data['B'])[0] / 3))
-if list(data['C'])[0] >= 30:
-    esc.append('C')
-    n_esc.append(list(data['C'])[0])
-    p_esc.append(int(list(data['C'])[0] / 3))
-if list(data['D'])[0] >= 30:
-    esc.append('D')
-    n_esc.append(list(data['D'])[0])
-    p_esc.append(int(list(data['D'])[0] / 3))
+    # -- -- encontrar el escenario donde hay mas de 30 observaciones
+    if list(data['A'])[0] >= 30:
+        esc.append('A')
+        n_esc.append(list(data['A'])[0])
+        p_esc.append(int(list(data['A'])[0]/3))
+    if list(data['B'])[0] >= 30:
+        esc.append('B')
+        n_esc.append(list(data['B'])[0])
+        p_esc.append(int(list(data['B'])[0] / 3))
+    if list(data['C'])[0] >= 30:
+        esc.append('C')
+        n_esc.append(list(data['C'])[0])
+        p_esc.append(int(list(data['C'])[0] / 3))
+    if list(data['D'])[0] >= 30:
+        esc.append('D')
+        n_esc.append(list(data['D'])[0])
+        p_esc.append(int(list(data['D'])[0] / 3))
 
-if len(esc) != 0:
-    tab_ind.extend([ind]*len(esc))
-    tab_esc.extend(esc)
-    tab_obs.extend(n_esc)
-    tab_grp.extend(p_esc)
+    # crear listas de valores encontrados
+    if len(esc) != 0:
+        tab_ind.extend([ind]*len(esc))
+        tab_esc.extend(esc)
+        tab_obs.extend(n_esc)
+        tab_grp.extend(p_esc)
 
+# formar DataFrame con listas previamente construidas
+df_anova = pd.DataFrame({'ind': tab_ind, 'esc': tab_esc, 'obs': tab_obs, 'grp': tab_grp,
+                         'anova_hl': [0]*len(tab_ind),
+                         'anova_ol': [0]*len(tab_ind),
+                         'anova_ho': [0]*len(tab_ind),
+                         'anova_co': [0]*len(tab_ind)})
 
-
-# -- -- encontrar el escenario donde hay mas de 30 observaciones
 # -- eligir aleatoriamente la misma cantidad de observaciones para 3 grupos distintos
+df_grp_anova = []
+
+# elegir N observaciones, aleatoriamente con dist uniforme sin reemplazo, del total
+# de observaciones del indicador IM.
+
+i = 0
+n_ale_1 = df_anova.iloc[i, 3]
+n_ale_2 = df_anova.iloc[i, 3]
+n_ale_3 = df_anova.iloc[i, 2] - n_ale_1 - n_ale_2
+
+im = df_anova.iloc[0, 0]
+obs = list(df_ce[df_ce['name'] == im].index)
+muestra_1 = np.random.choice(obs, n_ale_1, replace=False)
+muestra_2 = np.random.choice(obs, n_ale_2, replace=False)
+muestra_3 = np.random.choice(obs, n_ale_3, replace=False)
+
 # -- Hacer prueba ANOVA a cada indicador_escenario con sus 3 grupos
