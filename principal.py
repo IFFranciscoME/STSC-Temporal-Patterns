@@ -1,4 +1,3 @@
-
 # -- ------------------------------------------------------------------------------------ -- #
 # -- Proyecto: Temporal Patterns                                                          -- #
 # -- Codigo: principal.py - secuencia principal de codigo para el proyecto                -- #
@@ -11,6 +10,8 @@ from datos import df_usdmxn, df_ce
 import funciones as fn
 import numpy as np
 import pandas as pd
+import statsmodels.api as sm  # modelos estadisticos: anova
+from statsmodels.formula.api import ols  # modelo lineal con ols
 
 # -- -------------------------------------------------------------------- Data generation -- #
 # Importar Calendario Economico
@@ -81,7 +82,7 @@ for ind in indicadores:
     if list(data['A'])[0] >= 30:
         esc.append('A')
         n_esc.append(list(data['A'])[0])
-        p_esc.append(int(list(data['A'])[0]/3))
+        p_esc.append(int(list(data['A'])[0] / 3))
     if list(data['B'])[0] >= 30:
         esc.append('B')
         n_esc.append(list(data['B'])[0])
@@ -97,17 +98,17 @@ for ind in indicadores:
 
     # crear listas de valores encontrados
     if len(esc) != 0:
-        tab_ind.extend([ind]*len(esc))
+        tab_ind.extend([ind] * len(esc))
         tab_esc.extend(esc)
         tab_obs.extend(n_esc)
         tab_grp.extend(p_esc)
 
 # formar DataFrame con listas previamente construidas
 df_anova = pd.DataFrame({'ind': tab_ind, 'esc': tab_esc, 'obs': tab_obs, 'grp': tab_grp,
-                         'anova_hl': [0]*len(tab_ind),
-                         'anova_ol': [0]*len(tab_ind),
-                         'anova_ho': [0]*len(tab_ind),
-                         'anova_co': [0]*len(tab_ind)})
+                         'anova_hl': [0] * len(tab_ind),
+                         'anova_ol': [0] * len(tab_ind),
+                         'anova_ho': [0] * len(tab_ind),
+                         'anova_co': [0] * len(tab_ind)})
 
 # -- eligir aleatoriamente la misma cantidad de observaciones para 3 grupos distintos
 df_grp_anova = []
@@ -116,14 +117,54 @@ df_grp_anova = []
 # de observaciones del indicador IM.
 
 i = 0
+
 n_ale_1 = df_anova.iloc[i, 3]
-n_ale_2 = df_anova.iloc[i, 3]
+n_ale_2 = n_ale_1
 n_ale_3 = df_anova.iloc[i, 2] - n_ale_1 - n_ale_2
 
-im = df_anova.iloc[0, 0]
+im = df_anova['ind'][i]
 obs = list(df_ce[df_ce['name'] == im].index)
-muestra_1 = np.random.choice(obs, n_ale_1, replace=False)
-muestra_2 = np.random.choice(obs, n_ale_2, replace=False)
-muestra_3 = np.random.choice(obs, n_ale_3, replace=False)
+muestra_1 = list(np.random.choice(obs, n_ale_1, replace=False))
+muestra_2 = list(np.random.choice(obs, n_ale_2, replace=False))
+muestra_3 = list(np.random.choice(obs, n_ale_3, replace=False))
+
+# datos de metrica 1 para anova
+df_anova_test = pd.DataFrame({'muestras':
+                              [(df_anova['esc'][i] + '_' + str(1))] * len(muestra_1) + \
+                              [(df_anova['esc'][i] + '_' + str(2))] * len(muestra_2) + \
+                              [(df_anova['esc'][i] + '_' + str(3))] * len(muestra_3),
+                              'ho': list(df_ce['ho'][muestra_1]) + \
+                                    list(df_ce['ho'][muestra_2]) + \
+                                    list(df_ce['ho'][muestra_3]),
+                              'hl': list(df_ce['hl'][muestra_1]) + \
+                                    list(df_ce['hl'][muestra_2]) + \
+                                    list(df_ce['hl'][muestra_3]),
+                              'ol': list(df_ce['ol'][muestra_1]) + \
+                                    list(df_ce['ol'][muestra_2]) + \
+                                    list(df_ce['ol'][muestra_3]),
+                              'co': list(df_ce['co'][muestra_1]) + \
+                                    list(df_ce['co'][muestra_2]) + \
+                                    list(df_ce['co'][muestra_3])
+                              })
+
+# ajustar modelo lineal para (high - open)
+model_ho = ols('ho ~ C(muestras)', data=df_anova_test).fit()
+anova_table_ho = sm.stats.anova_lm(model_ho, typ=2)
+anova_table_ho['PR(>F)'][0]
+
+model_hl = ols('hl ~ C(muestras)', data=df_anova_test).fit()
+anova_table_hl = sm.stats.anova_lm(model_hl, typ=2)
+anova_table_hl['PR(>F)'][0]
+
+model_ol = ols('ol ~ C(muestras)', data=df_anova_test).fit()
+anova_table_ol = sm.stats.anova_lm(model_ol, typ=2)
+anova_table_ol['PR(>F)'][0]
+
+model_co = ols('co ~ C(muestras)', data=df_anova_test).fit()
+anova_table_co = sm.stats.anova_lm(model_co, typ=2)
+anova_table_co['PR(>F)'][0]
+
+# p > 0.05 --> se acepta la H0: NO hay diferencia significativa entre las medias
+# p < 0.05 --> se rechaza la H0: SI hay diferencia significativa entre las medias
 
 # -- Hacer prueba ANOVA a cada indicador_escenario con sus 3 grupos
