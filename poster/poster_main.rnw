@@ -1,0 +1,106 @@
+
+% -- --------------------------------------------------------------------------------------------------- -- %
+% -- Proyecto:                                                                                           -- %
+% -- Archivo: reporte.rnw                                                                                -- %
+% -- Repositorio: https://github.com/IFFranciscoME/A1_Temporal_Patterns                                  -- %
+% -- Autor: Francisco ME                                                                                 -- %
+% -- --------------------------------------------------------------------------------------------------- -- %
+
+\documentclass{iteraposter}
+
+\usepackage{lipsum}                                % Dummy text
+\usepackage[absolute, overlay]{textpos}            % Figure placement
+\setlength{\TPHorizModule}{\paperwidth}
+\setlength{\TPVertModule}{\paperheight}
+
+
+\title{
+  Clustering subsecuencial de series de tiempo: Evidencia de patrones temporales en el
+  tipo de cambio USD/MXN
+  }
+
+\vskip4cm
+
+\author {
+  Msc. Juan Francisco Mu\~noz Elguez\'abal \inst{1}
+  \and
+  Dr. Riemann Ruiz Cruz \inst{2}
+  }
+
+\institute {
+  \inst{1} Msc. Ciencia de Datos - ITESO
+  \and
+  \inst{2} Departamento de Matem\'aticas y F\'isca - ITESO
+  }
+
+% -- --------------------------------------------------------------------------- Comienzo de codigo en R -- %
+
+
+<<Ini, include=FALSE, echo=FALSE, eval=FALSE>>=
+
+# -- Remover Objetos de Environment
+rm(list=ls())
+
+knit_hooks$set(inline = function(x) {
+  prettyNum(x, big.mark=",")
+})
+
+# -- Instalar y/o cargar paquetes necesarios
+pkg <- c("downloader","dplyr","fBasics","gridExtra","ggplot2","httr","jsonlite","lubridate",
+         "lattice","moments","matrixStats", "plyr","plotly","plot3D", "reshape2","RCurl", "stats", 
+         "scales", "tseries","XML","xts","xlsx","xtable","zoo")
+
+inst <- pkg %in% installed.packages()
+if(length(pkg[!inst]) > 0)
+  install.packages(pkg[!inst], repo='https://cran.cnr.Berkeley.edu/')
+instpackages <- lapply(pkg, library, character.only=TRUE)
+
+@
+
+\begin{document}
+\begin{frame}
+
+\begin{block}{Introduction}
+  The basic looks like this.
+\end{block}
+
+\begin{columns}[onlytextwidth]
+
+\begin{column}{0.5\textwidth - 1.5cm}
+
+    \begin{block}{Method}
+        \lipsum[1]
+    \end{block}
+
+    \begin{block}{Results}
+        \lipsum[2]
+        \unskip
+    \end{block}
+    
+\end{column}
+
+
+\begin{column}{0.5\textwidth - 1.5cm}
+    \begin{block}{Conclusions}
+        \lipsum[4]
+    \end{block}
+
+    \begin{block}{Acknowledgements}
+        \lipsum[5]
+    \end{block}
+
+    \begin{block}{References}
+        \lipsum[6]
+    \end{block}
+
+\end{column}
+\end{columns}
+
+\begin{textblock}{0.5}(0.5, 0.955)
+    \color{white}
+    \sffamily
+    % \textbf{https://github.com/IFFranciscoME/A1\_Temporal\_Patterns}
+\end{textblock}
+
+\end{frame}
+\end{document}

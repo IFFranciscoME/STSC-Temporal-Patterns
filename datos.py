@@ -12,24 +12,49 @@ import funciones as fn
 from os import listdir, path
 from os.path import isfile, join
 
+# dividir en 11 partes
+year = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
+archivo = 'USD_MXN_M1'
+
 # -- -------------------------------------------------------- Descarga de precios masivos -- #
-#
-# oa_ak = '8b50d0cc9f97037e5b6e7b28de8be537-bccc5ff454afcd2ace0f774a57534cad'  # token de OANDA
+# -- ------------------------------------------------------------------------------------ -- #
+# -- Solo correr 1 vez para la descarga masiva
+
+# # token de OANDA https://www.oanda.com/demo-account/tpa/personal_token
+# oa_ak = '8' + 'b50d0cc9f97037e5b6e7b28de8be537-bccc5ff454afcd2ace0f774a57534ca' + 'd'
 # oa_in = "USD_MXN"  # Instrumento
 # oa_gn = "M1"       # Granularidad de velas (M1: Minuto, M5: 5 Minutos, M15: 15 Minutos)
-# fini = pd.to_datetime("2018-01-01 00:00:00").tz_localize('GMT')  # Fecha inicial
-# ffin = pd.to_datetime("2020-01-03 23:59:00").tz_localize('GMT')  # Fecha final
-#
+# fini = pd.to_datetime("2010-03-09 00:00:00").tz_localize('GMT')  # Fecha inicial
+# ffin = pd.to_datetime("2020-03-09 00:00:00").tz_localize('GMT')  # Fecha final
+
 # # -- solicitar 1 vez la descarga de precios masivos
 # df_pe = fn.f_precios_masivos(p0_fini=fini, p1_ffin=ffin, p2_gran=oa_gn, p3_inst=oa_in,
-#                              p4_oatk=oa_ak, p5_ginc=4920)
-#
+#                              p4_oatk=oa_ak, p5_ginc=4910)
+# # formato a columnas
 # columns = list(df_pe.columns)
 # columns = [i.lower() for i in columns]
 # df_pe.rename(columns=dict(zip(df_pe.columns[0:], columns)), inplace=True)
-# df_pe.to_csv(r"datos/price_files/USD_MXN_M1.csv", index=False)
 
-df_usdmxn = pd.read_csv('datos/price_files/USD_MXN_M1.csv')
+# # escribir cada parte en un archivo para que sea menos pesado cada uno y subir todos a github
+# for a in year:
+#     lista = [df_pe.loc[i, 'timestamp'].year == a for i in range(0, len(df_pe['timestamp']))]
+#     df_escribir = df_pe.iloc[lista, :]
+#     nombre_a = archivo + '_' + str(a)
+#     df_escribir.to_csv(r'datos/price_files/' + nombre_a + '.csv', index=False)
+
+# -- ---------------------------------------------------------- Lectura masiva de precios -- #
+# -- ------------------------------------------------------------------------------------ -- #
+# -- leer y concatenar todos los archivos en un DataFrame
+
+archivos = list()
+# ciclo para leer los archivos
+for a in year:
+    nombre_a = 'datos/price_files/' + archivo + '_' + str(a) + '.csv'
+    archivos.append(pd.read_csv(nombre_a))
+
+# concatenar todos los archivos
+df_usdmxn = pd.concat(archivos)
+# modificar el tipo de dato para la columna timestamp
 df_usdmxn['timestamp'] = pd.to_datetime(list(df_usdmxn['timestamp']))
 
 # -- ----------------------------------------- Descarga de indicadores economicos masivos -- #
@@ -49,15 +74,4 @@ indicadores = [files[i][0:files[i].find(' - ')] for i in range(0, len(files))]
 df_ce_g = pd.DataFrame({'ind': indicadores, 'econ': economias})
 
 # DataFrame con historicos
-df_ce_h = fn.f_unir_ind(param_dir=path.abspath('datos/econ_files/'))
-
-# para pruebas con 2019
-df_ce = df_ce_h[list([(df_ce_h['timestamp'][i].year == 2018) |
-                      (df_ce_h['timestamp'][i].year == 2019)
-                      for i in range(0, len(df_ce_h['timestamp']))])]
-
-# -- Generar criterio de eleccion de indicadores
-# base cuantitativa
-# con informacion completa
-# a la misma hora y el mismo dia, que haya sucedido solo 1 indicador
-
+df_ce = fn.f_unir_ind(param_dir=path.abspath('datos/econ_files/'))

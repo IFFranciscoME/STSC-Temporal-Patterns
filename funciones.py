@@ -6,13 +6,16 @@
 # -- Autor: Francisco ME                                                                  -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
-import pandas as pd                                       # dataframes y utilidades
-import numpy as np                                        # arrays y operaciones numericas
-from os import listdir, path
+from os import listdir
 from os.path import isfile, join
 from oandapyV20 import API                                # conexion con broker OANDA
 import oandapyV20.endpoints.instruments as instruments    # informacion de precios historicos
 from datetime import timedelta
+
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm  # modelos estadisticos: anova
+from statsmodels.formula.api import ols  # modelo lineal con ols
 
 pd.set_option('display.max_rows', None)                   # sin limite de renglones maximos
 pd.set_option('display.max_columns', None)                # sin limite de columnas maximas
@@ -467,3 +470,141 @@ def f_tabla_ind(param_ce):
     df_ocur = pd.DataFrame({'indicador': inds, 'A': l_a, 'B': l_b, 'C': l_c, 'D': l_d,
                             'T': l_t})
     return df_ocur
+
+
+# -- ------------------------------------------------------- FUNCION: Tabla Pruebas ANOVA -- #
+# -- ------------------------------------------------------------------------------------ -- #
+# -- construir la tabla ANOVA
+
+def f_anova(param_data1, param_data2):
+    """
+    Parameters
+    ----------
+    param_data1 : df_indes
+    param_data2 : df_ce
+
+    Returns
+    -------
+
+    """
+    # -- construir tabla de indicador_escenario con los candidatos
+    param_tab = param_data1
+    indicadores = list(set(param_data1['indicador']))
+
+    # -- escenarios diferentes de 0 para el indicador
+
+    # nombre de indicador
+    tab_ind = []
+    # nombre de escenario
+    tab_esc = []
+    # observaciones totales
+    tab_obs = []
+    # cantidad de observaciones por grupo
+    tab_grp = []
+    # 1: no hay variabilidad (se utiliza indicador-escenario)
+    # 0: hay variabilidad (se descarta indicador-escenario)
+    # tab_anova1 = []
+    # tab_anova2 = []
+    # tab_anova3 = []
+    # tab_anova4 = []
+
+    for ind in indicadores:
+        data = param_data1[param_data1['indicador'] == ind]
+        esc = list()
+        n_esc = list()
+        p_esc = list()
+
+        # -- -- encontrar el escenario donde hay mas de 30 observaciones
+        if list(data['A'])[0] >= 30:
+            esc.append('A')
+            n_esc.append(list(data['A'])[0])
+            p_esc.append(int(list(data['A'])[0] / 3))
+        if list(data['B'])[0] >= 30:
+            esc.append('B')
+            n_esc.append(list(data['B'])[0])
+            p_esc.append(int(list(data['B'])[0] / 3))
+        if list(data['C'])[0] >= 30:
+            esc.append('C')
+            n_esc.append(list(data['C'])[0])
+            p_esc.append(int(list(data['C'])[0] / 3))
+        if list(data['D'])[0] >= 30:
+            esc.append('D')
+            n_esc.append(list(data['D'])[0])
+            p_esc.append(int(list(data['D'])[0] / 3))
+
+        # crear listas de valores encontrados
+        if len(esc) != 0:
+            tab_ind.extend([ind] * len(esc))
+            tab_esc.extend(esc)
+            tab_obs.extend(n_esc)
+            tab_grp.extend(p_esc)
+
+    # formar DataFrame con listas previamente construidas
+    df_anova = pd.DataFrame({'ind': tab_ind, 'esc': tab_esc, 'obs': tab_obs, 'grp': tab_grp,
+                             'anova_hl': [0] * len(tab_ind),
+                             'anova_ol': [0] * len(tab_ind),
+                             'anova_ho': [0] * len(tab_ind),
+                             'anova_co': [0] * len(tab_ind)})
+
+    # -- eligir aleatoriamente la misma cantidad de observaciones para 3 grupos distintos
+    # elegir N observaciones, aleatoriamente con dist uniforme sin reemplazo, del total
+    # de observaciones del indicador IM.
+
+    for i in range(0, len(df_anova['ind'])):
+
+        n_ale_1 = df_anova.iloc[i, 3]
+        n_ale_2 = n_ale_1
+        n_ale_3 = df_anova.iloc[i, 2] - n_ale_1 - n_ale_2
+
+        im = df_anova['ind'][i]
+        obs = list(param_data2[param_data2['name'] == im].index)
+        muestra_1 = list(np.random.choice(obs, n_ale_1, replace=False))
+        muestra_2 = list(np.random.choice(obs, n_ale_2, replace=False))
+        muestra_3 = list(np.random.choice(obs, n_ale_3, replace=False))
+
+        # datos de metricas para anova
+        df_anova_test = pd.DataFrame({'muestras':
+                                      [(df_anova['esc'][i] + '_' + str(1))]*len(muestra_1) + \
+                                      [(df_anova['esc'][i] + '_' + str(2))]*len(muestra_2) + \
+                                      [(df_anova['esc'][i] + '_' + str(3))]*len(muestra_3),
+                                      'ho': list(param_data2['ho'][muestra_1]) + \
+                                            list(param_data2['ho'][muestra_2]) + \
+                                            list(param_data2['ho'][muestra_3]),
+                                      'hl': list(param_data2['hl'][muestra_1]) + \
+                                            list(param_data2['hl'][muestra_2]) + \
+                                            list(param_data2['hl'][muestra_3]),
+                                      'ol': list(param_data2['ol'][muestra_1]) + \
+                                            list(param_data2['ol'][muestra_2]) + \
+                                            list(param_data2['ol'][muestra_3]),
+                                      'co': list(param_data2['co'][muestra_1]) + \
+                                            list(param_data2['co'][muestra_2]) + \
+                                            list(param_data2['co'][muestra_3])
+                                      })
+
+        # p > 0.05 --> se acepta la H0: NO hay diferencia significativa entre las medias
+        # p < 0.05 --> se rechaza la H0: SI hay diferencia significativa entre las medias
+
+        # ANOVA para metrica 1: High - Open
+        model_ho = ols('ho ~ C(muestras)', data=df_anova_test).fit()
+        anova_table_ho = sm.stats.anova_lm(model_ho, typ=2)
+        df_anova['anova_ho'][i] = 1 if anova_table_ho['PR(>F)'][0] > 0.05 else 0
+
+        # ANOVA para metrica 2: High - Low
+        model_hl = ols('hl ~ C(muestras)', data=df_anova_test).fit()
+        anova_table_hl = sm.stats.anova_lm(model_hl, typ=2)
+        df_anova['anova_hl'][i] = 1 if anova_table_hl['PR(>F)'][0] > 0.05 else 0
+
+        # ANOVA para metrica 3: Open - Low
+        model_ol = ols('ol ~ C(muestras)', data=df_anova_test).fit()
+        anova_table_ol = sm.stats.anova_lm(model_ol, typ=2)
+        df_anova['anova_ol'][i] = 1 if anova_table_ol['PR(>F)'][0] > 0.05 else 0
+
+        # ANOVA para metrica 4: Close - Open
+        model_co = ols('co ~ C(muestras)', data=df_anova_test).fit()
+        anova_table_co = sm.stats.anova_lm(model_co, typ=2)
+        df_anova['anova_co'][i] = 1 if anova_table_co['PR(>F)'][0] > 0.05 else 0
+
+    # Si pasa 4 anovas = Fuerte, 3 o 2 anovas = Util, 1 anova = Poco util,
+    # 0 anovas = se descarta.
+
+    return df_anova
