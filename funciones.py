@@ -330,6 +330,63 @@ def f_escenario(p0_datos):
     return p0_datos
 
 
+# -- ---------------------------------------------------- FUNCION: Parametros de reaccion -- #
+# -- --------------------------------------------------------------------------------------- #
+# -- Calculo de parametros medidores de "reaccion del mercado"
+
+def f_reaccion(p0_i, p1_ad, p2_ph, p3_ce):
+    """
+    Parameters
+    ----------
+    p0_i : int : indexador para iterar en los datos de entrada
+    p1_ad : int : cantidad de precios futuros que se considera la ventana (t + p1_ad)
+    p2_ph : pd.DataFrame : precios en OHLC con columnas: timestamp, open, high, low, close
+    p3_ce : DataFrame : calendario economico con columnas: timestamp, name, actual,
+                        consensus, previous
+
+    Returns
+    -------
+    resultado : dict : diccionario con resultado final con 3 elementos como resultado
+
+    Debugging
+    ---------
+    p0_i = 0
+    p1_ad = 30
+    p2_ph = df_usdmxn
+    p3_ce = df_ce
+    """
+
+    # Debugging y control interno
+    # print(p0_i)
+    # print(' fecha del ce a buscar es: ' + str(p3_ce['timestamp'][p0_i]))
+    mult = 10000
+
+    # Revisión si no encuentra timestamp exacto, recorrer 1 hacia atras iterativamente
+    # hasta encontrar el mismo
+    indice_1 = list(np.where(p2_ph['timestamp'] == p3_ce['timestamp'][p0_i])[0])
+    i = 0
+    while not indice_1:
+        i += 1
+        indice_1 = list(np.where(p2_ph['timestamp'] == (p3_ce['timestamp'][p0_i]) -
+                                 timedelta(minutes=i))[0])
+
+    # Indices de coincidencias
+    indice_1 = indice_1[0]
+    indice_2 = indice_1 + p1_ad
+
+    # Calculo de metricas de reaccion
+    ho = round((max(p2_ph['high'][indice_1:indice_2]) - p2_ph['open'][indice_1])*mult, 2)
+    hl = round((max(p2_ph['high'][indice_1:indice_2]) -
+                min(p2_ph['low'][indice_1:indice_2])) * mult, 2)
+    ol = round((p2_ph['open'][indice_1] - min(p2_ph['low'][indice_1:indice_2]))*mult, 2)
+    co = round((p2_ph['close'][indice_1] - min(p2_ph['open'][indice_1:indice_2]))*mult, 2)
+
+    # Diccionario con resultado final
+    resultado = {'ho': ho, 'ol': ol, 'co': co, 'hl': hl, 'data': p2_ph[indice_1:indice_2]}
+
+    return resultado
+
+
 # -- ------------------------------------------------------ FUNCION: Metricas de reaccion -- #
 # -- --------------------------------------------------------------------------------------- #
 # -- Calculo de metricas de precios para pruebas ANOVA
@@ -352,65 +409,22 @@ def f_metricas(param_ce, param_ph):
     param_ph = df_usdmxn
     """
 
-    def f_reaccion(p0_i, p1_ad, p2_ph, p3_ce):
-        """
-        Parameters
-        ----------
-        p0_i : int : indexador para iterar en los datos de entrada
-        p1_ad : int : cantidad de precios futuros que se considera la ventana (t + p1_ad)
-        p2_ph : pd.DataFrame : precios en OHLC con columnas: timestamp, open, high, low, close
-        p3_ce : DataFrame : calendario economico con columnas: timestamp, name, actual,
-                            consensus, previous
-
-        Returns
-        -------
-        resultado : dict : diccionario con resultado final con 3 elementos como resultado
-
-        Debugging
-        ---------
-        p0_i = 0
-        p1_ad = 30
-        p2_ph = df_usdmxn
-        p3_ce = df_ce
-        """
-
-        # Debugging y control interno
-        # print(p0_i)
-        # print(' fecha del ce a buscar es: ' + str(p3_ce['timestamp'][p0_i]))
-        mult = 10000
-
-        # Revisión si no encuentra timestamp exacto, recorrer 1 hacia atras iterativamente
-        # hasta encontrar el mismo
-        indice_1 = list(np.where(p2_ph['timestamp'] == p3_ce['timestamp'][p0_i])[0])
-        i = 0
-        while not indice_1:
-            i += 1
-            indice_1 = list(np.where(p2_ph['timestamp'] == (p3_ce['timestamp'][p0_i]) -
-                                     timedelta(minutes=i))[0])
-
-        # Indices de coincidencias
-        indice_1 = indice_1[0]
-        indice_2 = indice_1 + p1_ad
-
-        # Calculo de metricas de reaccion
-        ho = round((max(p2_ph['high'][indice_1:indice_2]) - p2_ph['open'][indice_1])*mult, 2)
-        hl = round((max(p2_ph['high'][indice_1:indice_2]) -
-                    min(p2_ph['low'][indice_1:indice_2])) * mult, 2)
-        ol = round((p2_ph['open'][indice_1] - min(p2_ph['low'][indice_1:indice_2]))*mult, 2)
-        co = round((p2_ph['close'][indice_1] - min(p2_ph['open'][indice_1:indice_2]))*mult, 2)
-
-        # Diccionario con resultado final
-        resultado = {'ho': ho, 'ol': ol, 'co': co, 'hl': hl, 'data': p2_ph[indice_1:indice_2]}
-
-        return resultado
-
     # Cantidad de precios a futuro a considerar
     psiguiente = 30
     indices_ce = list(param_ce['timestamp'].index)
+    # --------------------------------------------------------- PARALELIZACION DE PROCESO -- #
 
-    # Reaccion del precio para cada escenario
-    d_reaccion = [f_reaccion(p0_i=i, p1_ad=psiguiente, p2_ph=param_ph, p3_ce=param_ce)
-                  for i in range(0, len(indices_ce))]
+    # Reaccion del precio para cada escenario (PARALELO)
+    # inicializar el pool con el maximo de procesadores disponibles
+    pool = mp.Pool(mp.cpu_count()-1)
+    d_reaccion = pool.starmap(f_reaccion, [(i, psiguiente, param_ph, param_ce)
+                                           for i in range(0, len(indices_ce))])
+    pool.close()
+
+    # --------------------------------------------------------- VERSION SIMPLE DE PROCESO -- #
+    # Reaccion del precio para cada escenario (SIMPLE)
+    # d_reaccion = [f_reaccion(p0_i=i, p1_ad=psiguiente, p2_ph=param_ph, p3_ce=param_ce)
+    #               for i in range(0, len(indices_ce))]
 
     # Acomodar resultados en columnas
     param_ce['ho'] = [d_reaccion[j]['ho'] for j in range(0, len(param_ce['timestamp']))]
