@@ -1,13 +1,17 @@
 
-# Create 3 randomly selected groups of at least 20 data for each sceario of each indicator
-# Calculate 4 different price metrics to search for invariance in price reactions due to
-# the release of the economic indicator
+# Parallelization notes
 
-# analysis of unequal sample size condition for ANOVA test for mean invariance between groups
+# f_metricas, 3 years, with 1 core = 10.8 segs
+# f_metricas, 3 years, with 2 cores = 8.99 segs
 
-# Test for invariance in 3 price metrics for each indicator, to look for homogeinity in price
-# response as a potential condition to a pattern presence due to the release of the economic
-# indicator
+# f_metricas, 4 years, with 1 core =  18.11 segs
+# f_metricas, 4 years, with 2 cores =  14.00 segs
 
-# subset the EI list with the ones that show invariance in the mean response for the metrics
+# -- R = 17 % - 22 % faster with 2 cores
 
+# f_metricas, 3 years, with 1 core = 10.8 segs
+# f_metricas, 3 years, with 4 cores = 8.2 segs
+# f_metricas, 4 years, with 1 core =  18.11 segs
+# f_metricas, 4 years, with 4 cores =  12.33 segs
+
+# -- R = 20 % - 30 % faster with 4 cores

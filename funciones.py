@@ -416,7 +416,7 @@ def f_metricas(param_ce, param_ph):
 
     # Reaccion del precio para cada escenario (PARALELO)
     # inicializar el pool con el maximo de procesadores disponibles
-    pool = mp.Pool(mp.cpu_count()-1)
+    pool = mp.Pool(mp.cpu_count()-2)
     d_reaccion = pool.starmap(f_reaccion, [(i, psiguiente, param_ph, param_ce)
                                            for i in range(0, len(indices_ce))])
     pool.close()
