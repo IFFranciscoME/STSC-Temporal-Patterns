@@ -10,7 +10,6 @@
 from datos import df_usdmxn, df_ce
 import funciones as fn
 
-
 # -- -------------------------------------------------------------------- Data generation -- #
 # Importar Calendario Economico
 

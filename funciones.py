@@ -17,6 +17,8 @@ import pandas as pd
 import statsmodels.api as sm  # modelos estadisticos: anova
 from statsmodels.formula.api import ols  # modelo lineal con ols
 
+import multiprocessing as mp                              # procesamiento en paralelo
+
 pd.set_option('display.max_rows', None)                   # sin limite de renglones maximos
 pd.set_option('display.max_columns', None)                # sin limite de columnas maximas
 pd.set_option('display.width', None)                      # sin limite el ancho del display
@@ -311,19 +313,19 @@ def f_escenario(p0_datos):
 
     # -- -- A: actual >= previous & actual >= consensus & consensus >= previous
     p0_datos['escenario'][((p0_datos['actual'] >= p0_datos['previous']) &
-                        (p0_datos['actual'] >= p0_datos['consensus']))] = 'A'
+                          (p0_datos['actual'] >= p0_datos['consensus']))] = 'A'
 
     # -- -- B: actual >= previous & actual >= consensus & consensus < Precious
     p0_datos['escenario'][((p0_datos['actual'] >= p0_datos['previous']) &
-                        (p0_datos['actual'] < p0_datos['consensus']))] = 'B'
+                          (p0_datos['actual'] < p0_datos['consensus']))] = 'B'
 
     # -- -- C: actual >= previous & actual < consensus & consensus >= previous
     p0_datos['escenario'][((p0_datos['actual'] < p0_datos['previous']) &
-                        (p0_datos['actual'] >= p0_datos['consensus']))] = 'C'
+                          (p0_datos['actual'] >= p0_datos['consensus']))] = 'C'
 
     # -- -- D: actual >= previous & actual < consensus & consensus < previous
     p0_datos['escenario'][((p0_datos['actual'] < p0_datos['previous']) &
-                        (p0_datos['actual'] < p0_datos['consensus']))] = 'D'
+                          (p0_datos['actual'] < p0_datos['consensus']))] = 'D'
 
     return p0_datos
 
@@ -346,8 +348,8 @@ def f_metricas(param_ce, param_ph):
 
     Debugging
     ---------
-    param_ce = df_ce_h
-    param_ph = df_eurusd
+    param_ce = df_ce
+    param_ph = df_usdmxn
     """
 
     def f_reaccion(p0_i, p1_ad, p2_ph, p3_ce):
@@ -366,15 +368,15 @@ def f_metricas(param_ce, param_ph):
 
         Debugging
         ---------
-        p0_i = lista_ce[0]
+        p0_i = 0
         p1_ad = 30
-        p2_ph = df_eurusd
-        p3_ce = df_ce_h
+        p2_ph = df_usdmxn
+        p3_ce = df_ce
         """
 
         # Debugging y control interno
         # print(p0_i)
-        # print(' fecha ce: ' + str(p3_ce['timestamp'][p0_i]))
+        # print(' fecha del ce a buscar es: ' + str(p3_ce['timestamp'][p0_i]))
         mult = 10000
 
         # Revisión si no encuentra timestamp exacto, recorrer 1 hacia atras iterativamente
@@ -404,13 +406,11 @@ def f_metricas(param_ce, param_ph):
 
     # Cantidad de precios a futuro a considerar
     psiguiente = 30
-
-    # Debugging para probar con 2019
-    lista_ce = list(param_ce['timestamp'].index)
+    indices_ce = list(param_ce['timestamp'].index)
 
     # Reaccion del precio para cada escenario
     d_reaccion = [f_reaccion(p0_i=i, p1_ad=psiguiente, p2_ph=param_ph, p3_ce=param_ce)
-                  for i in lista_ce]
+                  for i in range(0, len(indices_ce))]
 
     # Acomodar resultados en columnas
     param_ce['ho'] = [d_reaccion[j]['ho'] for j in range(0, len(param_ce['timestamp']))]

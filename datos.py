@@ -18,7 +18,7 @@ archivo = 'USD_MXN_M1'
 
 # -- -------------------------------------------------------- Descarga de precios masivos -- #
 # -- ------------------------------------------------------------------------------------ -- #
-# -- Solo correr 1 vez para la descarga masiva
+# -- Solo correr 1 vez para la descarga masiva de precios
 
 # # token de OANDA https://www.oanda.com/demo-account/tpa/personal_token
 # oa_ak = '8' + 'b50d0cc9f97037e5b6e7b28de8be537-bccc5ff454afcd2ace0f774a57534ca' + 'd'
@@ -56,6 +56,7 @@ for a in year:
 df_usdmxn = pd.concat(archivos)
 # modificar el tipo de dato para la columna timestamp
 df_usdmxn['timestamp'] = pd.to_datetime(list(df_usdmxn['timestamp']))
+df_usdmxn.reset_index(inplace=True, drop=True)
 
 # -- ----------------------------------------- Descarga de indicadores economicos masivos -- #
 
