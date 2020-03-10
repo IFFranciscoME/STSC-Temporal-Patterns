@@ -308,23 +308,23 @@ def f_escenario(p0_datos):
     columns = [i.lower() for i in columns]
     p0_datos.rename(columns=dict(zip(p0_datos.columns[0:], columns)), inplace=True)
 
-    # inicializar la columna escenario, habra los siguientes: A, B, C, D
-    p0_datos['escenario'] = 'X'
+    # inicializar la columna esc, habra los siguientes: A, B, C, D
+    p0_datos['esc'] = 'X'
 
     # -- -- A: actual >= previous & actual >= consensus & consensus >= previous
-    p0_datos['escenario'][((p0_datos['actual'] >= p0_datos['previous']) &
+    p0_datos['esc'][((p0_datos['actual'] >= p0_datos['previous']) &
                           (p0_datos['actual'] >= p0_datos['consensus']))] = 'A'
 
     # -- -- B: actual >= previous & actual >= consensus & consensus < Precious
-    p0_datos['escenario'][((p0_datos['actual'] >= p0_datos['previous']) &
+    p0_datos['esc'][((p0_datos['actual'] >= p0_datos['previous']) &
                           (p0_datos['actual'] < p0_datos['consensus']))] = 'B'
 
     # -- -- C: actual >= previous & actual < consensus & consensus >= previous
-    p0_datos['escenario'][((p0_datos['actual'] < p0_datos['previous']) &
+    p0_datos['esc'][((p0_datos['actual'] < p0_datos['previous']) &
                           (p0_datos['actual'] >= p0_datos['consensus']))] = 'C'
 
     # -- -- D: actual >= previous & actual < consensus & consensus < previous
-    p0_datos['escenario'][((p0_datos['actual'] < p0_datos['previous']) &
+    p0_datos['esc'][((p0_datos['actual'] < p0_datos['previous']) &
                           (p0_datos['actual'] < p0_datos['consensus']))] = 'D'
 
     return p0_datos
@@ -462,23 +462,23 @@ def f_tabla_ind(param_ce):
     inds = list(set(param_ce['name']))
 
     # Ocurrencias de escenario A en cada indicador
-    l_a = [sum(list(param_ce['escenario'][param_ce['name'] == inds[i]] == 'A'))
+    l_a = [sum(list(param_ce['esc'][param_ce['name'] == inds[i]] == 'A'))
            for i in range(0, len(inds))]
 
-    # Ocurrencias de escenario B en cada indicador
-    l_b = [sum(list(param_ce['escenario'][param_ce['name'] == inds[i]] == 'B'))
+    # Ocurrencias de esc B en cada indicador
+    l_b = [sum(list(param_ce['esc'][param_ce['name'] == inds[i]] == 'B'))
            for i in range(0, len(inds))]
 
-    # Ocurrencias de escenario C en cada indicador
-    l_c = [sum(list(param_ce['escenario'][param_ce['name'] == inds[i]] == 'C'))
+    # Ocurrencias de esc C en cada indicador
+    l_c = [sum(list(param_ce['esc'][param_ce['name'] == inds[i]] == 'C'))
            for i in range(0, len(inds))]
 
-    # Ocurrencias de escenario D en cada indicador
-    l_d = [sum(list(param_ce['escenario'][param_ce['name'] == inds[i]] == 'D'))
+    # Ocurrencias de esc D en cada indicador
+    l_d = [sum(list(param_ce['esc'][param_ce['name'] == inds[i]] == 'D'))
            for i in range(0, len(inds))]
 
     # Ocurrencias total de cada indicador
-    l_t = [len(param_ce['escenario'][param_ce['name'] == inds[i]]) for i in range(0, len(inds))]
+    l_t = [len(param_ce['esc'][param_ce['name'] == inds[i]]) for i in range(0, len(inds))]
 
     # DataFrame con los datos finales
     df_ocur = pd.DataFrame({'indicador': inds, 'A': l_a, 'B': l_b, 'C': l_c, 'D': l_d,
@@ -592,7 +592,7 @@ def f_anova(param_data1, param_data2):
             tab_grp.extend(p_esc)
 
     # formar DataFrame con listas previamente construidas
-    df_anova = pd.DataFrame({'ind': tab_ind, 'esc': tab_esc, 'obs': tab_obs, 'grp': tab_grp,
+    df_anova = pd.DataFrame({'name': tab_ind, 'esc': tab_esc, 'obs': tab_obs, 'grp': tab_grp,
                              'anova_hl': [0] * len(tab_ind),
                              'anova_ol': [0] * len(tab_ind),
                              'anova_ho': [0] * len(tab_ind),
@@ -602,13 +602,13 @@ def f_anova(param_data1, param_data2):
     # elegir N observaciones, aleatoriamente con dist uniforme sin reemplazo, del total
     # de observaciones del indicador IM.
 
-    for i in range(0, len(df_anova['ind'])):
+    for i in range(0, len(df_anova['name'])):
 
         n_ale_1 = df_anova.iloc[i, 3]
         n_ale_2 = n_ale_1
         n_ale_3 = df_anova.iloc[i, 2] - n_ale_1 - n_ale_2
 
-        im = df_anova['ind'][i]
+        im = df_anova['name'][i]
         obs = list(param_data2[param_data2['name'] == im].index)
         muestra_1 = list(np.random.choice(obs, n_ale_1, replace=False))
         muestra_2 = list(np.random.choice(obs, n_ale_2, replace=False))
