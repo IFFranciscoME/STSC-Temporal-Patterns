@@ -59,3 +59,5 @@ e_f5 = time.time()
 time_f5 = round(e_f5 - s_f5, 2)
 print('f_anova se tardo: ' + str(time_f3))
 
+# -- ----------------------------------------------------------------------- FUNCTION : 6 -- #
+# -- Busqueda hacia adelante de patrones

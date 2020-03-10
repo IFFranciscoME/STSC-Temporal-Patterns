@@ -7,16 +7,17 @@
 # -- ------------------------------------------------------------------------------------ -- #
 
 import pandas as pd
-import funciones as fn
 
-from os import listdir, path
-from os.path import isfile, join
+# -- In case of running Descarga y Lectura Masiva
+# import funciones as fn
+# from os import listdir, path
+# from os.path import isfile, join
 
-# dividir en 11 partes
-all_years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
+# dividir en 10 partes
+all_years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
 # -------------------------------------------------------- GUARDAR SOLO LOS SELECCIONADOS -- #
-years = all_years[0:10]
+years = all_years
 archivo = 'USD_MXN_M1'
 
 # -- -------------------------------------------------------- Descarga de precios masivos -- #
