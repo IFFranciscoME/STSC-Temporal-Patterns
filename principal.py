@@ -61,3 +61,59 @@ print('f_anova se tardo: ' + str(time_f3))
 
 # -- ----------------------------------------------------------------------- FUNCTION : 6 -- #
 # -- Busqueda hacia adelante de patrones
+
+# Para cada indicador, para cada escenario, empezar desde la 1era ocurrencia y buscar
+# hacia adelante:
+# -- En los mismos indicadores y mismos escenarios
+# -- En los mismos indicadores en diferentes escenarios
+# -- En otros indicadores
+# -- En todas las demas ventanas de precios
+
+datos = df_anova
+criterios = ['ind_sel+esc', 'ind_sel', 'ind', 'all']
+procesos = len(df_anova.iloc[:, 1])
+
+
+def f_busqueda_adelante(param_row, param_ca_data=datos, param_ce_data=df_ce, param_crit=None):
+    """
+    Parameters
+    ----------
+    param_row :
+    param_ce_data
+    param_ca_data :
+    param_crit :
+
+    Returns
+    -------
+
+    Debugging
+    ---------
+    param_row = 0
+    param_ca_data = datos
+    param_ce_data = df_ce
+    param_crit = criterios
+
+    """
+
+    if param_crit is None:
+        param_crit = criterios
+
+    # renglon con informacion de escenario candidato
+    candidate_data = param_ca_data.iloc[param_row, :]
+
+    # localizar punto inicial
+    historical_data = param_ce_data[param_ce_data['name'] == candidate_data['ind']]
+
+    if param_crit == 'ind_sel+esc':
+        print(1)
+
+    elif param_crit == 'ind_sel':
+        print(1)
+
+    elif param_crit == 'ind':
+        print(1)
+
+    elif param_crit == 'all':
+        print(1)
+
+    return 1
