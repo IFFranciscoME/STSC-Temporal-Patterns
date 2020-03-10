@@ -16,7 +16,7 @@ from os.path import isfile, join
 all_years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
 
 # -------------------------------------------------------- GUARDAR SOLO LOS SELECCIONADOS -- #
-years = all_years[0:3]
+years = all_years[0:4]
 archivo = 'USD_MXN_M1'
 
 # -- -------------------------------------------------------- Descarga de precios masivos -- #
@@ -63,7 +63,7 @@ df_usdmxn = pd.concat(archivos, sort=False)
 df_usdmxn['timestamp'] = pd.to_datetime(list(df_usdmxn['timestamp']))
 df_usdmxn.reset_index(inplace=True, drop=True)
 
-# -- ------------------------------------------------------ Lectura masiva de indicadores -- #
+# -- ------------------------------------------ Lectura masiva de archivos de indicadores -- #
 # -- ------------------------------------------------------------------------------------ -- #
 # -- Solo correr 1 vez para la lectura masiva de archivos con indicadores
 
@@ -87,14 +87,18 @@ df_usdmxn.reset_index(inplace=True, drop=True)
 # # Escribir archivo
 # df_ce.to_csv(r'datos/econ_files/' + 'ECON_USD_MXN' + '.csv', index=False)
 
-# -- ------------------------------------------------------ Lectura masiva de indicadores -- #
+# -- ------------------------------------------------------- Lectura de archivo unificado -- #
 # -- ------------------------------------------------------------------------------------ -- #
 # -- leer un csv en y guardar en un DataFrame
 
 df_ce = pd.read_csv('datos/econ_files/' + 'ECON_USD_MXN' + '.csv')
 
 lista = list()
+# Convertir a tipo datetime
 df_ce['timestamp'] = pd.to_datetime(df_ce['timestamp'])
+# Crear columna
 df_ce['year'] = [df_ce['timestamp'][i].year for i in range(0, len(df_ce['timestamp']))]
+# Seleccionar los deseados
 df_ce = df_ce.loc[df_ce['year'].isin(years)]
+# Resetear el index
 df_ce.reset_index(inplace=True, drop=True)
