@@ -486,6 +486,44 @@ def f_tabla_ind(param_ce):
     return df_ocur
 
 
+# -- ----------------------------------------------------- FUNCION: Seleccion Indicadores -- #
+# -- ------------------------------------------------------------------------------------ -- #
+# -- Seleccion de indicadores
+
+def f_seleccion_ind(param_ce, param_c1, param_c2):
+    """
+    Parameters
+    ----------
+    param_ce : DataFrame : Calendario Economico
+    param_c1 : int : Cantidad de observaciones totales de indicador
+    param_c2 : int : Cantidad de ocurrencias de escenarios por indicador
+
+    Returns
+    -------
+    param_ce : DataFrame : DataFrame con indicadores seleccionados
+
+    Debugging
+    ---------
+    param_ce = df_indes
+    param_c1 = 40
+    param_c2 = 12
+
+    """
+
+    # indicadores con mas de 40 observaciones.
+    indes_out_1 = param_ce[param_ce['T'] < param_c1].index
+    param_ce.drop(indes_out_1, inplace=True)
+    param_ce.reset_index(inplace=True, drop=True)
+
+    # escenarios de cada indicador con mas de 12 observaciones
+    indes_out_2 = param_ce[(param_ce['A'] < param_c2) & (param_ce['B'] < param_c2) &
+                           (param_ce['C'] < param_c2) & (param_ce['D'] < param_c2)].index
+    param_ce.drop(indes_out_2, inplace=True)
+    param_ce.reset_index(inplace=True, drop=True)
+
+    return param_ce
+
+
 # -- ------------------------------------------------------- FUNCION: Tabla Pruebas ANOVA -- #
 # -- ------------------------------------------------------------------------------------ -- #
 # -- construir la tabla ANOVA
@@ -502,7 +540,7 @@ def f_anova(param_data1, param_data2):
 
     """
     # -- construir tabla de indicador_escenario con los candidatos
-    param_tab = param_data1
+    # param_tab = param_data1
     indicadores = list(set(param_data1['indicador']))
 
     # -- escenarios diferentes de 0 para el indicador
