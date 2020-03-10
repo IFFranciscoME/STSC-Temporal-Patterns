@@ -9,6 +9,8 @@
 from datos import df_usdmxn, df_ce
 import funciones as fn
 import time
+import numpy as np
+import mass_ts as mass
 
 # -- ----------------------------------------------------------------------- FUNCTION : 1 -- #
 # -- Calcular escenarios para indicadores
@@ -68,19 +70,16 @@ print('f_anova se tardo: ' + str(time_f3))
 # -- En otros indicadores
 # -- En todas las demas ventanas de precios
 
-criterios = ['ind_sel+esc', 'ind_sel', 'ind', 'all']
 procesos = len(df_ind_3.iloc[:, 1])
 
 
-def f_busqueda_adelante(param_row, param_ca_data=df_ind_3,
-                        param_ce_data=df_ce, param_crit=None):
+def f_busqueda_adelante(param_row, param_ca_data=df_ind_3, param_ce_data=df_ce):
     """
     Parameters
     ----------
     param_row :
     param_ce_data
     param_ca_data :
-    param_crit :
 
     Returns
     -------
@@ -88,34 +87,44 @@ def f_busqueda_adelante(param_row, param_ca_data=df_ind_3,
     Debugging
     ---------
     param_row = 0
-    param_ca_data = df_anova
+    param_ca_data = df_ind_3
     param_ce_data = df_ce
-    param_crit = criterios
+    param_p_ventana = 30
 
     """
 
-    if param_crit is None:
-        param_crit = criterios
-
     # renglon con informacion de escenario candidato
     candidate_data = param_ca_data.iloc[param_row, :]
+
     # primera ocurrencia de escenario candidato
-    param_ce_data[(param_ce_data['escenario'] == candidate_data['esc']) &
-                  (param_ce_data['name'] == candidate_data['ind'])]
+    ancla = param_ce_data[(param_ce_data['esc'] == candidate_data['esc']) &
+                          (param_ce_data['name'] == candidate_data['name'])].iloc[param_row, :]
 
-    # localizar punto inicial
-    historical_data = param_ce_data[param_ce_data['name'] == candidate_data['ind']]
+    # fecha de ancla
+    fecha_ini = ancla['timestamp']
 
-    if param_crit == 'ind_sel+esc':
-        print(1)
+    # se toma el timestamp de precios igual a timestamp del primer escenario del indicador
+    ind_ini = df_usdmxn[df_usdmxn['timestamp'] == fecha_ini].index
+    # fecha final es la fecha inicial mas un tamaño de ventana arbitrario
+    ind_fin = ind_ini + param_p_ventana
+    # se construye la serie query
+    serie_q = df_usdmxn.iloc[ind_ini[0]:ind_fin[0], :]
+    # se toma el close
+    serie_q = np.array(serie_q['close'])
+    # se normaliza para tener todos entre 0 y 1
+    serie_q = serie_q / max(serie_q)
 
-    elif param_crit == 'ind_sel':
-        print(1)
+    # se construye la serie completa para busqueda (un array de numpy de 1 dimension)
+    serie = np.array(df_usdmxn['close'])[7:]
+    serie = serie / max(serie)
 
-    elif param_crit == 'ind':
-        print(1)
-
-    elif param_crit == 'all':
-        print(1)
+    # -- parametros del algoritmo -- #
+    # tamaño de ventana para iterar la busqueda = tamaño de query
+    batch_size = param_p_ventana * 1
+    # regresar los Top X casos que "mas parecidos" = Cantidad total de ocurrencias de indicador
+    top_matches = 5
+    # regresar los indices y las distancias
+    mass_indices, mass_dists = mass.mass2_batch(serie, serie_q, batch_size=batch_size,
+                                                top_matches=top_matches, n_jobs=4)
 
     return 1
