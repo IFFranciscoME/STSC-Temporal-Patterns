@@ -17,7 +17,7 @@ import pandas as pd
 all_years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
 # -------------------------------------------------------- GUARDAR SOLO LOS SELECCIONADOS -- #
-years = all_years[0:2]
+years = all_years[0:3]
 archivo = 'USD_MXN_M1'
 
 # -- -------------------------------------------------------- Descarga de precios masivos -- #
@@ -103,3 +103,5 @@ df_ce['year'] = [df_ce['timestamp'][i].year for i in range(0, len(df_ce['timesta
 df_ce = df_ce.loc[df_ce['year'].isin(years)]
 # Resetear el index
 df_ce.reset_index(inplace=True, drop=True)
+# Reordenar en ascendente por fechas
+df_ce = df_ce.sort_values(by=['timestamp'])

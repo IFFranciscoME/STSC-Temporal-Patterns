@@ -15,18 +15,23 @@ pio.renderers.default = "browser"                # render de imagenes para corre
 # -- --------------------------------------------------- GRÁFICA: lineas series de tiempo -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
-def g_lineas(p_datos1, p_datos2):
+def g_lineas(param_query, param_pattern):
     """
-    :param p_datos1
-    :param p_datos2
+    Parameters
+    ----------
+    param_query :
+    param_pattern :
 
-    :return:
+    Returns
+    -------
+
+    Debugging
+    ---------
+    param_query = serie_q
+    param_pattern = serie_p
+
     """
-
-    n = len(p_datos1)
-    random_x = list(np.arange(n))
-    random_y0 = p_datos1
-    random_y1 = p_datos2
+    serie_x = list(np.arange(len(param_query)))
 
     # Create traces
     fig = go.Figure()
@@ -36,13 +41,15 @@ def g_lineas(p_datos1, p_datos2):
                       xaxis=dict(title_text='fechas', rangeslider=dict(visible=False)),
                       yaxis=dict(title_text='precios (co)'))
 
-    fig.add_trace(go.Scatter(x=random_x, y=random_y0, mode='lines', name='serie_query'))
-    fig.add_trace(go.Scatter(x=random_x, y=random_y1, mode='lines', name='serie'))
+    fig.add_trace(go.Scatter(x=serie_x, y=param_query, mode='lines', name='serie_query'))
+    fig.add_trace(go.Scatter(x=serie_x, y=param_pattern, mode='lines', name='serie_pattern'))
 
     fig.update_layout(legend_orientation="h")
 
     fig.layout.autosize = False
     fig.layout.width = 840
     fig.layout.height = 520
+
+    fig.show()
 
     return fig
