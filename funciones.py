@@ -14,6 +14,7 @@ from datetime import timedelta
 
 import numpy as np
 import pandas as pd
+import mass_ts as mass
 import statsmodels.api as sm  # modelos estadisticos: anova
 from statsmodels.formula.api import ols  # modelo lineal con ols
 
@@ -660,3 +661,112 @@ def f_anova(param_data1, param_data2):
     # 0 anovas = se descarta.
 
     return df_anova
+
+
+# -- -------------------------------------------------- FUNCION: clustering subsecuencial -- #
+# -- ------------------------------------------------------------------------------------ -- #
+# -- construir la tabla ANOVA
+
+def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_ventana,
+                    param_cores):
+    """
+    Parameters
+    ----------
+    param_pe : pd.DataFrame : dataframe con precios
+    param_row :
+    param_ce_data :
+    param_ca_data :
+    param_p_ventana :
+    param_cores :
+
+    Returns
+    -------
+    df_tabla_busqueda
+
+    Debugging
+    ---------
+    param_row = 0 # renglon de iteracion de candidatos
+    param_ca_data = df_ind_3 # dataframe con candidatos a iterar
+    param_ce_data = df_ce # dataframe con calendario completo
+    param_p_ventana = 30 # tamano de ventana para buscar serie de tiempo
+    param_cores = 4 # nucleos con los cuales utilizar algoritmo
+
+    """
+    # almacenar resultados
+    resultado = list()
+
+    # renglon con informacion de evento disparador candidato
+    candidate_data = param_ca_data.iloc[param_row, :]
+    print('Ind disparador: ' + str(candidate_data['name']) + ' - ' + candidate_data['esc'])
+
+    # datos completos de todas las ocurrencias del evento disparador candidato
+    df_ancla = param_ce_data[(param_ce_data['esc'] == candidate_data['esc']) &
+                             (param_ce_data['name'] == candidate_data['name'])]
+
+    # todos los timestamps del calendario economico completo
+    ts_serie_ce = list(param_ce_data['timestamp'])
+
+    # -- ------------------------------------------------------ OCURRENCIA POR OCURRENCIA -- #
+    for ancla in range(0, len(df_ancla['timestamp'])-1):
+        print(ancla)
+        # datos de ancla para buscar hacia el futuro
+        ancla_ocurr = df_ancla.iloc[ancla, ]
+        print('ind: ' + ancla_ocurr['name'] + ' ' + str(ancla_ocurr['timestamp']))
+        # fecha de ancla
+        fecha_ini = ancla_ocurr['timestamp']
+        # se toma el timestamp de precios igual a timestamp del primer escenario del indicador
+        ind_ini = param_pe[param_pe['timestamp'] == fecha_ini].index
+        # fecha final es la fecha inicial mas un tamaño de ventana arbitrario
+        ind_fin = ind_ini + param_p_ventana
+        # se construye la serie query
+        serie_q = param_pe.iloc[ind_ini[0]:ind_fin[0], :]
+        # se toma el close
+        serie_q = np.array(serie_q['close'])
+        # se construye la serie completa para busqueda (un array de numpy de 1 dimension)
+        serie = np.array(param_pe.loc[ind_fin[0]:, 'close'])
+
+        print('serie BIEN')
+
+        # tamaño de ventana para iterar la busqueda = tamaño de query
+        batch = param_p_ventana * 10
+        # la cantidad de casos que regresa como "mas parecidos"
+        matches = 10
+        # correr algoritmo y regresar los indices de coincidencias y las distancias
+        mass_indices, mass_dists = mass.mass2_batch(ts=serie, query=serie_q,
+                                                    batch_size=batch,
+                                                    top_matches=matches,
+                                                    n_jobs=param_cores)
+
+        # Indice de referencia de n-esima serie similar encontrada
+        for indice in mass_indices:
+            # DataFrame de n-esima serie patron similar encontrada
+            df_serie_p = param_pe[indice:indice + param_p_ventana]
+            print('Verificando patron con f_ini: ' +
+                  str(list(df_serie_p['timestamp'])[0]) + ' f_fin: ' +
+                  str(list(df_serie_p['timestamp'])[-1]))
+
+            # Extraer solo los timestamp de la serie patron para busqueda.
+            ts_serie_p = list(df_serie_p['timestamp'])
+
+            # Busqueda si el timestamp inicial de cada uno de los patrones
+            # encontrados es igual a alguna fecha de comunicacion de toda
+            # la lista de indicadores que se tiene
+
+            if ts_serie_p[0] in ts_serie_ce:
+                # print(param_ce_data.loc[np.where(ts_serie_ce == ts_serie_p[0])[0], 'name'])
+                print('Coincidencia encontrada')
+                resultado.append(param_ce_data.loc[np.where(ts_serie_ce == ts_serie_p[0])[0],
+                                                   'name'])
+
+                # Tipo1 = Mismo Indicador + Mismo Escenario que la ancla
+
+                # Tipo2 = Mismo Indicador + Cualquier Escenario
+
+                # Tipo3 = Otro Indicador en la lista
+            else:
+                print('No coincide con comunicado de indicadores')
+
+                # Tipo0 = Cualquier otro punto en el tiempo fuera
+                # de ocurrencia de indicadores
+
+    return resultado
