@@ -724,7 +724,7 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
 
         # se toma el timestamp de precios igual a timestamp del primer escenario del indicador
         ind_ini = param_pe[param_pe['timestamp'] == fecha_ini].index
-        # fecha final es la fecha inicial mas un tamaño de ventana arbitrario
+        # fecha final es la fecha inicial mas un tamano de ventana arbitrario
         ind_fin = ind_ini + param_p_ventana
         # se construye la serie query
         df_serie_q = param_pe.loc[ind_ini[0]:ind_fin[0], :]
@@ -740,7 +740,7 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
         # se toma el mid como valor para construir series temporales
         serie = np.array(df_serie['mid'])
 
-        # tamaño de ventana para iterar la busqueda = tamaño de query
+        # tamano de ventana para iterar la busqueda = tamano de query
         batch = param_p_ventana * 100
 
         try:
