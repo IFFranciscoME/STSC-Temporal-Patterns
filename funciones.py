@@ -685,7 +685,8 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
 
     Debugging
     ---------
-    param_row = 0 # renglon de iteracion de candidatos
+    param_pe = df_usdmxn # precios historicos para minar
+    param_row = 4 # renglon de iteracion de candidatos
     param_ca_data = df_ind_3 # dataframe con candidatos a iterar
     param_ce_data = df_ce # dataframe con calendario completo
     param_p_ventana = 30 # tamano de ventana para buscar serie de tiempo
@@ -693,7 +694,7 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
 
     """
     # almacenar resultados
-    resultado = list()
+    dict_res = dict()
 
     # renglon con informacion de evento disparador candidato
     candidate_data = param_ca_data.iloc[param_row, :]
@@ -707,66 +708,97 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
     ts_serie_ce = list(param_ce_data['timestamp'])
 
     # -- ------------------------------------------------------ OCURRENCIA POR OCURRENCIA -- #
-    for ancla in range(0, len(df_ancla['timestamp'])-1):
+    for ancla in range(0, len(df_ancla['timestamp'])):
+        # ancla = 31
         print(ancla)
         # datos de ancla para buscar hacia el futuro
         ancla_ocurr = df_ancla.iloc[ancla, ]
-        print('ind: ' + ancla_ocurr['name'] + ' ' + str(ancla_ocurr['timestamp']))
+        # print('ind: ' + ancla_ocurr['name'] + ' ' + ancla_ocurr['esc'] + ' ' +
+        #       str(ancla_ocurr['timestamp']))
         # fecha de ancla
         fecha_ini = ancla_ocurr['timestamp']
+
+        # .. buscar recurrentemente la fecha mas cercana para construir serie y serie_p
+        while len(param_pe[param_pe['timestamp'] == fecha_ini].index) == 0:
+            fecha_ini = fecha_ini - timedelta(minutes=1)
+
         # se toma el timestamp de precios igual a timestamp del primer escenario del indicador
         ind_ini = param_pe[param_pe['timestamp'] == fecha_ini].index
         # fecha final es la fecha inicial mas un tamaño de ventana arbitrario
         ind_fin = ind_ini + param_p_ventana
         # se construye la serie query
-        serie_q = param_pe.iloc[ind_ini[0]:ind_fin[0], :]
-        # se toma el close
-        serie_q = np.array(serie_q['close'])
-        # se construye la serie completa para busqueda (un array de numpy de 1 dimension)
-        serie = np.array(param_pe.loc[ind_fin[0]:, 'close'])
+        df_serie_q = param_pe.loc[ind_ini[0]:ind_fin[0], :]
+        df_serie_q = df_serie_q.reset_index(drop=True)
 
-        print('serie BIEN')
+        # se toma el close
+        serie_q = np.array(df_serie_q['close'])
+        # se construye la serie completa para busqueda (un array de numpy de 1 dimension)
+        df_serie = param_pe.loc[ind_ini[0]:, :]
+        df_serie = df_serie.reset_index(drop=True)
+        serie = np.array(df_serie['close'])
 
         # tamaño de ventana para iterar la busqueda = tamaño de query
-        batch = param_p_ventana * 10
-        # la cantidad de casos que regresa como "mas parecidos"
-        matches = 10
-        # correr algoritmo y regresar los indices de coincidencias y las distancias
-        mass_indices, mass_dists = mass.mass2_batch(ts=serie, query=serie_q,
-                                                    batch_size=batch,
-                                                    top_matches=matches,
-                                                    n_jobs=param_cores)
+        batch = param_p_ventana * 100
 
-        # Indice de referencia de n-esima serie similar encontrada
-        for indice in mass_indices:
-            # DataFrame de n-esima serie patron similar encontrada
-            df_serie_p = param_pe[indice:indice + param_p_ventana]
-            print('Verificando patron con f_ini: ' +
-                  str(list(df_serie_p['timestamp'])[0]) + ' f_fin: ' +
-                  str(list(df_serie_p['timestamp'])[-1]))
+        try:
+            # correr algoritmo y regresar los indices de coincidencias y las distancias
+            mass_indices, mass_dists = mass.mass2_batch(ts=serie, query=serie_q,
+                                                        batch_size=batch,
+                                                        n_jobs=param_cores)
 
-            # Extraer solo los timestamp de la serie patron para busqueda.
-            ts_serie_p = list(df_serie_p['timestamp'])
+            # Borrar inidice 0 de resultados por ser el mismo que la serie query
+            origen = np.where(mass_indices == 0)[0][0]
+            mass_indices = np.delete(mass_indices, origen)
+            # mass_dists = np.delete(mass_dists, origen)
 
-            # Busqueda si el timestamp inicial de cada uno de los patrones
-            # encontrados es igual a alguna fecha de comunicacion de toda
-            # la lista de indicadores que se tiene
+            # print('indices encontrados' + ' ' + str(mass_indices))
 
-            if ts_serie_p[0] in ts_serie_ce:
-                # print(param_ce_data.loc[np.where(ts_serie_ce == ts_serie_p[0])[0], 'name'])
-                print('Coincidencia encontrada')
-                resultado.append(param_ce_data.loc[np.where(ts_serie_ce == ts_serie_p[0])[0],
-                                                   'name'])
+            # Indice de referencia de n-esima serie similar encontrada
+            for indice in mass_indices:
+                # indice = mass_indices[0]
+                # print(indice)
+                # DataFrame de n-esima serie patron similar encontrada
+                df_serie_p = df_serie.loc[indice:(indice + param_p_ventana), :]
+                # print(df_serie_p.head())
+                # print('Verificando patron con f_ini: ' +
+                #       str(list(df_serie_p['timestamp'])[0]) + ' f_fin: ' +
+                #       str(list(df_serie_p['timestamp'])[-1]))
 
-                # Tipo1 = Mismo Indicador + Mismo Escenario que la ancla
+                # Extraer solo los timestamp de la serie patron para busqueda.
+                ts_serie_p = list(df_serie_p['timestamp'])
 
-                # Tipo2 = Mismo Indicador + Cualquier Escenario
+                # Busqueda si el timestamp inicial de cada uno de los patrones
+                # encontrados es igual a alguna fecha de comunicacion de toda
+                # la lista de indicadores que se tiene
+                if ts_serie_p[0] in ts_serie_ce:
+                    print(' ------------------ Coincidencia encontrada ------------------')
+                    print('buscando en: ' + ancla_ocurr['name'] + ' ' + ancla_ocurr['esc'] +
+                          ' ' + str(ancla_ocurr['timestamp']))
+                    print(' ----------- Se encontro el patron que empieza en: -----------')
+                    print(ts_serie_p[0])
+                    print('en: ')
+                    match = np.where(param_ce_data['timestamp'] == ts_serie_p[0])[0]
+                    encontrados = param_ce_data.loc[match, :]
+                    dict_res[ancla_ocurr['name'] + ' - ' + ancla_ocurr['esc'] + ' - ' +
+                             str(ancla_ocurr['timestamp'])] = encontrados
 
-                # Tipo3 = Otro Indicador en la lista
-            else:
-                print('No coincide con comunicado de indicadores')
+                    print(dict_res)
+
+                    # resultado.append(list(param_ce_data.loc[match, 'name']))
+
+                    # Tipo1 = Mismo Indicador + Mismo Escenario que la ancla
+
+                    # Tipo2 = Mismo Indicador + Cualquier Escenario
+
+                    # Tipo3 = Otro Indicador en la lista
 
                 # Tipo0 = Cualquier otro punto en el tiempo fuera
                 # de ocurrencia de indicadores
 
-    return resultado
+        except ValueError:
+            print('ValueError: problemas de indices en MASS-TS')
+
+        except IndexError:
+            print('IndexError: problemas de indices en MASS-TS')
+
+    return dict_res

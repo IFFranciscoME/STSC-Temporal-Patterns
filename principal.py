@@ -45,7 +45,7 @@ print('f_tabla_ind se tardo: ' + str(time_f3))
 # -- ----------------------------------------------------------------------- FUNCTION : 4 -- #
 # -- Seleccionar indicadores y escenarios con observaciones suficientes
 s_f4 = time.time()
-df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=60, param_c2=40)
+df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=120, param_c2=30)
 e_f4 = time.time()
 time_f4 = round(e_f4 - s_f4, 2)
 print('f_seleccion_ind se tardo: ' + str(time_f4))
@@ -62,8 +62,8 @@ print('f_anova se tardo: ' + str(time_f3))
 # -- Busqueda hacia adelante de patrones en serie de tiempo
 s_f6 = time.time()
 stsc = [fn.f_ts_clustering(param_pe=df_usdmxn, param_row=s, param_ca_data=df_ind_3,
-                           param_ce_data=df_ce, param_p_ventana=30, param_cores=4)
-        for s in range(0, 1)]
+                           param_ce_data=df_ce, param_p_ventana=20, param_cores=4)
+        for s in range(0, len(df_ind_3))]
 e_f6 = time.time()
 time_f6 = round(e_f6 - s_f6, 2)
 print('f_ts_clustering se tardo: ' + str(time_f6))
