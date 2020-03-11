@@ -17,7 +17,7 @@ import pandas as pd
 all_years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
 # -------------------------------------------------------- GUARDAR SOLO LOS SELECCIONADOS -- #
-years = all_years[0:4]
+years = all_years
 archivo = 'USD_MXN_M1'
 
 # -- -------------------------------------------------------- Descarga de precios masivos -- #
@@ -107,16 +107,13 @@ df_ce.reset_index(inplace=True, drop=True)
 df_ce = df_ce.sort_values(by=['timestamp'])
 
 # Eliminar de la busqueda publicaciones que son fuera del mercado
-# horarios fuera de mercado
-df_ce['weekday'] = [df_ce.loc[i, 'timestamp'].weekday() for i in range(0, len(df_ce['timestamp']))]
+df_ce['weekday'] = [df_ce.loc[i, 'timestamp'].weekday()
+                    for i in range(0, len(df_ce['timestamp']))]
 df_ce['hour'] = [df_ce.loc[i, 'timestamp'].hour for i in range(0, len(df_ce['timestamp']))]
-
-indexNames = df_ce[(df_ce['weekday'] == 5) |
-                   (df_ce['weekday'] == 4) &
-                   (df_ce['hour'] > 22) |
-                   (df_ce['weekday'] == 6) &
-                   (df_ce['hour'] < 22)
-                   ].index
-
+# extraer los indices
+indexNames = df_ce[(df_ce['weekday'] == 5) | (df_ce['weekday'] == 4) & (df_ce['hour'] > 22) |
+                   (df_ce['weekday'] == 6) & (df_ce['hour'] < 22)].index
+# eliminar renglones
 df_ce.drop(indexNames, inplace=True)
+# resetear indice
 df_ce = df_ce.reset_index(inplace=False, drop=True)
