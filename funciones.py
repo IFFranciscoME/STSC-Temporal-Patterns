@@ -362,7 +362,7 @@ def f_reaccion(p0_i, p1_ad, p2_ph, p3_ce):
     # print(' fecha del ce a buscar es: ' + str(p3_ce['timestamp'][p0_i]))
     mult = 10000
 
-    # Revisión si no encuentra timestamp exacto, recorrer 1 hacia atras iterativamente
+    # Revision si no encuentra timestamp exacto, recorrer 1 hacia atras iterativamente
     # hasta encontrar el mismo
     indice_1 = list(np.where(p2_ph['timestamp'] == p3_ce['timestamp'][p0_i])[0])
     i = 0
