@@ -17,7 +17,7 @@ import pandas as pd
 all_years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
 # -------------------------------------------------------- GUARDAR SOLO LOS SELECCIONADOS -- #
-years = all_years
+years = all_years[0:2]
 archivo = 'USD_MXN_M1'
 
 # -- -------------------------------------------------------- Descarga de precios masivos -- #
@@ -59,6 +59,10 @@ for a in years:
 
 # concatenar todos los archivos
 df_usdmxn = pd.concat(archivos, sort=True)
+
+# # calcular el valor 'mid' como el punto medio entre close y open de cada vela
+df_usdmxn['mid'] = 0
+df_usdmxn['mid'] = (df_usdmxn['close'] + df_usdmxn['open'])/2
 
 # modificar el tipo de dato para la columna timestamp
 df_usdmxn['timestamp'] = pd.to_datetime(list(df_usdmxn['timestamp']))

@@ -710,7 +710,7 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
     # -- ------------------------------------------------------ OCURRENCIA POR OCURRENCIA -- #
     for ancla in range(0, len(df_ancla['timestamp'])):
         # ancla = 31
-        print(ancla)
+        # print(ancla)
         # datos de ancla para buscar hacia el futuro
         ancla_ocurr = df_ancla.iloc[ancla, ]
         # print('ind: ' + ancla_ocurr['name'] + ' ' + ancla_ocurr['esc'] + ' ' +
@@ -730,12 +730,15 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
         df_serie_q = param_pe.loc[ind_ini[0]:ind_fin[0], :]
         df_serie_q = df_serie_q.reset_index(drop=True)
 
-        # se toma el close
-        serie_q = np.array(df_serie_q['close'])
+        # se toma el mid como valor para construir series temporales
+        serie_q = np.array(df_serie_q['mid'])
+
         # se construye la serie completa para busqueda (un array de numpy de 1 dimension)
         df_serie = param_pe.loc[ind_ini[0]:, :]
         df_serie = df_serie.reset_index(drop=True)
-        serie = np.array(df_serie['close'])
+
+        # se toma el mid como valor para construir series temporales
+        serie = np.array(df_serie['mid'])
 
         # tamaño de ventana para iterar la busqueda = tamaño de query
         batch = param_p_ventana * 100
@@ -779,10 +782,15 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
                     print('en: ')
                     match = np.where(param_ce_data['timestamp'] == ts_serie_p[0])[0]
                     encontrados = param_ce_data.loc[match, :]
-                    dict_res[ancla_ocurr['name'] + ' - ' + ancla_ocurr['esc'] + ' - ' +
-                             str(ancla_ocurr['timestamp'])] = encontrados
+
+                    # agregar al diccionario de resultados los casos encontrados
+                    dict_res.update({ancla_ocurr['name'] + ' - ' + ancla_ocurr['esc'] + ' - ' +
+                                     str(ancla_ocurr['timestamp']): encontrados})
 
                     print(dict_res)
+                else:
+                    dict_res.update({ancla_ocurr['name'] + ' - ' + ancla_ocurr['esc'] + ' - ' +
+                                     str(ancla_ocurr['timestamp']): 0})
 
                     # resultado.append(list(param_ce_data.loc[match, 'name']))
 

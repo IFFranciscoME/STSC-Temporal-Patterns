@@ -7,6 +7,7 @@
 # -- ------------------------------------------------------------------------------------ -- #
 
 from datos import df_usdmxn, df_ce
+import multiprocessing as mp
 import funciones as fn
 import time
 
@@ -45,7 +46,7 @@ print('f_tabla_ind se tardo: ' + str(time_f3))
 # -- ----------------------------------------------------------------------- FUNCTION : 4 -- #
 # -- Seleccionar indicadores y escenarios con observaciones suficientes
 s_f4 = time.time()
-df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=120, param_c2=30)
+df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=24, param_c2=12)
 e_f4 = time.time()
 time_f4 = round(e_f4 - s_f4, 2)
 print('f_seleccion_ind se tardo: ' + str(time_f4))
@@ -60,10 +61,23 @@ print('f_anova se tardo: ' + str(time_f3))
 
 # -- ----------------------------------------------------------------------- FUNCTION : 6 -- #
 # -- Busqueda hacia adelante de patrones en serie de tiempo
-s_f6 = time.time()
-stsc = [fn.f_ts_clustering(param_pe=df_usdmxn, param_row=s, param_ca_data=df_ind_3,
-                           param_ce_data=df_ce, param_p_ventana=20, param_cores=4)
-        for s in range(0, len(df_ind_3))]
-e_f6 = time.time()
-time_f6 = round(e_f6 - s_f6, 2)
-print('f_ts_clustering se tardo: ' + str(time_f6))
+s_f6_1 = time.time()
+
+# # -- version 1 con mass2
+# stsc_1 = [fn.f_ts_clustering(param_pe=df_usdmxn, param_row=s, param_ca_data=df_ind_3,
+#                              param_ce_data=df_ce, param_p_ventana=30, param_cores=4)
+#           for s in range(0, len(df_ind_3))]
+#
+# e_f6_1 = time.time()
+# time_f6_1 = round(e_f6_1 - s_f6_1, 2)
+# print('con paralelizacion interna: ' + str(time_f6_1))
+
+s_f6_2 = time.time()
+# -- version 2 con apply
+pool = mp.Pool(mp.cpu_count())
+stsc_2 = [pool.apply(fn.f_ts_clustering, args=(df_usdmxn, s_ca_data, df_ind_3, df_ce, 30, 1))
+          for s_ca_data in range(0, len(df_ind_3))]
+e_f6_2 = time.time()
+time_f6_2 = round(e_f6_2 - s_f6_2, 2)
+
+print('con paralelizacion apply: ' + str(time_f6_2))
