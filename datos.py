@@ -58,15 +58,15 @@ for a in years:
     archivos.append(pd.read_csv(nombre_a))
 
 # concatenar todos los archivos
-df_usdmxn = pd.concat(archivos, sort=True)
+df_precios = pd.concat(archivos, sort=True)
 
 # # calcular el valor 'mid' como el punto medio entre close y open de cada vela
-df_usdmxn['mid'] = 0
-df_usdmxn['mid'] = (df_usdmxn['close'] + df_usdmxn['open'])/2
+df_precios['mid'] = 0
+df_precios['mid'] = (df_precios['close'] + df_precios['open'])/2
 
 # modificar el tipo de dato para la columna timestamp
-df_usdmxn['timestamp'] = pd.to_datetime(list(df_usdmxn['timestamp']))
-df_usdmxn = df_usdmxn.reset_index(inplace=False, drop=True)
+df_precios['timestamp'] = pd.to_datetime(list(df_precios['timestamp']))
+df_precios = df_precios.reset_index(inplace=False, drop=True)
 
 # -- ------------------------------------------ Lectura masiva de archivos de indicadores -- #
 # -- ------------------------------------------------------------------------------------ -- #

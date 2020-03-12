@@ -14,11 +14,14 @@ from datetime import timedelta
 
 import numpy as np
 import pandas as pd
-import mass_ts as mass
-import statsmodels.api as sm  # modelos estadisticos: anova
-from statsmodels.formula.api import ols  # modelo lineal con ols
-
+import warnings
+import statsmodels.api as sm                              # modelos estadisticos: anova
+from statsmodels.formula.api import ols                   # modelo lineal con ols
 import multiprocessing as mp                              # procesamiento en paralelo
+
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    import mass_ts as mass
 
 pd.set_option('display.max_rows', None)                   # sin limite de renglones maximos
 pd.set_option('display.max_columns', None)                # sin limite de columnas maximas
@@ -162,7 +165,7 @@ def f_precios_masivos(p0_fini, p1_ffin, p2_gran, p3_inst, p4_oatk, p5_ginc):
             a1_hist = api.request(a1_req1)
 
             # Para debuging
-            print(f1 + ' y ' + f2)
+            # print(f1 + ' y ' + f2)
             lista = list()
 
             # Acomodar las llaves
@@ -353,7 +356,7 @@ def f_reaccion(p0_i, p1_ad, p2_ph, p3_ce):
     ---------
     p0_i = 0
     p1_ad = 30
-    p2_ph = df_usdmxn
+    p2_ph = df_precios
     p3_ce = df_ce
     """
 
@@ -407,7 +410,7 @@ def f_metricas(param_ce, param_ph):
     Debugging
     ---------
     param_ce = df_ce
-    param_ph = df_usdmxn
+    param_ph = df_precios
     """
 
     # Cantidad de precios a futuro a considerar
@@ -685,7 +688,7 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
 
     Debugging
     ---------
-    param_pe = df_usdmxn # precios historicos para minar
+    param_pe = df_precios # precios historicos para minar
     param_row = 4 # renglon de iteracion de candidatos
     param_ca_data = df_ind_3 # dataframe con candidatos a iterar
     param_ce_data = df_ce # dataframe con calendario completo
@@ -753,7 +756,6 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
             origen = np.where(mass_indices == 0)[0][0]
             mass_indices = np.delete(mass_indices, origen)
             # mass_dists = np.delete(mass_dists, origen)
-
             # print('indices encontrados' + ' ' + str(mass_indices))
 
             # Indice de referencia de n-esima serie similar encontrada
@@ -774,12 +776,12 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
                 # encontrados es igual a alguna fecha de comunicacion de toda
                 # la lista de indicadores que se tiene
                 if ts_serie_p[0] in ts_serie_ce:
-                    print(' ------------------ Coincidencia encontrada ------------------')
-                    print('buscando en: ' + ancla_ocurr['name'] + ' ' + ancla_ocurr['esc'] +
-                          ' ' + str(ancla_ocurr['timestamp']))
-                    print(' ----------- Se encontro el patron que empieza en: -----------')
-                    print(ts_serie_p[0])
-                    print('en: ')
+                    # print(' ------------------ Coincidencia encontrada ------------------')
+                    # print('buscando en: ' + ancla_ocurr['name'] + ' ' + ancla_ocurr['esc'] +
+                    #       ' ' + str(ancla_ocurr['timestamp']))
+                    # print(' ----------- Se encontro el patron que empieza en: -----------')
+                    # print(ts_serie_p[0])
+                    # print('en: ')
                     match = np.where(param_ce_data['timestamp'] == ts_serie_p[0])[0]
                     encontrados = param_ce_data.loc[match, :]
 
@@ -787,7 +789,7 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
                     dict_res.update({ancla_ocurr['name'] + ' - ' + ancla_ocurr['esc'] + ' - ' +
                                      str(ancla_ocurr['timestamp']): encontrados})
 
-                    print(dict_res)
+                    # print(dict_res)
                 else:
                     dict_res.update({ancla_ocurr['name'] + ' - ' + ancla_ocurr['esc'] + ' - ' +
                                      str(ancla_ocurr['timestamp']): 0})
@@ -800,13 +802,16 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_p_v
 
                     # Tipo3 = Otro Indicador en la lista
 
-                # Tipo0 = Cualquier otro punto en el tiempo fuera
-                # de ocurrencia de indicadores
+                # Tipo0 = Cualquier otro punto en el tiempo fuera de ocurrencia de indicadores
 
         except ValueError:
             print('ValueError: problemas de indices en MASS-TS')
+            dict_res.update({ancla_ocurr['name'] + ' - ' + ancla_ocurr['esc'] + ' - ' +
+                             str(ancla_ocurr['timestamp']): 'ValueError'})
 
         except IndexError:
             print('IndexError: problemas de indices en MASS-TS')
+            dict_res.update({ancla_ocurr['name'] + ' - ' + ancla_ocurr['esc'] + ' - ' +
+                             str(ancla_ocurr['timestamp']): 'IndexError'})
 
     return dict_res
