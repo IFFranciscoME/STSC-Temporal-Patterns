@@ -51,7 +51,7 @@ if __name__ == "__main__":
     # -- ------------------------------------------------------------------- FUNCTION : 4 -- #
     # -- Seleccionar indicadores y escenarios con observaciones suficientes
     s_f4 = time.time()
-    df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=70, param_c2=12)
+    df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=120, param_c2=30)
     e_f4 = time.time()
     time_f4 = round(e_f4 - s_f4, 2)
     # print('f_seleccion_ind se tardo: ' + str(time_f4))
@@ -68,25 +68,28 @@ if __name__ == "__main__":
     # -- Busqueda hacia adelante de patrones en serie de tiempo
 
     # # -- version 1 con mass2
-    s_f6_1 = time.time()
-    stsc_1 = pd.DataFrame([fn.f_ts_clustering(param_pe=df_precios, param_row=s,
-                                              param_ca_data=df_ind_3, param_ce_data=df_ce,
-                                              param_p_ventana=30, param_cores=4,
-                                              param_tipo='mid')
-                           for s in range(0, len(df_ind_3))])
-
-    e_f6_1 = time.time()
-    time_f6_1 = round(e_f6_1 - s_f6_1, 2)
-    print(stsc_1)
+    # s_f6_1 = time.time()
+    # stsc_1 = pd.DataFrame([fn.f_ts_clustering(param_pe=df_precios, param_row=s,
+    #                                           param_ca_data=df_ind_3, param_ce_data=df_ce,
+    #                                           param_p_ventana=30, param_cores=4,
+    #                                           param_tipo='mid')
+    #                        for s in range(0, len(df_ind_3))])
+    #
+    # e_f6_1 = time.time()
+    # time_f6_1 = round(e_f6_1 - s_f6_1, 2)
+    # print(stsc_1)
 
     # print('con paralelizacion interna: ' + str(time_f6_1))
 
     # -- version 2 con apply
-    # s_f6_2 = time.time()
-    # pool = mp.Pool(mp.cpu_count())
-    # stsc_2 = [pool.apply(fn.f_ts_clustering,
-    #                      args=(df_precios, s_ca_data, df_ind_3, df_ce, 30, 1))
-    #           for s_ca_data in range(0, len(df_ind_3))]
-    # e_f6_2 = time.time()
-    # time_f6_2 = round(e_f6_2 - s_f6_2, 2)
-    # print('con paralelizacion apply: ' + str(time_f6_2))
+    s_f6_2 = time.time()
+    pool = mp.Pool(mp.cpu_count())
+    stsc_2 = pd.DataFrame([pool.apply(fn.f_ts_clustering,
+                                      args=(df_precios, s_ca_data, df_ind_3,
+                                            df_ce, 'mid', 30, 1))
+                           for s_ca_data in range(0, len(df_ind_3))])
+    e_f6_2 = time.time()
+    time_f6_2 = round(e_f6_2 - s_f6_2, 2)
+    print(stsc_2)
+
+    # print('con paralelizacion interna: ' + str(time_f6_2))
