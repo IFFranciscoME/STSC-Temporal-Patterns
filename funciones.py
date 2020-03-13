@@ -395,13 +395,14 @@ def f_reaccion(p0_i, p1_ad, p2_ph, p3_ce):
 # -- --------------------------------------------------------------------------------------- #
 # -- Calculo de metricas de precios para pruebas ANOVA
 
-def f_metricas(param_ce, param_ph):
+def f_metricas(param_ce, param_ph, param_window):
     """
     Parameters
     ----------
     param_ce : pd.DataFrame : Economic calendar with 'timestamp', 'name', 'actual',
                               'consensus', 'previous'
     param_ph : pd.DataFrame : Historical prices 'timestamp', 'open', 'high', 'low', 'close'
+    param_window : int : Cantidad de datos hacia el futuro para calculo de metricas
 
     Returns
     -------
@@ -411,17 +412,16 @@ def f_metricas(param_ce, param_ph):
     ---------
     param_ce = df_ce
     param_ph = df_precios
+    param_window = 30
     """
 
-    # Cantidad de precios a futuro a considerar
-    psiguiente = 30
     indices_ce = list(param_ce['timestamp'].index)
     # --------------------------------------------------------- PARALELIZACION DE PROCESO -- #
 
     # Reaccion del precio para cada escenario (PARALELO)
     # inicializar el pool con el maximo de procesadores disponibles
     pool = mp.Pool(mp.cpu_count())
-    d_reaccion = pool.starmap(f_reaccion, [(i, psiguiente, param_ph, param_ce)
+    d_reaccion = pool.starmap(f_reaccion, [(i, param_window, param_ph, param_ce)
                                            for i in range(0, len(indices_ce))])
     pool.close()
 
