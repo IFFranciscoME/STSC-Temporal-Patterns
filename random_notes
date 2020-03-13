@@ -1,17 +1,22 @@
 
-# Parallelization notes
+# stsc_2_A
 
-# f_metricas, 3 years, with 1 core = 10.8 segs
-# f_metricas, 3 years, with 2 cores = 8.99 segs
+# price for patterns: mid
+# price window: 30
 
-# f_metricas, 4 years, with 1 core =  18.11 segs
-# f_metricas, 4 years, with 2 cores =  14.00 segs
+# batch size: price window * 100
 
-# -- R = 17 % - 22 % faster with 2 cores
+    a time series of length 1,000 and a batch size of 100 would create
+    10 jobs where the first subsequence is 0 to 100.
 
-# f_metricas, 3 years, with 1 core = 10.8 segs
-# f_metricas, 3 years, with 4 cores = 8.2 segs
-# f_metricas, 4 years, with 1 core =  18.11 segs
-# f_metricas, 4 years, with 4 cores =  12.33 segs
+# top matches: 10
+The value selected for top matches should be at max (length(ts) / batch_size).
 
-# -- R = 20 % - 30 % faster with 4 cores
+
+# -- resultados
+
+# un monton de errores de IndexError
+'mid', 10, 1, 10*1000, 10               # multiplo del tamaño de ventana
+'mid', 10, 1, 20*1000, 10
+'mid', 10, 1, 35000, 10                 # batches de 1 mes (con precios de 1 min)
+'mid', 10, 1, 6, 10                     # Excesivos IndexError (6 batches de queries de 10)

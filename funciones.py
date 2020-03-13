@@ -671,7 +671,7 @@ def f_anova(param_data1, param_data2):
 # -- construir la tabla ANOVA
 
 def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tipo,
-                    param_p_ventana, param_cores):
+                    param_p_ventana, param_cores, param_batch, param_matches):
     """
     Parameters
     ----------
@@ -682,6 +682,8 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
     param_p_ventana :
     param_cores :
     param_tipo :
+    param_batch
+    param_matches
 
     Returns
     -------
@@ -696,8 +698,10 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
     param_tipo = 'mid'
     param_p_ventana = 30 # tamano de ventana para buscar serie de tiempo
     param_cores = 4 # nucleos con los cuales utilizar algoritmo
-
+    param_batch = 300
+    param_matches = 10
     """
+
     # almacenar resultados
     dict_res = {'name': [], 'esc': [], 'timestamp': [],
                 'patron_1': [], 'patron_2': [], 'patron_3': [], 'patron_4': []}
@@ -714,7 +718,7 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
     ts_serie_ce = list(param_ce_data['timestamp'])
 
     # inicializar contadores de ocurrencias por escenario ancla
-    p1, p2, p3, p4, p4_else = 0, 0, 0, 0, 0
+    p1, p2, p3, p4 = 0, 0, 0, 0
 
     # -- ------------------------------------------------------ OCURRENCIA POR OCURRENCIA -- #
     for ancla in range(0, len(df_ancla['timestamp'])):
@@ -751,13 +755,15 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
         serie = np.array(df_serie[param_tipo])
 
         # tamano de ventana para iterar la busqueda = tamano de query
-        batch = param_p_ventana * 100
+        # batch = param_p_ventana * 100
+        # matches = 10
 
         try:
             # correr algoritmo y regresar los indices de coincidencias y las distancias
             mass_indices, mass_dists = mass.mass2_batch(ts=serie, query=serie_q,
-                                                        batch_size=batch,
-                                                        n_jobs=param_cores)
+                                                        batch_size=param_batch,
+                                                        n_jobs=param_cores,
+                                                        top_matches=param_matches)
 
             # Borrar inidice 0 de resultados por ser el mismo que la serie query
             origen = np.where(mass_indices == 0)[0][0]

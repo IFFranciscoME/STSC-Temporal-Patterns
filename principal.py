@@ -9,8 +9,13 @@
 from datos import df_precios, df_ce
 import multiprocessing as mp
 import funciones as fn
-import time
 import pandas as pd
+import time
+import json
+from multiprocessing import cpu_count
+
+import warnings
+warnings.filterwarnings("ignore")
 
 if __name__ == "__main__":
 
@@ -51,7 +56,7 @@ if __name__ == "__main__":
     # -- ------------------------------------------------------------------- FUNCTION : 4 -- #
     # -- Seleccionar indicadores y escenarios con observaciones suficientes
     s_f4 = time.time()
-    df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=120, param_c2=30)
+    df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=18, param_c2=10)
     e_f4 = time.time()
     time_f4 = round(e_f4 - s_f4, 2)
     # print('f_seleccion_ind se tardo: ' + str(time_f4))
@@ -67,29 +72,37 @@ if __name__ == "__main__":
     # -- ------------------------------------------------------------------- FUNCTION : 6 -- #
     # -- Busqueda hacia adelante de patrones en serie de tiempo
 
-    # # -- version 1 con mass2
-    # s_f6_1 = time.time()
-    # stsc_1 = pd.DataFrame([fn.f_ts_clustering(param_pe=df_precios, param_row=s,
-    #                                           param_ca_data=df_ind_3, param_ce_data=df_ce,
-    #                                           param_p_ventana=30, param_cores=4,
-    #                                           param_tipo='mid')
-    #                        for s in range(0, len(df_ind_3))])
-    #
-    # e_f6_1 = time.time()
-    # time_f6_1 = round(e_f6_1 - s_f6_1, 2)
-    # print(stsc_1)
+    parametros_stsc = {'data_series': ['mid', 'mid', 'mid', 'close', 'close', 'close'],
+                       'data_window': [10, 20, 10, 10, 10, 10],
+                       'mass_cores': [1, 1, 1, 1, 1, 1],
+                       'mass_batch': [1000, 2000, 1000, 1000, 1000, 1000],
+                       'mass_matches': [20, 20, 20, 20, 20, 20]}
 
-    # print('con paralelizacion interna: ' + str(time_f6_1))
+    # ciclo para buscar varias combinaciones de casos
 
-    # -- version 2 con apply
-    s_f6_2 = time.time()
-    pool = mp.Pool(mp.cpu_count())
-    stsc_2 = pd.DataFrame([pool.apply(fn.f_ts_clustering,
-                                      args=(df_precios, s_ca_data, df_ind_3,
-                                            df_ce, 'mid', 30, 1))
-                           for s_ca_data in range(0, len(df_ind_3))])
-    e_f6_2 = time.time()
-    time_f6_2 = round(e_f6_2 - s_f6_2, 2)
-    print(stsc_2)
+    for ciclo in range(0, 2):
 
-    # print('con paralelizacion interna: ' + str(time_f6_2))
+        s_f6_2 = time.time()
+        pool = mp.Pool(cpu_count()-1)
+        df_stsc_2 = pd.DataFrame([pool.apply(fn.f_ts_clustering,
+                                             args=(df_precios, indexador_data, df_ind_3, df_ce,
+                                                   parametros_stsc['data_series'][ciclo],
+                                                   parametros_stsc['data_window'][ciclo],
+                                                   parametros_stsc['mass_cores'][ciclo],
+                                                   parametros_stsc['mass_batch'][ciclo],
+                                                   parametros_stsc['mass_matches'][ciclo]))
+                                  for indexador_data in range(0, len(df_ind_3))])
+
+        pool.close()
+        e_f6_2 = time.time()
+        time_f6_2 = round(e_f6_2 - s_f6_2, 2)
+
+        archivo = str(parametros_stsc['data_series'][ciclo]) + '_' + \
+                  str(parametros_stsc['data_window'][ciclo]) + '_' + \
+                  str(parametros_stsc['mass_cores'][ciclo]) + '_' + \
+                  str(parametros_stsc['mass_batch'][ciclo]) + '_' + \
+                  str(parametros_stsc['mass_matches'][ciclo])
+
+        df_stsc_2.to_csv(r'datos/results_files/' + archivo + '.csv', index=False)
+
+        print('fin')
