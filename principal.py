@@ -56,7 +56,7 @@ if __name__ == "__main__":
     # -- ------------------------------------------------------------------- FUNCTION : 4 -- #
     # -- Seleccionar indicadores y escenarios con observaciones suficientes
     s_f4 = time.time()
-    df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=18, param_c2=10)
+    df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=120, param_c2=40)
     e_f4 = time.time()
     time_f4 = round(e_f4 - s_f4, 2)
     # print('f_seleccion_ind se tardo: ' + str(time_f4))
@@ -80,10 +80,12 @@ if __name__ == "__main__":
 
     # ciclo para buscar varias combinaciones de casos
 
-    for ciclo in range(0, 2):
+    for ciclo in range(0, 5):
+        print('**************************** -- INICIANDO CICLO: ' +
+              str(ciclo) + ' -- ****************************')
 
         s_f6_2 = time.time()
-        pool = mp.Pool(cpu_count()-1)
+        pool = mp.Pool(cpu_count())
         df_stsc_2 = pd.DataFrame([pool.apply(fn.f_ts_clustering,
                                              args=(df_precios, indexador_data, df_ind_3, df_ce,
                                                    parametros_stsc['data_series'][ciclo],
