@@ -7,6 +7,7 @@
 # -- ------------------------------------------------------------------------------------ -- #
 
 import pandas as pd
+import re
 
 # -- In case of running Descarga y Lectura Masiva
 # import funciones as fn
@@ -137,3 +138,20 @@ indexNames = df_ce[(df_ce['weekday'] == 5) | (df_ce['weekday'] == 4) & (df_ce['h
 df_ce.drop(indexNames, inplace=True)
 # resetear indice
 df_ce = df_ce.reset_index(inplace=False, drop=True)
+
+# quitar todos los valores que no sean economias definidas
+currencies = list()
+for r in range(0, len(df_ce['currency'])):
+    if len(re.findall(r'United States', df_ce['currency'][r])):
+        currencies.append('United States')
+    elif len(re.findall(r'Mexico', df_ce['currency'][r])):
+        currencies.append('Mexico')
+
+df_ce['currency'] = currencies
+
+# crear lista de nombres cortos
+nombres_cortos = ['ind_' + df_ce['currency'][i] + '_' + str(i)
+                  for i in range(0, len(df_ce['name']))]
+
+# crear dataframe con nombres de referencia
+
