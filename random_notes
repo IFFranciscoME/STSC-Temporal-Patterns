@@ -37,3 +37,7 @@ $ sudo rm -i [name.txt]
 
 # -- borrar todos los archivos de un directorio
 $ sudo rm /home/franciscome/A1_Temporal_Patterns/datos/results_files/*
+
+# Transferir archivos del servidor a una compu local.
+# correr esto desde la computadora local
+scp -r ubuntu@148.201.129.217:/home/franciscome/directorioremoto /media/franciscome/directoriolocal

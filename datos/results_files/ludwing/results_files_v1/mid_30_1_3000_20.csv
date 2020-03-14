@@ -1,0 +1,124 @@
+name,esc,timestamp,patron_1,patron_2,patron_3,patron_4
+CFTC USD NC Net Positions,A,2019-12-30 20:30:00+00:00,1,1,10,37772
+CFTC USD NC Net Positions,D,2019-12-06 20:30:00+00:00,0,0,8,31673
+Durable Goods Orders,A,2019-11-27 13:30:00+00:00,0,0,6,16910
+Durable Goods Orders,D,2019-12-23 13:30:00+00:00,0,0,4,12939
+Business Inventories,A,2019-12-13 15:00:00+00:00,0,0,6,20159
+Business Inventories,D,2019-10-16 14:00:00+00:00,0,0,8,11837
+Core Personal Consumption Expenditure,A,2019-12-20 15:00:00+00:00,0,0,3,52288
+Core Personal Consumption Expenditure,D,2019-11-27 15:00:00+00:00,0,0,11,17632
+Retail Sales MoM,A,2019-11-26 12:00:00+00:00,0,0,5,32471
+Retail Sales MoM,D,2019-12-20 12:00:00+00:00,1,1,9,31635
+Chicago Purchasing Managers' Index,A,2019-12-30 14:45:00+00:00,0,0,7,17993
+Chicago Purchasing Managers' Index,D,2019-10-31 13:45:00+00:00,0,0,5,16872
+ADP Employment Change,A,2019-09-05 12:15:00+00:00,0,0,10,18297
+ADP Employment Change,D,2019-12-04 13:15:00+00:00,0,0,4,12616
+Nonfarm Payrolls,A,2019-12-06 13:30:00+00:00,1,1,5,18012
+Nonfarm Payrolls,D,2019-09-06 12:30:00+00:00,1,1,15,13661
+Producer Price Index MoM,A,2019-11-14 13:30:00+00:00,0,0,3,16549
+Producer Price Index MoM,D,2019-12-12 13:30:00+00:00,0,0,9,12236
+API Weekly Crude Oil Stock,A,2019-12-31 21:30:00+00:00,0,0,22,39596
+API Weekly Crude Oil Stock,D,2019-12-24 21:30:00+00:00,1,2,5,41781
+4-Week Bill Auction,A,2019-12-26 16:30:00+00:00,1,2,24,80978
+4-Week Bill Auction,D,2019-12-19 16:30:00+00:00,0,2,16,56145
+Markit PMI Composite,A,2019-12-16 14:45:00+00:00,0,0,13,23028
+Markit PMI Composite,D,2019-11-05 14:45:00+00:00,0,0,6,19798
+Personal Income MoM,A,2019-12-20 15:00:00+00:00,0,0,11,19779
+Personal Income MoM,D,2019-11-27 15:00:00+00:00,0,0,0,12274
+Producer Price Index YoY,A,2019-09-11 12:30:00+00:00,0,0,3,17290
+Producer Price Index YoY,D,2019-10-08 12:30:00+00:00,0,0,9,13680
+Wholesale Inventories,A,2019-11-26 13:30:00+00:00,0,0,14,28063
+Wholesale Inventories,D,2019-12-30 13:30:00+00:00,0,0,6,18715
+Markit Manufacturing PMI,A,2019-12-02 14:45:00+00:00,0,0,19,32756
+Markit Manufacturing PMI,D,2019-11-01 13:45:00+00:00,0,1,14,27303
+Markit Services PMI,A,2019-12-16 14:45:00+00:00,0,0,17,24453
+Markit Services PMI,D,2019-11-05 14:45:00+00:00,0,0,10,23370
+NAHB Housing Market Index,A,2019-12-16 15:00:00+00:00,0,0,10,22629
+NAHB Housing Market Index,D,2019-11-18 15:00:00+00:00,0,0,3,14041
+Consumer Price Index ex Food  Energy MoM,A,2019-12-11 13:30:00+00:00,0,0,6,23028
+Housing Starts MoM,A,2019-12-17 13:30:00+00:00,0,0,4,20159
+Housing Starts MoM,D,2019-10-17 12:30:00+00:00,0,0,9,17252
+Retail Sales ex Autos MoM,A,2019-08-15 12:30:00+00:00,0,0,0,18050
+Retail Sales ex Autos MoM,D,2019-12-13 13:30:00+00:00,0,0,3,15124
+Redbook Index YoY,A,2019-12-31 13:55:00+00:00,0,0,11,76741
+Redbook Index YoY,D,2019-12-17 13:55:00+00:00,0,0,15,60477
+Redbook Index MoM,A,2019-12-31 13:55:00+00:00,0,0,10,88312
+Redbook Index MoM,D,2019-12-17 13:55:00+00:00,0,0,16,48906
+ISM Manufacturing PMI,A,2019-04-01 14:00:00+00:00,0,0,9,20824
+ISM Manufacturing PMI,D,2019-12-02 15:00:00+00:00,0,0,2,15865
+SPCase-Shiller Home Price Indices YoY,A,2019-12-31 14:00:00+00:00,0,0,2,17290
+SPCase-Shiller Home Price Indices YoY,D,2019-09-24 13:00:00+00:00,0,1,6,12939
+Factory Orders MoM,A,2019-12-05 15:00:00+00:00,0,0,2,14782
+Factory Orders MoM,D,2019-11-04 15:00:00+00:00,0,0,3,10792
+EIA Crude Oil Stocks Change,A,2019-12-11 15:30:00+00:00,0,0,21,75278
+EIA Crude Oil Stocks Change,B,2019-09-05 15:00:00+00:00,0,0,2,14041
+EIA Crude Oil Stocks Change,C,2019-12-18 15:30:00+00:00,0,0,4,21964
+EIA Crude Oil Stocks Change,D,2019-12-27 16:00:00+00:00,0,1,30,72960
+Consumer Credit Change,A,2019-12-06 20:00:00+00:00,0,0,3,20159
+Consumer Credit Change,D,2019-11-07 20:00:00+00:00,0,0,0,16245
+Import Price Index MoM,A,2019-12-13 13:30:00+00:00,0,0,4,14022
+Import Price Index MoM,D,2019-11-15 13:30:00+00:00,0,0,7,10792
+Industrial Production MoM,A,2019-12-17 14:15:00+00:00,0,0,9,17271
+Industrial Production MoM,D,2019-11-15 14:15:00+00:00,0,0,7,18696
+NY Empire State Manufacturing Index,A,2019-10-14 20:00:00+00:00,0,0,1,17309
+NY Empire State Manufacturing Index,D,2019-11-15 13:30:00+00:00,0,0,3,18012
+Unemployment Rate,A,2019-11-01 12:30:00+00:00,0,1,15,21242
+Unemployment Rate,D,2019-12-06 13:30:00+00:00,0,0,1,17670
+Average Weekly Hours,A,2019-12-06 13:30:00+00:00,0,1,17,30590
+New Home Sales Change MoM,A,2019-12-23 15:00:00+00:00,0,0,1,16948
+New Home Sales Change MoM,D,2019-08-23 14:00:00+00:00,0,0,2,15504
+Building Permits MoM,A,2019-12-17 13:30:00+00:00,0,0,4,20159
+Building Permits MoM,D,2019-07-17 12:30:00+00:00,0,0,8,16891
+Monthly Budget Statement,A,2019-10-25 18:00:00+00:00,0,0,7,14326
+Monthly Budget Statement,D,2019-12-11 19:00:00+00:00,0,0,2,10792
+New Home Sales MoM,A,2019-11-26 15:00:00+00:00,0,0,1,18031
+New Home Sales MoM,D,2019-12-23 15:00:00+00:00,0,0,2,17309
+EIA Natural Gas Storage Change,A,2019-12-05 15:30:00+00:00,1,1,19,54321
+EIA Natural Gas Storage Change,B,2019-10-17 14:30:00+00:00,0,0,8,13281
+EIA Natural Gas Storage Change,C,2019-12-12 15:30:00+00:00,0,0,6,19057
+EIA Natural Gas Storage Change,D,2019-12-27 15:30:00+00:00,1,1,24,56829
+Net Long-Term TIC Flows,A,2019-11-18 21:00:00+00:00,0,0,1,20919
+Net Long-Term TIC Flows,D,2019-10-16 20:00:00+00:00,0,0,11,18335
+Consumer Price Index MoM,A,2019-11-13 13:30:00+00:00,0,0,3,15124
+Initial Jobless Claims,A,2019-12-12 13:30:00+00:00,0,1,34,70547
+Initial Jobless Claims,B,2019-10-17 12:30:00+00:00,0,0,3,19076
+Initial Jobless Claims,C,2019-12-19 13:30:00+00:00,0,0,3,22686
+Initial Jobless Claims,D,2019-12-26 13:30:00+00:00,0,0,25,71516
+Total Net TIC Flows,A,2019-10-16 20:00:00+00:00,0,0,8,19095
+Total Net TIC Flows,D,2019-12-16 21:00:00+00:00,0,0,4,20881
+CFTC Gold NC Net Positions,A,2019-12-30 20:30:00+00:00,1,1,9,35967
+CFTC Gold NC Net Positions,D,2019-12-13 20:30:00+00:00,0,0,9,32756
+Existing Home Sales MoM,A,2019-09-19 14:00:00+00:00,0,0,0,18050
+Existing Home Sales MoM,D,2019-12-19 15:00:00+00:00,0,0,4,18715
+Durable Goods Orders ex Transportation,A,2019-11-27 13:30:00+00:00,0,0,13,13623
+Durable Goods Orders ex Transportation,D,2019-12-23 13:30:00+00:00,0,1,9,16530
+ISM Non-Manufacturing PMI,A,2019-11-05 15:00:00+00:00,0,0,9,19399
+ISM Non-Manufacturing PMI,D,2019-12-04 15:00:00+00:00,0,0,3,17290
+Capacity Utilization,A,2019-09-17 13:15:00+00:00,0,0,2,17290
+Capacity Utilization,D,2019-11-15 14:15:00+00:00,0,0,5,15466
+Consumer Price Index YoY,A,2019-12-11 13:30:00+00:00,0,0,2,19836
+Consumer Price Index YoY,D,2019-09-12 12:30:00+00:00,0,0,5,11115
+Baker Hughes US Oil Rig Count,A,2019-12-20 18:00:00+00:00,0,1,9,45334
+Baker Hughes US Oil Rig Count,D,2019-12-27 18:00:00+00:00,0,0,10,35986
+CFTC Oil NC Net Positions,A,2019-12-30 20:30:00+00:00,0,0,7,30571
+CFTC Oil NC Net Positions,D,2019-12-06 20:30:00+00:00,1,1,11,38513
+6-Month Bill Auction,A,2019-12-23 16:30:00+00:00,1,2,38,86944
+6-Month Bill Auction,D,2019-12-30 16:30:00+00:00,1,3,10,51870
+Average Hourly Earnings MoM,A,2019-09-06 12:30:00+00:00,0,0,10,19437
+Average Hourly Earnings MoM,D,2019-10-04 12:30:00+00:00,0,2,11,15105
+Construction Spending MoM,A,2019-11-01 14:00:00+00:00,0,0,2,12977
+Construction Spending MoM,D,2019-12-02 15:00:00+00:00,0,0,4,17632
+Consumer Price Index ex Food  Energy YoY,A,2019-12-11 13:30:00+00:00,0,0,8,26980
+Consumer Price Index ex Food  Energy YoY,D,2019-11-13 13:30:00+00:00,0,0,1,10811
+Philadelphia Fed Manufacturing Survey,A,2019-11-21 13:30:00+00:00,0,0,5,18354
+Philadelphia Fed Manufacturing Survey,D,2019-12-19 13:30:00+00:00,0,0,3,17290
+3-Month Bill Auction,A,2019-12-23 16:30:00+00:00,1,3,36,83353
+3-Month Bill Auction,D,2019-12-30 16:30:00+00:00,0,2,14,54359
+Michigan Consumer Sentiment Index,A,2019-12-20 15:00:00+00:00,0,0,5,40755
+Michigan Consumer Sentiment Index,D,2019-10-25 14:00:00+00:00,0,0,16,35587
+Personal Consumption Expenditures,A,2019-12-20 15:00:00+00:00,0,0,1,41857
+Personal Consumption Expenditures,D,2019-10-31 12:30:00+00:00,0,0,20,26600
+Continuing Jobless Claims,A,2019-12-19 13:30:00+00:00,0,0,22,75202
+Continuing Jobless Claims,B,2019-09-12 12:30:00+00:00,0,0,6,11476
+Continuing Jobless Claims,C,2019-12-26 13:30:00+00:00,0,0,8,21945
+Continuing Jobless Claims,D,2019-12-12 13:30:00+00:00,0,1,30,75544
