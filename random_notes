@@ -17,7 +17,7 @@ $ A1_Temporal_Patterns.log
 
 # -- para correr en servidor sin tener la terminal abierta + guardar logs en archivo +
 # estar visualizando las impresiones en terminal en tiempo real.
-$ sudo nohup python3 -u principal.py > A1_Temporal_Patterns.log & tail -f A1_Temporal_Patterns.log
+$ sudo nohup python3 -u principal.py > A1_Temporal_Patterns_ludwing.log & tail -f A1_Temporal_Patterns_ludwing.log
 
 # -- para terminar todos los procesos que hagan match con el valor en la columna COMMAND
 $ sudo killall [name]
@@ -34,3 +34,6 @@ $ sudo rm -i [name.txt]
 
 # comandos en vim para cerrar sin salvar
 :q
+
+# -- borrar todos los archivos de un directorio
+$ sudo rm /home/franciscome/A1_Temporal_Patterns/datos/results_files/*
