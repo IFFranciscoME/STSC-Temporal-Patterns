@@ -136,6 +136,8 @@ indexNames = df_ce[(df_ce['weekday'] == 5) | (df_ce['weekday'] == 4) & (df_ce['h
                    (df_ce['weekday'] == 6) & (df_ce['hour'] < 22)].index
 # eliminar renglones
 df_ce.drop(indexNames, inplace=True)
+# ordenar por nombre alfabeticamente
+df_ce.sort_values(by=['name'], ascending=True, inplace=True)
 # resetear indice
 df_ce = df_ce.reset_index(inplace=False, drop=True)
 
@@ -143,15 +145,16 @@ df_ce = df_ce.reset_index(inplace=False, drop=True)
 currencies = list()
 for r in range(0, len(df_ce['currency'])):
     if len(re.findall(r'United States', df_ce['currency'][r])):
-        currencies.append('United States')
+        currencies.append('unitedstates')
     elif len(re.findall(r'Mexico', df_ce['currency'][r])):
-        currencies.append('Mexico')
+        currencies.append('mexico')
 
 df_ce['currency'] = currencies
 
 # crear lista de nombres cortos
-nombres_cortos = ['ind_' + df_ce['currency'][i] + '_' + str(i)
+nombres_cortos = ['ind_' + df_ce['name'][i][:2] + '_' + df_ce['currency'][i] + '_' + str(i)
                   for i in range(0, len(df_ce['name']))]
 
 # crear dataframe con nombres de referencia
-
+df_ce_nombres = df_ce.copy()
+df_ce['name'] = nombres_cortos
