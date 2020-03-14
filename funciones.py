@@ -701,7 +701,6 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
     param_batch = 300
     param_matches = 10
     """
-
     # almacenar resultados
     dict_res = {'name': [], 'esc': [], 'timestamp': [],
                 'patron_1': [], 'patron_2': [], 'patron_3': [], 'patron_4': []}
