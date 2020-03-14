@@ -13,12 +13,15 @@ import pandas as pd
 # from os import listdir, path
 # from os.path import isfile, join
 
-parametros_stsc = {'data_series': ['mid', 'mid', 'mid', 'mid', 'mid',
+parametros_stsc = {'data_series': ['mid_oc', 'mid_oc', 'mid_oc', 'mid_oc', 'mid_oc',
+                                   'mid_hl', 'mid_hl', 'mid_hl', 'mid_hl', 'mid_hl',
                                    'close', 'close', 'close', 'close', 'close'],
-                   'data_window': [10, 10, 20, 20, 30, 10, 10, 20, 20, 30],
-                   'mass_cores': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                   'mass_batch': [1000, 2000, 1000, 2000, 3000, 1000, 2000, 1000, 2000, 3000],
-                   'mass_matches': [10, 10, 20, 20, 20, 10, 10, 20, 20, 20]}
+                   'data_window': [10, 10, 20, 20, 30, 10, 10, 20, 20, 30, 10, 10, 20, 20, 30],
+                   'mass_cores': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                   'mass_batch': [1000, 2000, 1000, 2000, 3000, 1000, 2000, 1000, 2000, 3000,
+                                  1000, 2000, 1000, 2000, 3000],
+                   'mass_matches': [10, 10, 20, 20, 20, 10, 10, 20, 20, 20,
+                                    10, 10, 20, 20, 20]}
 
 # dividir en 10 partes
 all_years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
@@ -67,9 +70,15 @@ for a in years:
 # concatenar todos los archivos
 df_precios = pd.concat(archivos, sort=True)
 
-# # calcular el valor 'mid' como el punto medio entre close y open de cada vela
-df_precios['mid'] = 0
-df_precios['mid'] = (df_precios['close'] + df_precios['open'])/2
+# calcular el valor 'mid' como el punto medio entre close y open de cada vela
+# como proxy 1 de volatilidad
+df_precios['mid_oc'] = 0
+df_precios['mid_oc'] = (df_precios['close'] + df_precios['open'])/2
+
+# calcular el valor 'mid_hl' como el punto medio entre high y low de cada vela
+# como proxy 2 de volatilidad
+df_precios['mid_hl'] = 0
+df_precios['mid_hl'] = (df_precios['high'] + df_precios['low'])/2
 
 # modificar el tipo de dato para la columna timestamp
 df_precios['timestamp'] = pd.to_datetime(list(df_precios['timestamp']))

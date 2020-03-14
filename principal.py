@@ -7,12 +7,11 @@
 # -- ------------------------------------------------------------------------------------ -- #
 
 from datos import df_precios, df_ce, parametros_stsc
+from multiprocessing import cpu_count
 import multiprocessing as mp
 import funciones as fn
 import pandas as pd
 import time
-from multiprocessing import cpu_count
-
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -27,10 +26,14 @@ if __name__ == "__main__":
     e_i7 = time.time()
 
     for ciclo in range(0, len(parametros_stsc['data_series'])):
+        if ciclo < 10:
+            str_ciclo = '0' + str(ciclo)
+        else:
+            str_ciclo = str(ciclo)
 
         print('                                                            ')
         print(' ***********************************************************')
-        print(' ************************ CICLO: ' + str(ciclo) + ' *************************')
+        print(' ************************ CICLO: ' + str_ciclo + ' ************************')
         print(' ***********************************************************')
 
         # -- --------------------------------------------------------------- FUNCTION : 1 -- #
@@ -130,3 +133,5 @@ if __name__ == "__main__":
 
     time_f7 = round(e_f7 - e_i7, 2)
     print('ciclo de 6 iteraciones se tardo: ' + str(time_f7))
+
+    print(' -- Finalizado sin errores de ejecucion -- ')
