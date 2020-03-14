@@ -12,11 +12,25 @@
 # top matches: 10
 The value selected for top matches should be at max (length(ts) / batch_size).
 
+# crear archivo
+$ A1_Temporal_Patterns.log
 
-# -- resultados
+# -- para correr en servidor sin tener la terminal abierta + guardar logs en archivo +
+# estar visualizando las impresiones en terminal en tiempo real.
+$ sudo nohup python3 -u principal.py > A1_Temporal_Patterns.log & tail -f A1_Temporal_Patterns.log
 
-# un monton de errores de IndexError
-'mid', 10, 1, 10*1000, 10               # multiplo del tamaño de ventana
-'mid', 10, 1, 20*1000, 10
-'mid', 10, 1, 35000, 10                 # batches de 1 mes (con precios de 1 min)
-'mid', 10, 1, 6, 10                     # Excesivos IndexError (6 batches de queries de 10)
+# -- para terminar todos los procesos que hagan match con el valor en la columna COMMAND
+$ sudo killall [name]
+
+Ejemplo:
+
+$ sudo killall python3
+
+# -- borrar un archivo en especifico y solicitar confirmación para doble seguridad
+$ sudo rm -i [name.txt]
+
+# comandos en vim para cerrar y salvar
+:wq
+
+# comandos en vim para cerrar sin salvar
+:q
