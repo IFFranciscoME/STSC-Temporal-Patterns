@@ -50,3 +50,4 @@ scp -r ubuntu@148.201.129.217:/home/franciscome/directorioremoto /media/francisc
 # 5.- Subir la ultima version del proyecto al repositorio
 # 3.- Conectarse a Cluster
 # 4.- Descargar la version actualizada del proyecto: sudo git pull origin master
+# 5.- Cambiar permisos de carpeta:

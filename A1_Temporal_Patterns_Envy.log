@@ -1,0 +1,46 @@
+Script started on 2020-03-14 20:19:54-0600
+Error processing line 1 of /home/franciscome/anaconda3/lib/python3.6/site-packages/matplotlib-3.1.3-py3.6-nspkg.pth:
+
+  Traceback (most recent call last):
+    File "/home/franciscome/anaconda3/lib/python3.6/site.py", line 168, in addpackage
+      exec(line)
+    File "<string>", line 1, in <module>
+    File "<frozen importlib._bootstrap>", line 568, in module_from_spec
+  AttributeError: 'NoneType' object has no attribute 'loader'
+
+Remainder of file ignored
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ ls
+[0m[01;32mA1_Temporal_Patterns_Envy.log[0m  [01;32mA1_Temporal_Patterns_Ludwing.log[0m  [34;42mdatos[0m  [01;32mdatos.py[0m  [01;32mfunciones.py[0m  [01;32mLICENSE[0m  [34;42mposter[0m  [01;32mprincipal.py[0m  [34;42m__pycache__[0m  [01;32mrandom_notes[0m  [01;32mREADME.md[0m  [01;32mvisualizaciones.py[0m
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ it [K[K[Kls
+[0m[01;32mA1_Temporal_Patterns_Envy.log[0m  [01;32mA1_Temporal_Patterns_Ludwing.log[0m  [34;42mdatos[0m  [01;32mdatos.py[0m  [01;32mfunciones.py[0m  [01;32mLICENSE[0m  [34;42mposter[0m  [01;32mprincipal.py[0m  [34;42m__pycache__[0m  [01;32mrandom_notes[0m  [01;32mREADME.md[0m  [01;32mvisualizaciones.py[0m
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   datos.py[m
+	[31mmodified:   principal.py[m
+	[31mmodified:   random_notes[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git add --all
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git commit -m "Prueba[K[K[K[K[K[KCLuste[K[K[K[K[Kluster Beta V2.02[K"
+[master f3dbfbd] Cluster Beta V2.0
+ 3 files changed, 23 insertions(+), 14 deletions(-)
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git push origin master
+Username for 'https://github.com': IFFranciscoME
+Password for 'https://IFFranciscoME@github.com': 
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects:  20% (1/5)   Compressing objects:  40% (2/5)   Compressing objects:  60% (3/5)   Compressing objects:  80% (4/5)   Compressing objects: 100% (5/5)   Compressing objects: 100% (5/5), done.
+Writing objects:  20% (1/5)   Writing objects:  40% (2/5)   Writing objects:  60% (3/5)   Writing objects:  80% (4/5)   Writing objects: 100% (5/5)   Writing objects: 100% (5/5), 852 bytes | 142.00 KiB/s, done.
+Total 5 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/4)[Kremote: Resolving deltas:  25% (1/4)[Kremote: Resolving deltas:  50% (2/4)[Kremote: Resolving deltas:  75% (3/4)[Kremote: Resolving deltas: 100% (4/4)[Kremote: Resolving deltas: 100% (4/4), completed with 4 local objects.[K
+remote: This repository moved. Please use the new location:[K
+remote:   https://github.com/IFFranciscoME/A1_Temporal_Patterns.git[K
+To https://github.com/IFFranciscoME/Temporal_Patterns.git
+   e367882..f3dbfbd  master -> master
+(base) ]0;franciscome@Envy: /med
