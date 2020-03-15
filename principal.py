@@ -72,7 +72,7 @@ if __name__ == "__main__":
         # -- --------------------------------------------------------------- FUNCTION : 4 -- #
         # -- Seleccionar indicadores y escenarios con observaciones suficientes
         s_f4 = time.time()
-        df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=24, param_c2=12)
+        df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=120, param_c2=30)
         e_f4 = time.time()
         time_f4 = round(e_f4 - s_f4, 2)
         print('f_seleccion_ind se tardo: ' + str(time_f4))
@@ -97,14 +97,14 @@ if __name__ == "__main__":
 
         pool = mp.Pool(cpu_count())
         stsc = {'ciclo_' +
-                ciclo: pool.starmap(fn.f_ts_clustering,
-                                    [(df_precios, indexador_data, df_ind_3, df_ce,
-                                      parametros_stsc['data_series'][ciclo],
-                                      parametros_stsc['data_window'][ciclo],
-                                      parametros_stsc['mass_cores'][ciclo],
-                                      parametros_stsc['mass_batch'][ciclo],
-                                      parametros_stsc['mass_matches'][ciclo])
-                                     for indexador_data in range(0, len(df_ind_3))])}
+                str(ciclo): pool.starmap(fn.f_ts_clustering,
+                                         [(df_precios, indexador_data, df_ind_3, df_ce,
+                                           parametros_stsc['data_series'][ciclo],
+                                           parametros_stsc['data_window'][ciclo],
+                                           parametros_stsc['mass_cores'][ciclo],
+                                           parametros_stsc['mass_batch'][ciclo],
+                                           parametros_stsc['mass_matches'][ciclo])
+                                          for indexador_data in range(0, len(df_ind_3))])}
 
         pool.close()
 
@@ -116,7 +116,7 @@ if __name__ == "__main__":
                   str(parametros_stsc['mass_matches'][ciclo])
 
         # Guardar resultados de la combinacion iterada
-        with open(archivo, 'wb') as file:
+        with open('datos/results_files/' + archivo, 'wb') as file:
             pickle.dump(stsc, file)
 
         e_f6 = time.time()
@@ -135,7 +135,7 @@ if __name__ == "__main__":
           ' iteraciones se tardo: ' + str(time_f7))
     print(' -- Finalizado sin errores de ejecucion -- ')
 
-# -- Prueba para re-abrir archivo pickle
-# with open('mid_oc_10_1_1000_10', 'rb') as file:
+# # -- Prueba para re-abrir archivo pickle
+# with open('datos/results_files/' + 'mid_oc_10_1_1000_10', 'rb') as file:
 #     results_dictionary = pickle.load(file)
 #     print(results_dictionary)

@@ -21,14 +21,14 @@ parametros_stsc = {'data_series': ['mid_oc', 'mid_oc', 'mid_oc', 'mid_oc', 'mid_
                    'mass_cores': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                    'mass_batch': [1000, 2000, 1000, 2000, 3000, 1000, 2000, 1000, 2000, 3000,
                                   1000, 2000, 1000, 2000, 3000],
-                   'mass_matches': [2, 10, 20, 20, 20, 10, 10, 20, 20, 20,
+                   'mass_matches': [10, 10, 20, 20, 20, 10, 10, 20, 20, 20,
                                     10, 10, 20, 20, 20]}
 
 # dividir en 10 partes
 all_years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
 # -------------------------------------------------------- GUARDAR SOLO LOS SELECCIONADOS -- #
-years = all_years[0:2]
+years = all_years
 archivo = 'USD_MXN_M1'
 
 # -- -------------------------------------------------------- Descarga de precios masivos -- #

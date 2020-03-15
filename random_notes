@@ -41,3 +41,12 @@ $ sudo rm /home/franciscome/A1_Temporal_Patterns/datos/results_files/*
 # Transferir archivos del servidor a una compu local.
 # correr esto desde la computadora local
 scp -r ubuntu@148.201.129.217:/home/franciscome/directorioremoto /media/franciscome/directoriolocal
+
+# Pasos para correr proyecto en cluster
+# 1.- Crear archivo de logs en local: A1_Temporal_Patterns_Envy.log
+# 2.- Crear archivo de logs en cluster: A1_Temporal_Patterns_Ludwing.log
+# 3.- Revisar carpeta de resultados este vacia
+# 4.- Revisar que scripts tengan toda la configuracion necesaria para correr en cluster
+# 5.- Subir la ultima version del proyecto al repositorio
+# 3.- Conectarse a Cluster
+# 4.- Descargar la version actualizada del proyecto: sudo git pull origin master
