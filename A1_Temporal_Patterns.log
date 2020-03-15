@@ -1,133 +1,0 @@
-Script started on 2020-03-13 19:54:18-0600
-Error processing line 1 of /home/franciscome/anaconda3/lib/python3.6/site-packages/matplotlib-3.1.3-py3.6-nspkg.pth:
-
-  Traceback (most recent call last):
-    File "/home/franciscome/anaconda3/lib/python3.6/site.py", line 168, in addpackage
-      exec(line)
-    File "<string>", line 1, in <module>
-    File "<frozen importlib._bootstrap>", line 568, in module_from_spec
-  AttributeError: 'NoneType' object has no attribute 'loader'
-
-Remainder of file ignored
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [H[2J(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ ls
-[0m[01;32mA1_Temporal_Patterns.log[0m  [34;42mdatos[0m  [01;32mdatos.py[0m  [01;32mfunciones.py[0m  [01;32mLICENSE[0m  [34;42mposter[0m  [01;32mprincipal.py[0m  [01;32mrandom_notes[0m  [01;32mREADME.md[0m  [01;32mvisualizaciones.py[0m
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
-On branch master
-Your branch is up to date with 'origin/master'.
-
-nothing to commit, working tree clean
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [H[2J(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
-On branch master
-Your branch is up to date with 'origin/master'.
-
-nothing to commit, working tree clean
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git add --all
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git commit -m "agregar archivo logs"
-On branch master
-Your branch is up to date with 'origin/master'.
-
-nothing to commit, working tree clean
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git push[K[K[K[K[K[K[K[Kls
-[0m[01;32mA1_Temporal_Patterns.log[0m  [34;42mdatos[0m  [01;32mdatos.py[0m  [01;32mfunciones.py[0m  [01;32mLICENSE[0m  [34;42mposter[0m  [01;32mprincipal.py[0m  [01;32mrandom_notes[0m  [01;32mREADME.md[0m  [01;32mvisualizaciones.py[0m
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ lsgit commit -m "agregar archivo logs"add --all[K[3Pstatusls[Kssh ubuntu@148.201.129.217ls[Kgit statusadd --allcommit -m "agregar archivo logs"ls[K[Kscript A1_Tepo[K[K[K[K[K[K[K[K[K[K[K[K[K[Kgit add A1_Temporal_Patterns.log
-The following paths are ignored by one of your .gitignore files:
-A1_Temporal_Patterns.log
-Use -f if you really want to add them.
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git add A1_Temporal_Patterns.log -f
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ ls
-[0m[01;32mA1_Temporal_Patterns.log[0m  [34;42mdatos[0m  [01;32mdatos.py[0m  [01;32mfunciones.py[0m  [01;32mLICENSE[0m  [34;42mposter[0m  [01;32mprincipal.py[0m  [01;32mrandom_notes[0m  [01;32mREADME.md[0m  [01;32mvisualizaciones.py[0m
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
-On branch master
-Your branch is up to date with 'origin/master'.
-
-Changes to be committed:
-  (use "git reset HEAD <file>..." to unstage)
-
-	[32mnew file:   A1_Temporal_Patterns.log[m
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
-	[31mmodified:   A1_Temporal_Patterns.log[m
-
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git add --all
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git commit m [K[K- m "[K[K[K[K, [K[Km "se agrego archivo logs"
-[master 7e16e1e] se agrego archivo logs
- 1 file changed, 38 insertions(+)
- create mode 100644 A1_Temporal_Patterns.log
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git push origni mas[K[K[K[K[K[Kigin master
-fatal: 'origigin' does not appear to be a git repository
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git push origigin master[1P master[1P master[1P master[1P master[1P masterg masteri mastern master
-Username for 'https://github.com': IFFranciscoME
-Password for 'https://IFFranciscoME@github.com': 
-Counting objects: 3, done.
-Delta compression using up to 4 threads.
-Compressing objects:  33% (1/3)   Compressing objects:  66% (2/3)   Compressing objects: 100% (3/3)   Compressing objects: 100% (3/3), done.
-Writing objects:  33% (1/3)   Writing objects:  66% (2/3)   Writing objects: 100% (3/3)   Writing objects: 100% (3/3), 1.08 KiB | 1.08 MiB/s, done.
-Total 3 (delta 1), reused 0 (delta 0)
-remote: Resolving deltas:   0% (0/1)[Kremote: Resolving deltas: 100% (1/1)[Kremote: Resolving deltas: 100% (1/1), completed with 1 local object.[K
-remote: This repository moved. Please use the new location:[K
-remote:   https://github.com/IFFranciscoME/A1_Temporal_Patterns.git[K
-To https://github.com/IFFranciscoME/Temporal_Patterns.git
-   f1f4cc8..7e16e1e  master -> master
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [H[2J(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ ls
-[0m[01;32mA1_Temporal_Patterns.log[0m  [34;42mdatos[0m  [01;32mdatos.py[0m  [01;32mfunciones.py[0m  [01;32mLICENSE[0m  [34;42mposter[0m  [01;32mprincipal.py[0m  [01;32mrandom_notes[0m  [01;32mREADME.md[0m  [01;32mvisualizaciones.py[0m
-(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [K(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [H[2J(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ lsgit push origin masteer[A(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [C[C[C[C[C[C[C[C[C[C[C[C[C[Cgin master[A(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [C[C[C[Ccommit -m "se agrego archivo logs"[A(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [C[C[C[C[7Padd --all
-[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[3Pstatusls[Kgit add A1_Temporal_PPatterns.log -f[K[A(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ ls[K
-[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit commit -m "agregaar archivo logs"[A(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ [C[C[C[C[7Padd --all
-[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[3Pstatusls[Kssh ubuntu@148.201.1229.217
-ubuntu@148.201.129.217's password: 
-Welcome to Ubuntu 19.04 (GNU/Linux 5.0.0-29-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-  System information as of Sat Mar 14 02:07:22 UTC 2020
-
-  System load:  4.29             Processes:                    705
-  Usage of /:   0.9% of 6.31TB   Users logged in:              1
-  Memory usage: 3%               IP address for eno1:          148.201.129.217
-  Swap usage:   0%               IP address for enp0s29f0u2c2: 169.254.95.120
-
- * Latest Kubernetes 1.18 beta is now available for your laptop, NUC, cloud
-   instance or Raspberry Pi, with automatic updates to the final GA release.
-
-     sudo snap install microk8s --channel=1.18/beta --classic
-
- * Multipass 1.1 adds proxy support for developers behind enterprise
-   firewalls. Rapid prototyping for cloud operations just got easier.
-
-     https://multipass.run/
-
-38 updates can be installed immediately.
-0 of these updates are security updates.
-
-Your Ubuntu release is not supported anymore.
-For upgrade information, please visit:
-http://www.ubuntu.com/releaseendoflife
-
-New release '19.10' available.
-Run 'do-release-upgrade' to upgrade to it.
-
-
-*** System restart required ***
-Last login: Sat Mar 14 02:06:20 2020 from 148.201.194.102
-]0;ubuntu@fismat: ~[01;32mubuntu@fismat[00m:[01;34m~[00m$ [H[2J]0;ubuntu@fismat: ~[01;32mubuntu@fismat[00m:[01;34m~[00m$ cd ..
-]0;ubuntu@fismat: /home[01;32mubuntu@fismat[00m:[01;34m/home[00m$ ls
-[0m[01;34mfranciscome[0m  [01;34minfra[0m  [01;34mriemannruiz[0m  [01;34mubuntu[0m
-]0;ubuntu@fismat: /home[01;32mubuntu@fismat[00m:[01;34m/home[00m$ cd franciscome
-]0;ubuntu@fismat: /home/franciscome[01;32mubuntu@fismat[00m:[01;34m/home/franciscome[00m$ ls
-[0m[01;34mA1_Temporal_Patterns[0m
-]0;ubuntu@fismat: /home/franciscome[01;32mubuntu@fismat[00m:[01;34m/home/franciscome[00m$ cd A1_Tempora_[Kl_Patterns
-]0;ubuntu@fismat: /home/franciscome/A1_Temporal_Patterns[01;32mubuntu@fismat[00m:[01;34m/home/franciscome/A1_Temporal_Patterns[00m$ [H[2J]0;ubuntu@fismat: /home/franciscome/A1_Temporal_Patterns[01;32mubuntu@fismat[00m:[01;34m/home/franciscome/A1_Temporal_Patterns[00m$ ls
-A1_Temporal_Patterns_ludwing.log  [0m[01;34m__pycache__[0m  funciones.py  random_notes
-LICENSE                           [01;34mdatos[0m        [01;34mposter[0m        visualizaciones.py
-README.md                         datos.py     principal.py
-]0;ubuntu@fismat: /home/franciscome/A1_Temporal_Patterns[01;32mubuntu@fismat[00m:[01;34m/home/franciscome/A1_Temporal_Patterns[00m$ d[Kcd datos
-]0;ubuntu@fismat: /home/franciscome/A1_Temporal_Patterns/datos[01;32mubuntu@fismat[00m:[01;34m/home/franciscome/A1_Te

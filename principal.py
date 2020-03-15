@@ -10,7 +10,7 @@ from datos import df_precios, df_ce, parametros_stsc
 from multiprocessing import cpu_count
 import multiprocessing as mp
 import funciones as fn
-import pandas as pd
+import pickle
 import time
 import warnings
 warnings.filterwarnings("ignore")
@@ -96,17 +96,15 @@ if __name__ == "__main__":
         print(' ***********************************************************')
 
         pool = mp.Pool(cpu_count())
-        df_stsc_2 = pool.starmap(fn.f_ts_clustering,
-                                 [(df_precios, indexador_data,
-                                   df_ind_3, df_ce,
-                                   parametros_stsc['data_series'][ciclo],
-                                   parametros_stsc['data_window'][ciclo],
-                                   parametros_stsc['mass_cores'][ciclo],
-                                   parametros_stsc['mass_batch'][ciclo],
-                                   parametros_stsc['mass_matches'][ciclo])
-                                  for indexador_data in range(0, len(df_ind_3))])
-
-        df_stsc_2 = pd.DataFrame(df_stsc_2)
+        stsc = {'ciclo_' +
+                ciclo: pool.starmap(fn.f_ts_clustering,
+                                    [(df_precios, indexador_data, df_ind_3, df_ce,
+                                      parametros_stsc['data_series'][ciclo],
+                                      parametros_stsc['data_window'][ciclo],
+                                      parametros_stsc['mass_cores'][ciclo],
+                                      parametros_stsc['mass_batch'][ciclo],
+                                      parametros_stsc['mass_matches'][ciclo])
+                                     for indexador_data in range(0, len(df_ind_3))])}
 
         pool.close()
 
@@ -118,7 +116,8 @@ if __name__ == "__main__":
                   str(parametros_stsc['mass_matches'][ciclo])
 
         # Guardar resultados de la combinacion iterada
-        df_stsc_2.to_csv(r'datos/results_files/' + archivo + '.csv', index=False)
+        with open(archivo, 'wb') as file:
+            pickle.dump(stsc, file)
 
         e_f6 = time.time()
         time_f6 = round(e_f6 - e_i6, 2)
@@ -132,6 +131,11 @@ if __name__ == "__main__":
     print(' -- ---------------- ------------------- ---------------- --')
 
     time_f7 = round(e_f7 - e_i7, 2)
-    print('ciclo de 6 iteraciones se tardo: ' + str(time_f7))
-
+    print('ciclo de ' + str(len(parametros_stsc['data_series'])) +
+          ' iteraciones se tardo: ' + str(time_f7))
     print(' -- Finalizado sin errores de ejecucion -- ')
+
+# -- Prueba para re-abrir archivo pickle
+# with open('mid_oc_10_1_1000_10', 'rb') as file:
+#     results_dictionary = pickle.load(file)
+#     print(results_dictionary)

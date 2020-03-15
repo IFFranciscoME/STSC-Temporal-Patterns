@@ -21,7 +21,7 @@ parametros_stsc = {'data_series': ['mid_oc', 'mid_oc', 'mid_oc', 'mid_oc', 'mid_
                    'mass_cores': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                    'mass_batch': [1000, 2000, 1000, 2000, 3000, 1000, 2000, 1000, 2000, 3000,
                                   1000, 2000, 1000, 2000, 3000],
-                   'mass_matches': [10, 10, 20, 20, 20, 10, 10, 20, 20, 20,
+                   'mass_matches': [2, 10, 20, 20, 20, 10, 10, 20, 20, 20,
                                     10, 10, 20, 20, 20]}
 
 # dividir en 10 partes
@@ -145,9 +145,9 @@ df_ce = df_ce.reset_index(inplace=False, drop=True)
 currencies = list()
 for r in range(0, len(df_ce['currency'])):
     if len(re.findall(r'United States', df_ce['currency'][r])):
-        currencies.append('unitedstates')
+        currencies.append('USA')
     elif len(re.findall(r'Mexico', df_ce['currency'][r])):
-        currencies.append('mexico')
+        currencies.append('MEX')
 
 df_ce['currency'] = currencies
 
@@ -157,4 +157,9 @@ nombres_cortos = ['ind_' + df_ce['name'][i][:2] + '_' + df_ce['currency'][i] + '
 
 # crear dataframe con nombres de referencia
 df_ce_nombres = df_ce.copy()
-df_ce['name'] = nombres_cortos
+
+# crear ID unico
+nombres_or = df_ce['name']
+currencies_or = df_ce['currency']
+df_ce['id'] = [nombres_or[i].replace(' ', '')[0:6] + nombres_or[i].replace(' ', '')[-6:] +
+               '_' + currencies_or[i] for i in range(0, len(nombres_or))]

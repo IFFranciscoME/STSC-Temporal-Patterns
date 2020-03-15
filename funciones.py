@@ -702,8 +702,8 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
     param_matches = 10
     """
     # almacenar resultados
-    dict_res = {'name': [], 'esc': [], 'timestamp': [],
-                'patron_1': [], 'patron_2': [], 'patron_3': [], 'patron_4': []}
+    # dict_res = {'name': [], 'esc': [], 'timestamp': [],
+    #             'tipo_1': [], 'tipo_2': [], 'tipo_3': [], 'tipo_4': []}
 
     # renglon con informacion de evento disparador candidato
     candidate_data = param_ca_data.iloc[param_row, :]
@@ -718,6 +718,9 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
 
     # inicializar contadores de ocurrencias por escenario ancla
     p1, p2, p3, p4 = 0, 0, 0, 0
+
+    # Para guardar resultados parciales
+    dict_res = {'ancla': df_ancla['id'].iloc[0], 'metricas': {}, 'datos': {}}
 
     # -- ------------------------------------------------------ OCURRENCIA POR OCURRENCIA -- #
     for ancla in range(0, len(df_ancla['timestamp'])):
@@ -753,10 +756,6 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
         # se toma el mid como valor para construir series temporales
         serie = np.array(df_serie[param_tipo])
 
-        # tamano de ventana para iterar la busqueda = tamano de query
-        # batch = param_p_ventana * 100
-        # matches = 10
-
         try:
             # correr algoritmo y regresar los indices de coincidencias y las distancias
             mass_indices, mass_dists = mass.mass2_batch(ts=serie, query=serie_q,
@@ -788,38 +787,62 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
                 # encontrados es igual a alguna fecha de comunicacion de toda
                 # la lista de indicadores que se tiene
                 if ts_serie_p in ts_serie_ce:
-                    print(' ------------------ Coincidencia encontrada ------------------')
-                    print('buscando en: ' + ancla_ocurr['name'] + ' ' + ancla_ocurr['esc'] +
-                          ' ' + str(ancla_ocurr['timestamp']))
-                    print(' ----------- Se encontro el patron que empieza en: -----------')
-                    print(ts_serie_p)
-                    print('en: ')
+
+                    # ID del evento ancla que genero patron hacia adelante
+                    id_ocurrencia = ancla_ocurr['id'] + '_' + ancla_ocurr['esc'] +\
+                                    '_' + str(ancla_ocurr['timestamp'])[:-6].replace(' ', '_')
 
                     match = np.where(param_ce_data['timestamp'] == ts_serie_p)[0]
                     encontrados = param_ce_data.loc[match, :]
+
+                    print(' ------------------ Coincidencia encontrada ------------------')
+                    print('buscando en: ' + id_ocurrencia)
+                    print(' ----------- Se encontro el patron que empieza en: -----------')
+                    print(ts_serie_p)
+                    print('en los siguientes casos: ')
                     print(encontrados)
+
+                    # -- contar y sacar los datos segun tipo
+                    # Paso 1: tener un diccionario con la llave id_ocurrencia con la encontrada
+                    # Paso 2: dentro de la llave id_ocurrencia tener la llave datos
+                    dict_res['datos'].update({id_ocurrencia: {'ocurrencias': {},
+                                                              'df_serie_q': df_serie_q,
+                                                              'df_serie_p': df_serie_p}})
+
+                    # Paso 3: hacer las llaves id_sub_ocurrencia para cada sub de ocurrencia
+                    llaves = [encontrados['id'].iloc[j] + '_' + encontrados['esc'].iloc[j] +
+                              '_' +
+                              str(encontrados['timestamp'].iloc[j])[:-6].replace(' ', '_')
+                              for j in range(0, len(encontrados['id']))]
+                    dict_res['datos'][id_ocurrencia]['ocurrencias'] = llaves
 
                     enc = (encontrados['name'] == ancla_ocurr['name']) & \
                           (encontrados['esc'] == ancla_ocurr['esc'])
 
+                    # TIPO 1: name == name & esc == esc
                     p1 = p1 + len(encontrados.loc[enc, 'name'])
+                    print('tipo_1 = ' + str(p1))
 
-                    print('p1 = ' + str(p1))
+                    # TIPO 2: name == name
                     p2 = p2 + len(encontrados.loc[encontrados['name'] == ancla_ocurr['name'],
                                                   'name'])
-                    print('p2 = ' + str(p2))
+                    print('tipo_2 = ' + str(p2))
+
+                    # TIPO 3: cualquiera en calendario
                     p3 = p3 + len(encontrados.loc[encontrados['name'] != ancla_ocurr['name'],
                                                   'name'])
-                    print('p3 = ' + str(p3))
+                    print('tipo_3 = ' + str(p3))
 
+                    # TIPO 4: fuera de calendario
                     p4 = p4 + 0
-                    print('p4 = ' + str(p4))
+                    print('tipo_4 = ' + str(p4))
 
                 else:
+                    # TIPO 4: fuera de calendario
                     p4 += len(mass_indices)
                     # print('p4 = ' + str(p4))
 
-        # patron_4 = Cualquier otro punto en el tiempo
+        # tipo_4 = Cualquier otro punto en el tiempo
         except ValueError:
             print('ValueError: problemas de indices en MASS-TS')
             p4 += 0
@@ -827,18 +850,16 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
             print('IndexError: problemas de indices en MASS-TS')
             p4 += 0
 
-        # print(' -- fin del for del ancla -- ')
         # agregar al diccionario de resultados los casos encontrados
-        dict_res.update({'name': ancla_ocurr['name'],
-                         'esc': ancla_ocurr['esc'],
-                         'timestamp': ancla_ocurr['timestamp'],
-                         # Mismo Indicador + Mismo Escenario que la ancla
-                         'patron_1': p1,
-                         # Mismo Indicador + Cualquier Escenario
-                         'patron_2': p2,
-                         # Otro Indicador en la lista
-                         'patron_3': p3,
-                         # Ninguna de las anteriores
-                         'patron_4': p4})
+        dict_res.update({'metricas': {
+            # Mismo Indicador + Mismo Escenario que la ancla
+            'tipo_1': p1,
+            # Mismo Indicador + Cualquier Escenario
+            'tipo_2': p2,
+            # Otro Indicador en la lista
+            'tipo_3': p3,
+            # Ninguna de las anteriores
+            'tipo_4': p4}
+        })
 
     return dict_res
