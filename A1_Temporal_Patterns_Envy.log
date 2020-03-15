@@ -43,4 +43,131 @@ remote: This repository moved. Please use the new location:[K
 remote:   https://github.com/IFFranciscoME/A1_Temporal_Patterns.git[K
 To https://github.com/IFFranciscoME/Temporal_Patterns.git
    e367882..f3dbfbd  master -> master
-(base) ]0;franciscome@Envy: /med
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   random_notes[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git add[K[K[K[K[K[K[Kgit status[K[K[K[K[K[Kadd A1_Temporal_Patterns_Ludwing.log
+The following paths are ignored by one of your .gitignore files:
+A1_Temporal_Patterns_Ludwing.log
+Use -f if you really want to add them.
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git[K[K[Kgit status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   random_notes[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git statusadd A1_Temporal_Patterns_Ludwing.log-A1_Temporal_Patterns_Ludwing.logfA1_Temporal_Patterns_Ludwing.log A1_Temporal_Patterns_Ludwing.log
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	[32mnew file:   A1_Temporal_Patterns_Ludwing.log[m
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   random_notes[m
+
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git statusadd -f A1_Temporal_Patterns_Ludwing.log[1P.log[1P.log[1P.log[1P.log[1P.log[1P.log[1P.logE.logn.logv.logy.log
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	[32mnew file:   A1_Temporal_Patterns_Envy.log[m
+	[32mnew file:   A1_Temporal_Patterns_Ludwing.log[m
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   A1_Temporal_Patterns_Ludwing.log[m
+	[31mmodified:   random_notes[m
+
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git add --all
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	[32mnew file:   A1_Temporal_Patterns_Envy.log[m
+	[32mnew file:   A1_Temporal_Patterns_Ludwing.log[m
+	[32mmodified:   random_notes[m
+
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	[32mnew file:   A1_Temporal_Patterns_Envy.log[m
+	[32mnew file:   A1_Temporal_Patterns_Ludwing.log[m
+	[32mmodified:   random_notes[m
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   A1_Temporal_Patterns_Envy.log[m
+
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git commit -m "agregar lo[K[Karchivos de logs"
+[master b9f08c6] agregar archivos de logs
+ 3 files changed, 139 insertions(+)
+ create mode 100644 A1_Temporal_Patterns_Envy.log
+ create mode 100644 A1_Temporal_Patterns_Ludwing.log
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git push origin master
+Username for 'https://github.com': IFFranciscoME
+Password for 'https://IFFranciscoME@github.com': 
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects:  20% (1/5)   Compressing objects:  40% (2/5)   Compressing objects:  60% (3/5)   Compressing objects:  80% (4/5)   Compressing objects: 100% (5/5)   Compressing objects: 100% (5/5), done.
+Writing objects:  20% (1/5)   Writing objects:  40% (2/5)   Writing objects:  60% (3/5)   Writing objects:  80% (4/5)   Writing objects: 100% (5/5)   Writing objects: 100% (5/5), 3.05 KiB | 1.53 MiB/s, done.
+Total 5 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/2)[Kremote: Resolving deltas:  50% (1/2)[Kremote: Resolving deltas: 100% (2/2)[Kremote: Resolving deltas: 100% (2/2), completed with 2 local objects.[K
+remote: This repository moved. Please use the new location:[K
+remote:   https://github.com/IFFranciscoME/A1_Temporal_Patterns.git[K
+To https://github.com/IFFranciscoME/Temporal_Patterns.git
+   f3dbfbd..b9f08c6  master -> master
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   A1_Temporal_Patterns_Envy.log[m
+	[31mmodified:   A1_Temporal_Patterns_Ludwing.log[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ ls
+[0m[01;32mA1_Temporal_Patterns_Envy.log[0m  [01;32mA1_Temporal_Patterns_Ludwing.log[0m  [34;42mdatos[0m  [01;32mdatos.py[0m  [01;32mfunciones.py[0m  [01;32mLICENSE[0m  [34;42mposter[0m  [01;32mprincipal.py[0m  [34;42m__pycache__[0m  [01;32mrandom_notes[0m  [01;32mREADME.md[0m  [01;32mvisualizaciones.py[0m
+(base) ]0;franciscome@Envy: /media/franciscome/DATA/GitHub/A1_Temporal_Patterns[01;32mfranciscome@Envy[00m:[01;34m/media/franciscome/DATA/GitHub/A1_Temporal_Patterns[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard chan
