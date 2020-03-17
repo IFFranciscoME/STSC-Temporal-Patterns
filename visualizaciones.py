@@ -27,29 +27,97 @@ def g_lineas(param_query, param_pattern):
 
     Debugging
     ---------
-    param_query = serie_q
-    param_pattern = serie_p
+    param_serie_p = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
+    param_serie_p = param_serie_p['df_serie_p']
+    param_serie_q = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
+    param_serie_q = param_serie_q['df_serie_q']
 
     """
-    serie_x = list(np.arange(len(param_query)))
 
-    # Create traces
+    pt_temp = dict(eje_x_tick_col='blue', eje_x_tick_tam=12,
+                   eje_x_titulo_col='blue', eje_x_titulo_tam=12,
+
+                   eje_y0_tick_col='red', eje_y0_tick_tam=12,
+                   eje_y0_titulo_col='red', eje_y0_titulo_tam=12,
+
+                   eje_y1_tick_col='blue', eje_y1_tick_tam=12,
+                   eje_y1_titulo_col='blue', eje_y1_titulo_tam=12,
+
+                   legend_col='grey', legend_tam=16)
+
+    serie_x = list(np.arange(len(param_serie_p['close'])))
+    p1_y1 = param_serie_p['close']
+    p2_y2 = param_serie_q['close']
+
+    # Determinar los valores y los textos para el eje y1
+    y1_ticks_n = 5
+    y1_ticks_vals = np.arange(min(p1_y1), max(p1_y1), (max(p1_y1) - min(p1_y1)) / y1_ticks_n)
+    y1_ticks_vals = np.append(y1_ticks_vals, max(p1_y1))
+    y1_ticks_text = [str("%.4f" % i) for i in y1_ticks_vals]
+
+    # Determinar los valores y los textos para el eje y2
+    y2_ticks_n = 5
+    y2_ticks_vals = np.arange(min(p2_y2), max(p2_y2), (max(p2_y2) - min(p2_y2)) / y2_ticks_n)
+    y2_ticks_vals = np.append(y2_ticks_vals, max(p2_y2))
+    y2_ticks_text = [str("%.4f" % i) for i in y2_ticks_vals]
+
+    serie_p = param_serie_p['close']/max(param_serie_p['close'])
+    serie_q = param_serie_q['close']/max(param_serie_q['close'])
+
+    # Crear objeto figura
     fig = go.Figure()
 
-    fig.update_layout(margin=go.layout.Margin(l=50, r=50, b=20, t=50, pad=0),
-                      title=dict(x=0.5, y=1, text='Patron encontrado'),
-                      xaxis=dict(title_text='fechas', rangeslider=dict(visible=False)),
-                      yaxis=dict(title_text='precios (co)'))
+    # agregar serie 1
+    fig.add_trace(
+        go.Scatter(y=p1_y1, name="Serie patron encontrado"))
 
-    fig.add_trace(go.Scatter(x=serie_x, y=param_query, mode='lines', name='serie_query'))
-    fig.add_trace(go.Scatter(x=serie_x, y=param_pattern, mode='lines', name='serie_pattern'))
+    # agregar serie 2
+    fig.add_trace(
+        go.Scatter(y=p2_y2, name="Serie original", yaxis="y2"))
 
-    fig.update_layout(legend_orientation="h")
+    # actualizar layout general
+    fig.update_layout(
+        xaxis=dict(tickvals=serie_x),
+        yaxis=dict(tickvals=y1_ticks_vals, ticktext=y1_ticks_text, zeroline=False,
+                   automargin=True,
+                   tickfont=dict(color=pt_temp['eje_y0_tick_col'],
+                                 size=pt_temp['eje_y0_tick_tam']),
+                   showgrid=True),
+        yaxis2=dict(tickvals=y2_ticks_vals, ticktext=y2_ticks_text, zeroline=False,
+                    automargin=True,
+                    tickfont=dict(color=pt_temp['eje_y1_tick_col'],
+                                  size=pt_temp['eje_y1_tick_tam']),
+                    showgrid=True,
+                    overlaying="y", side="right"))
 
-    fig.layout.autosize = False
+    # actualizar layout de leyenda
+    fig.update_layout(
+        legend=go.layout.Legend(x=.2, y=-.2, font=dict(size=pt_temp['legend_tam'],
+                                                       color=pt_temp['legend_col'])),
+        legend_orientation="h")
+
+    # medidas de imagen y margenes
+    fig.update_layout(autosize=False, width=1240, height=400, paper_bgcolor="white",
+                      margin=go.layout.Margin(l=55, r=65, b=5, t=5, pad=1))
+
+    # Creacion de titulos Y0 y Y1 como anotaciones
+    fig.update_layout(annotations=[
+        go.layout.Annotation(x=0, y=0.25, text="Serie Original", textangle=-90,
+                             xref="paper", yref="paper", showarrow=False,
+                             font=dict(size=pt_temp['eje_y0_titulo_tam'],
+                                       color=pt_temp['eje_y0_titulo_col'])),
+        go.layout.Annotation(x=1, y=0.25, text="Serie Patron Encontrado", textangle=-90,
+                             xref="paper", yref="paper", showarrow=False,
+                             font=dict(size=pt_temp['eje_y1_titulo_tam'],
+                                       color=pt_temp['eje_y1_titulo_col']))])
+
+    fig.update_layout(margin=go.layout.Margin(l=50, r=50, b=20, t=50, pad=20),
+                      title=dict(x=0.5, text='Serie Original - <b> Patron Encontrado </b>'),
+                      legend=go.layout.Legend(x=.3, y=-.15, orientation='h',
+                                              font=dict(size=15)))
+    fig.layout.autosize = True
     fig.layout.width = 840
     fig.layout.height = 520
-
     fig.show()
 
     return fig
