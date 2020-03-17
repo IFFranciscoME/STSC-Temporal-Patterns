@@ -72,7 +72,7 @@ if __name__ == "__main__":
         # -- --------------------------------------------------------------- FUNCTION : 4 -- #
         # -- Seleccionar indicadores y escenarios con observaciones suficientes
         s_f4 = time.time()
-        df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=120, param_c2=30)
+        df_ind_2 = fn.f_seleccion_ind(param_ce=df_ind_1, param_c1=12, param_c2=10)
         e_f4 = time.time()
         time_f4 = round(e_f4 - s_f4, 2)
         print('f_seleccion_ind se tardo: ' + str(time_f4))
@@ -95,7 +95,7 @@ if __name__ == "__main__":
         print(' ***************** PARALELIZACION DE STSC ******************')
         print(' ***********************************************************')
 
-        pool = mp.Pool(cpu_count())
+        pool = mp.Pool(cpu_count()-1)
         stsc = {'ciclo_' +
                 str(ciclo): pool.starmap(fn.f_ts_clustering,
                                          [(df_precios, indexador_data, df_ind_3, df_ce,
@@ -133,9 +133,5 @@ if __name__ == "__main__":
     time_f7 = round(e_f7 - e_i7, 2)
     print('ciclo de ' + str(len(parametros_stsc['data_series'])) +
           ' iteraciones se tardo: ' + str(time_f7))
-    print(' -- Finalizado sin errores de ejecucion -- ')
 
-# # -- Prueba para re-abrir archivo pickle
-# with open('datos/results_files/' + 'mid_oc_10_1_1000_10', 'rb') as file:
-#     results_dictionary = pickle.load(file)
-#     print(results_dictionary)
+    print(' -- Finalizado sin errores de ejecucion -- ')

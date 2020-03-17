@@ -51,3 +51,39 @@ scp -r ubuntu@148.201.129.217:/home/franciscome/directorioremoto /media/francisc
 # 3.- Conectarse a Cluster
 # 4.- Descargar la version actualizada del proyecto: sudo git pull origin master
 # 5.- Cambiar permisos de carpeta:
+sudo nohup python3 -u principal.py > A1_Temporal_Patterns_ludwing.log & tail -f A1_Temporal_Patterns_ludwing.log
+
+# PENDIENTES
+
+# -- Lista de todas las categorias de indicadores y 2 indicadores por cada categoria
+# -- Hacer categoría corta a cada indicador+escenario, tipo A_1. Para que no abarque mucho
+# -- Elegir 1 indicador con mas ocurrencias de patrones
+# -- Tabla de ocurrencias de patrones de cada tipo (Tipo 1, Tipo 2, Tipo 3) para
+# todos los Ind_Esce explorados.
+
+R + ggplot2
+# -- Grafica de velas OHLC + 3 lineas para series de tiempo exploradas
+# -- Grafica de boxplot para 3 grupos de un Ind_Esc para cada metrica de similitud de reaccion
+# -- Grafica de ocurrencias de escenarios para 1 indicador de ejemplo
+
+LaTeX
+# -- Texto descriptivo para colocar al inicio del poster.
+# (Cantida de datos, economias de indicador, etc)
+# -- Tabla de citas de autores y Evidencia sobre aceptar/rechazar EMH
+# -- Diagrama de flujo en general.
+# -- QR con repositorio en GitHub
+
+
+lista_c = ['Subasta de bonos',
+           'Flujos de capital',
+           'Banco Central',
+           'Consumo',
+           'Actividad Economica'
+           'Energia'
+           'Mercado Inmobiliario'
+           'Inflacion',
+           'Tasas de interes',
+           'Mercado Laboral'
+           'Politicas']
+
+

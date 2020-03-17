@@ -12,6 +12,7 @@ from oandapyV20 import API                                # conexion con broker 
 import oandapyV20.endpoints.instruments as instruments    # informacion de precios historicos
 from datetime import timedelta
 
+import pickle
 import numpy as np
 import pandas as pd
 import warnings
@@ -707,7 +708,7 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
 
     # renglon con informacion de evento disparador candidato
     candidate_data = param_ca_data.iloc[param_row, :]
-    print('Ind disparador: ' + str(candidate_data['name']) + ' - ' + candidate_data['esc'])
+    # print('Ind disparador: ' + str(candidate_data['name']) + ' - ' + candidate_data['esc'])
 
     # datos completos de todas las ocurrencias del evento disparador candidato
     df_ancla = param_ce_data[(param_ce_data['esc'] == candidate_data['esc']) &
@@ -766,7 +767,7 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
             # Borrar inidice 0 de resultados por ser el mismo que la serie query
             origen = np.where(mass_indices == 0)[0][0]
             mass_indices = np.delete(mass_indices, origen)
-            # mass_dists = np.delete(mass_dists, origen)
+            mass_dists = np.delete(mass_dists, origen)
             # print('indices encontrados' + ' ' + str(mass_indices))
 
             # Indice de referencia de n-esima serie similar encontrada
@@ -795,12 +796,12 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
                     match = np.where(param_ce_data['timestamp'] == ts_serie_p)[0]
                     encontrados = param_ce_data.loc[match, :]
 
-                    print(' ------------------ Coincidencia encontrada ------------------')
-                    print('buscando en: ' + id_ocurrencia)
-                    print(' ----------- Se encontro el patron que empieza en: -----------')
-                    print(ts_serie_p)
-                    print('en los siguientes casos: ')
-                    print(encontrados)
+                    # print(' ------------------ Coincidencia encontrada ------------------')
+                    # print('buscando en: ' + id_ocurrencia)
+                    # print(' ----------- Se encontro el patron que empieza en: -----------')
+                    # print(ts_serie_p)
+                    # print('en los siguientes casos: ')
+                    # print(encontrados)
 
                     # -- contar y sacar los datos segun tipo
                     # Paso 1: tener un diccionario con la llave id_ocurrencia con la encontrada
@@ -821,21 +822,21 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
 
                     # TIPO 1: name == name & esc == esc
                     p1 = p1 + len(encontrados.loc[enc, 'name'])
-                    print('tipo_1 = ' + str(p1))
+                    # print('tipo_1 = ' + str(p1))
 
                     # TIPO 2: name == name
                     p2 = p2 + len(encontrados.loc[encontrados['name'] == ancla_ocurr['name'],
                                                   'name'])
-                    print('tipo_2 = ' + str(p2))
+                    # print('tipo_2 = ' + str(p2))
 
                     # TIPO 3: cualquiera en calendario
                     p3 = p3 + len(encontrados.loc[encontrados['name'] != ancla_ocurr['name'],
                                                   'name'])
-                    print('tipo_3 = ' + str(p3))
+                    # print('tipo_3 = ' + str(p3))
 
                     # TIPO 4: fuera de calendario
                     p4 = p4 + 0
-                    print('tipo_4 = ' + str(p4))
+                    # print('tipo_4 = ' + str(p4))
 
                 else:
                     # TIPO 4: fuera de calendario
@@ -844,10 +845,10 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
 
         # tipo_4 = Cualquier otro punto en el tiempo
         except ValueError:
-            print('ValueError: problemas de indices en MASS-TS')
+            # print('ValueError: problemas de indices en MASS-TS')
             p4 += 0
         except IndexError:
-            print('IndexError: problemas de indices en MASS-TS')
+            # print('IndexError: problemas de indices en MASS-TS')
             p4 += 0
 
         # agregar al diccionario de resultados los casos encontrados
@@ -863,3 +864,32 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
         })
 
     return dict_res
+
+
+# -- ------------------------------------------------------ FUNCION: analisis estadistico -- #
+# -- ------------------------------------------------------------------------------------ -- #
+# -- construir la tabla
+
+def f_estadisticas(param_d1, param_d2):
+    """
+    Parameters
+    ----------
+    param_d1 :
+    param_d2 :
+
+    Returns
+    -------
+
+    Debugging
+    ---------
+    param_d1 = 0
+    param_d2 = 0
+
+    """
+
+    # -- Prueba para re-abrir archivo pickle
+    with open('datos/results_files_r2/' + 'mid_oc_20_1_2000_20_r2', 'rb') as file:
+        results = pickle.load(file)
+        print(results)
+
+    return 1
