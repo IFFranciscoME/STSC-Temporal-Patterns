@@ -229,39 +229,51 @@ lista_n = {'nombre': ['12-Month Inflation', '1st half-month Inflation',
                       'Wholesale Inventories'],
            'categoria': ['Inflacion', 'Inflacion', 'Subasta de bonos', 'Subasta de bonos',
                          'Subasta de bonos', 'Subasta de bonos', 'Subasta de bonos',
-                         'Mercado Laboral', 'Energia', 'Actividad Economica',
+                         'Mercado Laboral', 'Energia', 'Actividad economica',
                          'Mercado Laboral', 'Mercado Laboral', 'Mercado Laboral', 'Energia',
-                         'Mercado Inmobiliario', 'Mercado Inmobiliario', 'Consumo',
+                         'Mercado inmobiliario', 'Mercado inmobiliario', 'Consumo',
                          'Flujos de capital', 'Flujos de capital', 'Flujos de capital',
                          'Consumo', 'Tasas de interes', 'Mercado Laboral',
-                         'Actividad Economica', 'Consumo', 'Mercado inmobiliario',
+                         'Actividad economica', 'Consumo', 'Mercado inmobiliario',
                          'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo',
                          'Consumo', 'Consumo', 'Consumo', 'Mercado Laboral',
-                         'Inflacion', 'Consumo', 'Consumo', 'Actividad Economica',
-                         'Actividad Economica', 'Actividad Economica', 'Consumo', 'Consumo',
+                         'Inflacion', 'Consumo', 'Consumo', 'Actividad economica',
+                         'Actividad economica', 'Actividad economica', 'Consumo', 'Consumo',
                          'Consumo', 'Energia', 'Energia', 'Mercado Laboral',
-                         'Mercado inmobiliario', 'Mercado inmobilirario',
-                         'Actividad Economica', 'Actividad Economica', 'Actividad Economica',
+                         'Mercado inmobiliario', 'Mercado inmobiliario',
+                         'Actividad economica', 'Actividad economica', 'Actividad economica',
                          'Tasas de interes', 'Actividad economica', 'Actividad economica',
                          'Actividad economica', 'Actividad economica', 'Actividad economica',
-                         'Actividad economica', 'Inflacion', 'Mercado inmobilirario',
-                         'Mercado inmobilirario', 'Actividad economica',
+                         'Actividad economica', 'Inflacion', 'Mercado inmobiliario',
+                         'Mercado inmobiliario', 'Actividad economica',
                          'Actividad economica', 'Actividad economica', 'Actividad economica',
                          'Actividad economica', 'Actividad economica', 'Actividad economica',
                          'Actividad economica', 'Actividad economica', 'Mercado Laboral',
                          'Mercado Laboral', 'Actividad economica', 'Actividad economica',
-                         'Actividad economica', 'Actividad economica' 'Actividad economica',
-                         'Mercado inmobilirario', 'Actividad economica',
+                         'Actividad economica', 'Actividad economica',
+                         'Mercado inmobiliario', 'Actividad economica',
                          'Actividad economica', 'Flujos de capital', 'Mercado inmobiliario',
-                         'Mercado inmobilirario', 'Mercado Laboral', 'Mercado Laboral',
-                         'Mercado inmobiliario', 'Consumo', 'Consumo' 'Consumo',
+                         'Mercado inmobiliario', 'Mercado Laboral', 'Mercado Laboral',
+                         'Mercado inmobiliario', 'Consumo', 'Consumo',
                          'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo',
                          'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo',
-                         'Consumo', 'Consumo', 'Mercado Inmobiliario', 'Flujos de capital',
+                         'Consumo', 'Consumo', 'Mercado inmobiliario', 'Flujos de capital',
                          'Actividad economica', 'Actividad economica', 'Actividad economica',
                          'Mercado Laboral', 'Mercado Laboral', 'Mercado Laboral',
                          'Mercado Laboral', 'Actividad economica'
                          ]}
 
-# Indicadores y clasificacion de tipo economico
-df_ce_cate = pd.DataFrame(lista_n)
+# Tabla completa Indicadores y clasificacion de tipo economico
+df_ce_ca = pd.DataFrame(lista_n)
+set(df_ce_ca['categoria'])
+
+
+# tabla = pd.DataFrame({'indicador': ['Trade Balance sa', 'Actividad Economica'
+# 'Continuing Jobless Claims', 'Mercado Laboral'
+# 'CFTC USD NC Net Positions', 'Flujos de capital'
+# 'Consumer Confidence', 'Consumo'
+# '3-Year Note Auction', 'Subasta de bonos'
+# '12-Month Inflation', 'Inflacion'
+# 'API Weekly Crude Oil Stock', 'Energia'
+# 'Building Permits Change', 'Mercado inmobiliario'
+# 'Central Bank Interest Rate', 'Tasas de interes'

@@ -72,18 +72,3 @@ LaTeX
 # -- Tabla de citas de autores y Evidencia sobre aceptar/rechazar EMH
 # -- Diagrama de flujo en general.
 # -- QR con repositorio en GitHub
-
-
-lista_c = ['Subasta de bonos',
-           'Flujos de capital',
-           'Banco Central',
-           'Consumo',
-           'Actividad Economica'
-           'Energia'
-           'Mercado Inmobiliario'
-           'Inflacion',
-           'Tasas de interes',
-           'Mercado Laboral'
-           'Politicas']
-
-
