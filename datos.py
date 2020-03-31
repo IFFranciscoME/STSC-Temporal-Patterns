@@ -6,30 +6,14 @@
 # -- Autor: Francisco ME                                                                  -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
+import entradas as ent
 import pandas as pd
 import re
 
-# -- In case of running Descarga y Lectura Masiva
+# -- en caso de correr descarga y lectura masiva
 # import funciones as fn
 # from os import listdir, path
 # from os.path import isfile, join
-
-parametros_stsc = {'data_series': ['mid_oc', 'mid_oc', 'mid_oc', 'mid_oc', 'mid_oc',
-                                   'mid_hl', 'mid_hl', 'mid_hl', 'mid_hl', 'mid_hl',
-                                   'close', 'close', 'close', 'close', 'close'],
-                   'data_window': [10, 10, 20, 20, 30, 10, 10, 20, 20, 30, 10, 10, 20, 20, 30],
-                   'mass_cores': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                   'mass_batch': [1000, 2000, 1000, 2000, 3000, 1000, 2000, 1000, 2000, 3000,
-                                  1000, 2000, 1000, 2000, 3000],
-                   'mass_matches': [10, 10, 20, 20, 20, 10, 10, 20, 20, 20,
-                                    10, 10, 20, 20, 20]}
-
-# dividir en 10 partes
-all_years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
-
-# -------------------------------------------------------- GUARDAR SOLO LOS SELECCIONADOS -- #
-years = all_years
-archivo = 'USD_MXN_M1'
 
 # -- -------------------------------------------------------- Descarga de precios masivos -- #
 # -- ------------------------------------------------------------------------------------ -- #
@@ -63,8 +47,8 @@ archivo = 'USD_MXN_M1'
 
 archivos = list()
 # ciclo para leer los archivos
-for a in years:
-    nombre_a = 'datos/price_files/' + archivo + '_' + str(a) + '.csv'
+for a in ent.years:
+    nombre_a = 'datos/price_files/' + ent.archivo + '_' + str(a) + '.csv'
     # print(nombre_a)
     archivos.append(pd.read_csv(nombre_a))
 
@@ -121,7 +105,7 @@ df_ce['timestamp'] = pd.to_datetime(df_ce['timestamp'])
 # Crear columna
 df_ce['year'] = [df_ce['timestamp'][i].year for i in range(0, len(df_ce['timestamp']))]
 # Seleccionar los deseados
-df_ce = df_ce.loc[df_ce['year'].isin(years)]
+df_ce = df_ce.loc[df_ce['year'].isin(ent.years)]
 # Resetear el index
 df_ce.reset_index(inplace=True, drop=True)
 # Reordenar en ascendente por fechas
@@ -168,112 +152,3 @@ df_ce['id'] = [nombres_or[i].replace(' ', '')[0:6] + nombres_or[i].replace(' ', 
 # -- ------------------------------------------------------------------------------------ -- #
 # -- Una lista para relacionar el indicador con su clase economica.
 
-lista_n = {'nombre': ['12-Month Inflation', '1st half-month Inflation',
-                      '3-Month Bill Auction', '3-Year Note Auction',
-                      '30-Year Bond Auction', '4-Week Bill Auction',
-                      '6-Month Bill Auction', 'ADP Employment Change',
-                      'API Weekly Crude Oil Stock', 'Accumulated Current AccountGDP',
-                      'Average Hourly Earnings MoM', 'Average Hourly Earnings YoY',
-                      'Average Weekly Hours', 'Baker Hughes US Oil Rig Count',
-                      'Building Permits Change', 'Building Permits MoM',
-                      'Business Inventories', 'CFTC Gold NC Net Positions',
-                      'CFTC Oil NC Net Positions', 'CFTC USD NC Net Positions',
-                      'Capacity Utilization', 'Central Bank Interest Rate',
-                      'Challenger Job Cuts', 'Chicago Fed National Activity Index',
-                      "Chicago Purchasing Managers' Index", 'Construction Spending MoM',
-                      'Consumer Confidence', 'Consumer Confidence s.a',
-                      'Consumer Credit Change', 'Consumer Price Index Core s.a',
-                      'Consumer Price Index MoM', 'Consumer Price Index YoY',
-                      'Consumer Price Index ex Food  Energy MoM',
-                      'Consumer Price Index ex Food  Energy YoY',
-                      'Consumer Price Index n.s.a MoM', 'Continuing Jobless Claims',
-                      'Core Inflation', 'Core Personal Consumption Expenditure',
-                      'Core Personal Consumption Expenditures QoQ', 'Current Account',
-                      'Current Account,  QoQ', 'Dallas Fed Manufacturing Business Index',
-                      'Durable Goods Orders', 'Durable Goods Orders ex Defense',
-                      'Durable Goods Orders ex Transportation', 'EIA Crude Oil Stocks Change',
-                      'EIA Natural Gas Storage Change', 'Employment Cost Index',
-                      'Existing Home Sales Change MoM', 'Existing Home Sales MoM',
-                      'Export Price Index MoM', 'Export Price Index YoY',
-                      'Factory Orders MoM', 'Fed Interest Rate Decision',
-                      'Fiscal Balance, pesos', 'Goods Trade Balance',
-                      'Gross Domestic Product Annualized', 'Gross Domestic Product Price Index',
-                      'Gross Domestic Product QoQ', 'Gross Domestic Product YoY',
-                      'Headline Inflation', 'Housing Starts Change',
-                      'Housing Starts MoM', 'IBDTIPP Economic Optimism MoM',
-                      'ISM Manufacturing PMI', 'ISM Manufacturing Prices Paid',
-                      'ISM Non-Manufacturing PMI', 'ISM-NY Business Conditions Index',
-                      'Import Price Index MoM', 'Industrial Output MoM',
-                      'Industrial Output YoY', 'Industrial Production MoM',
-                      'Initial Jobless Claims', 'Labor Force Participation Rate',
-                      'Markit Manufacturing PMI', 'Markit PMI Composite',
-                      'Markit Services PMI', 'Michigan Consumer Sentiment Index',
-                      'Monthly Budget Statement', 'NAHB Housing Market Index',
-                      'NFIB Business Optimism Index', 'NY Empire State Manufacturing Index',
-                      'Net Long-Term TIC Flows', 'New Home Sales Change MoM',
-                      'New Home Sales MoM', 'Nonfarm Payrolls',
-                      'Nonfarm Productivity', 'Pending Home Sales YoY',
-                      'Personal Consumption Expenditures',
-                      'Personal Consumption Expenditures Prices QoQ', 'Personal Income MoM',
-                      'Personal Spending', 'Philadelphia Fed Manufacturing Survey',
-                      'Private Spending QoQ', 'Private Spending YoY',
-                      'Producer Price Index MoM', 'Producer Price Index YoY',
-                      'Producer Price Index ex Food  Energy MoM',
-                      'Producer Price Index ex Food  Energy YoY', 'Redbook Index MoM',
-                      'Redbook Index YoY', 'Retail Sales Control Group',
-                      'Retail Sales MoM', 'Retail Sales YoY',
-                      'Retail Sales ex Autos MoM', 'SPCase-Shiller Home Price Indices YoY',
-                      'Total Net TIC Flows', 'Trade Balance',
-                      'Trade Balance sa, ', 'Trade Balance, ',
-                      'Unemployment Rate', 'Unit Labor Costs',
-                      'Wholesale Inventories'],
-           'categoria': ['Inflacion', 'Inflacion', 'Subasta de bonos', 'Subasta de bonos',
-                         'Subasta de bonos', 'Subasta de bonos', 'Subasta de bonos',
-                         'Mercado Laboral', 'Energia', 'Actividad economica',
-                         'Mercado Laboral', 'Mercado Laboral', 'Mercado Laboral', 'Energia',
-                         'Mercado inmobiliario', 'Mercado inmobiliario', 'Consumo',
-                         'Flujos de capital', 'Flujos de capital', 'Flujos de capital',
-                         'Consumo', 'Tasas de interes', 'Mercado Laboral',
-                         'Actividad economica', 'Consumo', 'Mercado inmobiliario',
-                         'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo',
-                         'Consumo', 'Consumo', 'Consumo', 'Mercado Laboral',
-                         'Inflacion', 'Consumo', 'Consumo', 'Actividad economica',
-                         'Actividad economica', 'Actividad economica', 'Consumo', 'Consumo',
-                         'Consumo', 'Energia', 'Energia', 'Mercado Laboral',
-                         'Mercado inmobiliario', 'Mercado inmobiliario',
-                         'Actividad economica', 'Actividad economica', 'Actividad economica',
-                         'Tasas de interes', 'Actividad economica', 'Actividad economica',
-                         'Actividad economica', 'Actividad economica', 'Actividad economica',
-                         'Actividad economica', 'Inflacion', 'Mercado inmobiliario',
-                         'Mercado inmobiliario', 'Actividad economica',
-                         'Actividad economica', 'Actividad economica', 'Actividad economica',
-                         'Actividad economica', 'Actividad economica', 'Actividad economica',
-                         'Actividad economica', 'Actividad economica', 'Mercado Laboral',
-                         'Mercado Laboral', 'Actividad economica', 'Actividad economica',
-                         'Actividad economica', 'Actividad economica',
-                         'Mercado inmobiliario', 'Actividad economica',
-                         'Actividad economica', 'Flujos de capital', 'Mercado inmobiliario',
-                         'Mercado inmobiliario', 'Mercado Laboral', 'Mercado Laboral',
-                         'Mercado inmobiliario', 'Consumo', 'Consumo',
-                         'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo',
-                         'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo', 'Consumo',
-                         'Consumo', 'Consumo', 'Mercado inmobiliario', 'Flujos de capital',
-                         'Actividad economica', 'Actividad economica', 'Actividad economica',
-                         'Mercado Laboral', 'Mercado Laboral', 'Mercado Laboral',
-                         'Mercado Laboral', 'Actividad economica'
-                         ]}
-
-# Tabla completa Indicadores y clasificacion de tipo economico
-df_ce_ca = pd.DataFrame(lista_n)
-set(df_ce_ca['categoria'])
-
-
-# tabla = pd.DataFrame({'indicador': ['Trade Balance sa', 'Actividad Economica'
-# 'Continuing Jobless Claims', 'Mercado Laboral'
-# 'CFTC USD NC Net Positions', 'Flujos de capital'
-# 'Consumer Confidence', 'Consumo'
-# '3-Year Note Auction', 'Subasta de bonos'
-# '12-Month Inflation', 'Inflacion'
-# 'API Weekly Crude Oil Stock', 'Energia'
-# 'Building Permits Change', 'Mercado inmobiliario'
-# 'Central Bank Interest Rate', 'Tasas de interes'

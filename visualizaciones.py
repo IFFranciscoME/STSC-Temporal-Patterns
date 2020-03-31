@@ -15,22 +15,28 @@ pio.renderers.default = "browser"                # render de imagenes para corre
 # -- --------------------------------------------------- GRÁFICA: lineas series de tiempo -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
-def g_lineas(param_query, param_pattern):
+def g_lineas(param_query, param_pattern, param_theme, param_dim):
     """
     Parameters
     ----------
     param_query :
     param_pattern :
+    param_theme :
+    param_dim :
 
     Returns
     -------
+    fig :
 
     Debugging
     ---------
-    param_serie_p = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
-    param_serie_p = param_serie_p['df_serie_p']
-    param_serie_q = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
-    param_serie_q = param_serie_q['df_serie_q']
+    param_pattern = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
+    param_pattern = param_pattern['df_serie_p']
+    param_query = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
+    param_query = param_query['df_serie_q']
+
+    param_theme = tema_base
+    param_dim = dimensiones_base
 
     """
 
@@ -45,9 +51,9 @@ def g_lineas(param_query, param_pattern):
 
                    legend_col='grey', legend_tam=16)
 
-    serie_x = list(np.arange(len(param_serie_p['close'])))
-    p1_y1 = param_serie_p['close']
-    p2_y2 = param_serie_q['close']
+    serie_x = list(np.arange(len(param_pattern['close'])))
+    p1_y1 = param_pattern['close']
+    p2_y2 = param_query['close']
 
     # Determinar los valores y los textos para el eje y1
     y1_ticks_n = 5
@@ -61,8 +67,8 @@ def g_lineas(param_query, param_pattern):
     y2_ticks_vals = np.append(y2_ticks_vals, max(p2_y2))
     y2_ticks_text = [str("%.4f" % i) for i in y2_ticks_vals]
 
-    serie_p = param_serie_p['close']/max(param_serie_p['close'])
-    serie_q = param_serie_q['close']/max(param_serie_q['close'])
+    # serie_p = param_pattern['close']/max(param_pattern['close'])
+    # serie_q = param_query['close']/max(param_query['close'])
 
     # Crear objeto figura
     fig = go.Figure()
