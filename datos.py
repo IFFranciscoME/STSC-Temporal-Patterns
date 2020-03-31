@@ -88,7 +88,7 @@ df_precios = df_precios.reset_index(inplace=False, drop=True)
 # df_ce_g = pd.DataFrame({'ind': indicadores, 'econ': economias})
 #
 # # DataFrame con historicos
-# df_ce = fn.f_unir_ind(param_dir=path.abspath('datos/econ_files/'))
+# df_ce = fn.f_unir_archivos(param_dir=path.abspath('datos/econ_files/'))
 #
 # # Escribir archivo
 # df_ce.to_csv(r'datos/econ_files/' + 'ECON_USD_MXN' + '.csv', index=False)
@@ -147,8 +147,4 @@ nombres_or = df_ce['name']
 currencies_or = df_ce['currency']
 df_ce['id'] = [nombres_or[i].replace(' ', '')[0:6] + nombres_or[i].replace(' ', '')[-6:] +
                '_' + currencies_or[i] for i in range(0, len(nombres_or))]
-
-# -- ----------------------------------------------------- Lista de clases de indicadores -- #
-# -- ------------------------------------------------------------------------------------ -- #
-# -- Una lista para relacionar el indicador con su clase economica.
 

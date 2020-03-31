@@ -202,7 +202,7 @@ def f_precios_masivos(p0_fini, p1_ffin, p2_gran, p3_inst, p4_oatk, p5_ginc):
 # -- --------------------------------------------------------------------------------------- #
 # -- Unir todos los archivos de indicadores descargados
 
-def f_unir_ind(param_dir):
+def f_unir_archivos(param_dir):
     """
     Parameters
     ----------
@@ -444,7 +444,7 @@ def f_metricas(param_ce, param_ph, param_window):
 # -- --------------------------------------------------------------------------------------- #
 # -- Tabla de ocurrencias de escenarios para indicadores
 
-def f_tabla_ind(param_ce):
+def f_tabla_esc(param_ce):
     """
     Parameters
     ----------
@@ -683,12 +683,12 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
     param_p_ventana :
     param_cores :
     param_tipo :
-    param_batch
-    param_matches
+    param_batch :
+    param_matches :
 
     Returns
     -------
-    df_tabla_busqueda
+    df_tabla_busqueda :
 
     Debugging
     ---------
@@ -767,7 +767,7 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
             # Borrar inidice 0 de resultados por ser el mismo que la serie query
             origen = np.where(mass_indices == 0)[0][0]
             mass_indices = np.delete(mass_indices, origen)
-            mass_dists = np.delete(mass_dists, origen)
+            # mass_dists = np.delete(mass_dists, origen)
             # print('indices encontrados' + ' ' + str(mass_indices))
 
             # Indice de referencia de n-esima serie similar encontrada
@@ -893,3 +893,7 @@ def f_estadisticas(param_d1, param_d2):
         print(results)
 
     return 1
+
+# -- ----------------------------------------------------- Lista de clases de indicadores -- #
+# -- ------------------------------------------------------------------------------------ -- #
+# -- Una lista para relacionar el indicador con su clase economica.

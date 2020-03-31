@@ -15,45 +15,42 @@ pio.renderers.default = "browser"                # render de imagenes para corre
 # -- --------------------------------------------------- GRÁFICA: lineas series de tiempo -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
-def g_lineas(param_query, param_pattern, param_theme, param_dim):
+def g_lineas(param_query, param_pattern, param_theme, param_dims):
     """
     Parameters
     ----------
-    param_query :
-    param_pattern :
-    param_theme :
-    param_dim :
+    param_query : pd.series / np.array : datos a graficar
+    param_pattern : pd.series / np.array : datos a graficar
+    param_theme : dict : diccionario con tema de visualizaciones
+    param_dims : dict : diccionario con tamanos para visualizaciones
 
     Returns
     -------
-    fig :
+    fig_g_lineas : fig : resultado de visualizacion con plotly
 
     Debugging
     ---------
     param_pattern = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
-    param_pattern = param_pattern['df_serie_p']
+    param_pattern = param_pattern['df_serie_p']['close']
     param_query = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
-    param_query = param_query['df_serie_q']
-
+    param_query = param_query['df_serie_q']['close']
     param_theme = tema_base
-    param_dim = dimensiones_base
+    param_dims = dimensiones_base
 
     """
 
-    pt_temp = dict(eje_x_tick_col='blue', eje_x_tick_tam=12,
-                   eje_x_titulo_col='blue', eje_x_titulo_tam=12,
+    # eje x en comun
+    serie_x = list(np.arange(len(param_pattern)))
+    # eje y0 de original
+    p1_y0 = param_query
+    # eje y1 de patron encontrado
+    p1_y1 = param_pattern
 
-                   eje_y0_tick_col='red', eje_y0_tick_tam=12,
-                   eje_y0_titulo_col='red', eje_y0_titulo_tam=12,
-
-                   eje_y1_tick_col='blue', eje_y1_tick_tam=12,
-                   eje_y1_titulo_col='blue', eje_y1_titulo_tam=12,
-
-                   legend_col='grey', legend_tam=16)
-
-    serie_x = list(np.arange(len(param_pattern['close'])))
-    p1_y1 = param_pattern['close']
-    p2_y2 = param_query['close']
+    # Determinar los valores y los textos para el eje y0
+    y0_ticks_n = 5
+    y0_ticks_vals = np.arange(min(p1_y0), max(p1_y0), (max(p1_y0) - min(p1_y0)) / y0_ticks_n)
+    y0_ticks_vals = np.append(y0_ticks_vals, max(p1_y0))
+    y0_ticks_text = [str("%.4f" % i) for i in y0_ticks_vals]
 
     # Determinar los valores y los textos para el eje y1
     y1_ticks_n = 5
@@ -61,72 +58,70 @@ def g_lineas(param_query, param_pattern, param_theme, param_dim):
     y1_ticks_vals = np.append(y1_ticks_vals, max(p1_y1))
     y1_ticks_text = [str("%.4f" % i) for i in y1_ticks_vals]
 
-    # Determinar los valores y los textos para el eje y2
-    y2_ticks_n = 5
-    y2_ticks_vals = np.arange(min(p2_y2), max(p2_y2), (max(p2_y2) - min(p2_y2)) / y2_ticks_n)
-    y2_ticks_vals = np.append(y2_ticks_vals, max(p2_y2))
-    y2_ticks_text = [str("%.4f" % i) for i in y2_ticks_vals]
-
-    # serie_p = param_pattern['close']/max(param_pattern['close'])
-    # serie_q = param_query['close']/max(param_query['close'])
-
     # Crear objeto figura
-    fig = go.Figure()
+    fig_g_lineas = go.Figure()
+
+    # agregar serie 0
+    fig_g_lineas.add_trace(
+        go.Scatter(y=p1_y0, name="Serie original",
+                   line=dict(color=param_theme['color_linea_1'],
+                             width=param_theme['tam_linea_2'])))
 
     # agregar serie 1
-    fig.add_trace(
-        go.Scatter(y=p1_y1, name="Serie patron encontrado"))
-
-    # agregar serie 2
-    fig.add_trace(
-        go.Scatter(y=p2_y2, name="Serie original", yaxis="y2"))
+    fig_g_lineas.add_trace(
+        go.Scatter(y=p1_y1, name="Serie patron encontrado", yaxis="y2",
+                   line=dict(color=param_theme['color_linea_2'],
+                             width=param_theme['tam_linea_2'], dash='dash')))
 
     # actualizar layout general
-    fig.update_layout(
+    fig_g_lineas.update_layout(
         xaxis=dict(tickvals=serie_x),
-        yaxis=dict(tickvals=y1_ticks_vals, ticktext=y1_ticks_text, zeroline=False,
+        yaxis=dict(tickvals=y0_ticks_vals, ticktext=y0_ticks_text, zeroline=False,
                    automargin=True,
-                   tickfont=dict(color=pt_temp['eje_y0_tick_col'],
-                                 size=pt_temp['eje_y0_tick_tam']),
+                   tickfont=dict(color=param_theme['color_linea_1'],
+                                 size=param_theme['tam_texto_ejes']),
                    showgrid=True),
-        yaxis2=dict(tickvals=y2_ticks_vals, ticktext=y2_ticks_text, zeroline=False,
+        yaxis2=dict(tickvals=y1_ticks_vals, ticktext=y1_ticks_text, zeroline=False,
                     automargin=True,
-                    tickfont=dict(color=pt_temp['eje_y1_tick_col'],
-                                  size=pt_temp['eje_y1_tick_tam']),
+                    tickfont=dict(color=param_theme['color_linea_2'],
+                                  size=param_theme['tam_texto_ejes']),
                     showgrid=True,
                     overlaying="y", side="right"))
 
     # actualizar layout de leyenda
-    fig.update_layout(
-        legend=go.layout.Legend(x=.2, y=-.2, font=dict(size=pt_temp['legend_tam'],
-                                                       color=pt_temp['legend_col'])),
+    fig_g_lineas.update_layout(
+        legend=go.layout.Legend(x=.2, y=-.2,
+                                font=dict(size=param_theme['tam_texto_leyenda'],
+                                          color=param_theme['color_texto_leyenda'])),
         legend_orientation="h")
 
     # medidas de imagen y margenes
-    fig.update_layout(autosize=False, width=1240, height=400, paper_bgcolor="white",
-                      margin=go.layout.Margin(l=55, r=65, b=5, t=5, pad=1))
+    fig_g_lineas.update_layout(autosize=False, width=1240, height=400, paper_bgcolor="white",
+                               margin=go.layout.Margin(l=55, r=65, b=5, t=5, pad=1))
 
     # Creacion de titulos Y0 y Y1 como anotaciones
-    fig.update_layout(annotations=[
-        go.layout.Annotation(x=0, y=0.25, text="Serie Original", textangle=-90,
+    fig_g_lineas.update_layout(annotations=[
+        go.layout.Annotation(x=0, y=0.5, text="Serie Original", textangle=-90,
                              xref="paper", yref="paper", showarrow=False,
-                             font=dict(size=pt_temp['eje_y0_titulo_tam'],
-                                       color=pt_temp['eje_y0_titulo_col'])),
-        go.layout.Annotation(x=1, y=0.25, text="Serie Patron Encontrado", textangle=-90,
+                             font=dict(size=param_theme['tam_texto_grafica'],
+                                       color=param_theme['color_linea_1'])),
+        go.layout.Annotation(x=1, y=0.5, text="Serie Patron Encontrado", textangle=-90,
                              xref="paper", yref="paper", showarrow=False,
-                             font=dict(size=pt_temp['eje_y1_titulo_tam'],
-                                       color=pt_temp['eje_y1_titulo_col']))])
+                             font=dict(size=param_theme['tam_texto_grafica'],
+                                       color=param_theme['color_linea_2']))])
 
-    fig.update_layout(margin=go.layout.Margin(l=50, r=50, b=20, t=50, pad=20),
-                      title=dict(x=0.5, text='Serie Original - <b> Patron Encontrado </b>'),
-                      legend=go.layout.Legend(x=.3, y=-.15, orientation='h',
-                                              font=dict(size=15)))
-    fig.layout.autosize = True
-    fig.layout.width = 840
-    fig.layout.height = 520
-    fig.show()
+    # Formato para titulo
+    fig_g_lineas.update_layout(margin=go.layout.Margin(l=50, r=50, b=20, t=50, pad=20),
+                               title=dict(x=0.5, text='<b> Serie Original </b> - '
+                                                      '<i> Patron Encontrado </i>'),
+                               legend=go.layout.Legend(x=.3, y=-.15, orientation='h',
+                                                       font=dict(size=15)))
+    # Formato de tamanos
+    fig_g_lineas.layout.autosize = True
+    fig_g_lineas.layout.width = param_dims['figura_1']['width']
+    fig_g_lineas.layout.height = param_dims['figura_1']['height']
 
-    return fig
+    return fig_g_lineas
 
 
 # -- ------------------------------------------------------- GRÁFICA: velas OHLC Reaccion -- #

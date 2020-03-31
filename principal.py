@@ -6,13 +6,16 @@
 # -- Autor: Francisco ME                                                                  -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
-from datos import df_precios, df_ce, parametros_stsc
+from datos import df_precios, df_ce
+from entradas import parametros_stsc
+
 from multiprocessing import cpu_count
 import multiprocessing as mp
 import funciones as fn
 import pickle
 import time
 import warnings
+
 warnings.filterwarnings("ignore")
 
 if __name__ == "__main__":
@@ -64,7 +67,7 @@ if __name__ == "__main__":
         # -- --------------------------------------------------------------- FUNCTION : 3 -- #
         # -- Tabla de ocurrencias de escenario para cada indicador
         s_f3 = time.time()
-        df_ind_1 = fn.f_tabla_ind(param_ce=df_ce)
+        df_ind_1 = fn.f_tabla_esc(param_ce=df_ce)
         e_f3 = time.time()
         time_f3 = round(e_f3 - s_f3, 2)
         print('f_tabla_ind se tardo: ' + str(time_f3))
