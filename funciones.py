@@ -955,7 +955,9 @@ def f_tablas_ocur(param_carpeta):
 
     return dc_ocurrencias
 
+
 # -- ----------------------------------------------------- Lista de clases de indicadores -- #
 # -- ------------------------------------------------------------------------------------ -- #
 # -- Una lista para relacionar el indicador con su clase economica.
+
 
