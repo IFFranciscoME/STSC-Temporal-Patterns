@@ -120,6 +120,7 @@ def g_lineas(param_query, param_pattern, param_theme, param_dims):
     fig_g_lineas.layout.autosize = True
     fig_g_lineas.layout.width = param_dims['figura_1']['width']
     fig_g_lineas.layout.height = param_dims['figura_1']['height']
+    fig_g_lineas.show()
 
     return fig_g_lineas
 
@@ -127,18 +128,22 @@ def g_lineas(param_query, param_pattern, param_theme, param_dims):
 # -- ------------------------------------------------------- GRÁFICA: velas OHLC Reaccion -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
-def g_velas_reaccion(param_timestamp, param_ohlc, param_serie1, param_serie2, param_serie3):
+def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_serie3,
+                 param_theme, param_dims):
     """
     Parameters
     ----------
-    param_timestamp
-    param_ohlc
-    param_serie1
-    param_serie2
-    param_serie3
+    param_timestamp : pd.DataFrame : columnas 'timestamp'
+    param_ohlc : pd.DataFrame : columnas 'open', 'high', 'low', 'close'
+    param_serie1 : pd.Series / np.array : datos a graficar
+    param_serie2 : pd.Series / np.array : datos a graficar
+    param_serie3 : pd.Series / np.array : datos a graficar
+    param_theme : dict : diccionario con tema de visualizaciones
+    param_dims : dict : diccionario con tamanos para visualizaciones
 
     Returns
     -------
+    fig_g_velas_reac : plotly : objeto/diccionario tipo plotly para graficar
 
     Debugging
     ---------
@@ -148,44 +153,87 @@ def g_velas_reaccion(param_timestamp, param_ohlc, param_serie1, param_serie2, pa
     param_serie1 = param_ohlc['close']
     param_serie2 = param_ohlc['mid_hl']
     param_serie3 = param_ohlc['mid_oc']
+
+    param_theme = tema_base
+    param_dims = dimensiones_base
+
     """
 
+    # parametros para anotacion de texto en grafica
     f_i = param_timestamp[0]
     yini = param_ohlc['high'][0]
     yfin = max(param_ohlc['close'])
-    fig = go.Figure(data=[go.Candlestick(name='ohlc', x=param_ohlc['timestamp'],
-                                         open=param_ohlc['open'], high=param_ohlc['high'],
-                                         low=param_ohlc['low'], close=param_ohlc['close'],
-                                         opacity=0.4)])
 
-    fig.add_trace(go.Scatter(x=param_timestamp, y=param_serie1, name='close',
-                             line=dict(color='blue', width=2, dash='dash')))
-    fig.add_trace(go.Scatter(x=param_timestamp, y=param_serie2, name='mid hl',
-                             line=dict(color='red', width=2, dash='dash')))
-    fig.add_trace(go.Scatter(x=param_timestamp, y=param_serie3, name='mid oc',
-                             line=dict(color='green', width=2, dash='dash')))
+    # base de figura
+    fig_g_velas_reac = go.Figure()
 
+    # agregar capa de figura de velas japonesas (candlestick)
+    fig_g_velas_reac.add_trace(
+        go.Candlestick(name='ohlc',
+                       x=param_ohlc['timestamp'],
+                       open=param_ohlc['open'],
+                       high=param_ohlc['high'],
+                       low=param_ohlc['low'],
+                       close=param_ohlc['close'],
+                       opacity=0.4))
+
+    # Agregar capa de linea extra: Close
+    fig_g_velas_reac.add_trace(
+        go.Scatter(x=param_timestamp, y=param_serie1, name='close',
+                   line=dict(color=param_theme['color_linea_1'], width=2, dash='dash')))
+
+    # Agregar capa de linea extra: mid hl
+    fig_g_velas_reac.add_trace(
+        go.Scatter(x=param_timestamp, y=param_serie2, name='mid hl',
+                   line=dict(color=param_theme['color_linea_2'], width=2, dash='dash')))
+
+    # Agregar capa de linea extra: mid oc
+    fig_g_velas_reac.add_trace(
+        go.Scatter(x=param_timestamp, y=param_serie3, name='mid oc',
+                   line=dict(color=param_theme['color_linea_3'], width=2, dash='dash')))
+
+    # linea vertical
     lineas = [dict(x0=f_i, x1=f_i, xref='x', y0=yini, y1=yfin, yref='y', type='line',
-                   line=dict(color='red', width=1.5, dash='dashdot'))]
+                   line=dict(color=param_theme['color_linea_4'], width=1.5, dash='dashdot'))]
 
-    fig.update_layout(margin=go.layout.Margin(l=50, r=50, b=20, t=50, pad=20),
-                      title=dict(x=0.5, text='Reaccion del precio durante '
-                                             'comunicado de <b> indicador </b>'),
-                      xaxis=dict(title_text='Hora del dia', rangeslider=dict(visible=False)),
-                      yaxis=dict(title_text='Precio del EurUsd'), shapes=lineas,
-                      annotations=[go.layout.Annotation(x=f_i, y=0.95, xref="x", yref="paper",
-                                                        showarrow=False, text="Indicador",
-                                                        font=dict(size=15)),
-                                   go.layout.Annotation(x=f_i, y=0.90, xref="x", yref="paper",
-                                                        showarrow=False, text="Comunicado",
-                                                        font=dict(size=15))])
+    # layout de margen, titulos y ejes
+    fig_g_velas_reac.update_layout(
+        margin=go.layout.Margin(l=50, r=50, b=20, t=50, pad=20),
+        title=dict(x=0.5, text='Reaccion del precio durante <b> Indicador Comunicado </b>'),
+        xaxis=dict(title_text='Hora del dia', rangeslider=dict(visible=False)),
+        yaxis=dict(title_text='Precio del EurUsd'), shapes=lineas)
 
-    # fig.update_layout(legend_orientation="h")
-    fig.update_layout(legend=go.layout.Legend(x=.3, y=-.15, orientation='h',
-                                              font=dict(size=15)))
-    fig.layout.autosize = False
-    fig.layout.width = 840
-    fig.layout.height = 520
-    fig.show()
+    # Color y fuente de texto en ejes
+    fig_g_velas_reac.update_layout(
+        xaxis=dict(titlefont=dict(color=param_theme['color_titulo_ejes']),
+                   tickfont=dict(color=param_theme['color_texto_ejes'],
+                                 size=param_theme['tam_texto_ejes'])),
+        yaxis=dict(zeroline=False, automargin=True,
+                   titlefont=dict(color=param_theme['color_titulo_ejes']),
+                   tickfont=dict(color=param_theme['color_texto_ejes'],
+                                 size=param_theme['tam_texto_ejes']),
+                   showgrid=True))
 
-    return fig
+    # Anotaciones
+    fig_g_velas_reac.update_layout(
+        annotations=[go.layout.Annotation(x=f_i, y=0.95, xref="x", yref="paper",
+                                          showarrow=False, text="Indicador",
+                                          font=dict(size=15, color='red')),
+                     go.layout.Annotation(x=f_i, y=0.90, xref="x", yref="paper",
+                                          showarrow=False, text="Comunicado",
+                                          font=dict(size=15, color='red'))])
+
+    # Formato de leyenda
+    fig_g_velas_reac.update_layout(
+        legend=go.layout.Legend(x=.3, y=-.15, orientation='h',
+                                font=dict(size=param_theme['tam_texto_leyenda'],
+                                          color=param_theme['color_texto_leyenda'])))
+
+    # Formato de tamanos
+    fig_g_velas_reac.layout.autosize = True
+    fig_g_velas_reac.layout.width = param_dims['figura_1']['width']
+    fig_g_velas_reac.layout.height = param_dims['figura_1']['height']
+
+    fig_g_velas_reac.show()
+
+    return fig_g_velas_reac
