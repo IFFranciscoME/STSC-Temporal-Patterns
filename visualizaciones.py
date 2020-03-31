@@ -120,7 +120,6 @@ def g_lineas(param_query, param_pattern, param_theme, param_dims):
     fig_g_lineas.layout.autosize = True
     fig_g_lineas.layout.width = param_dims['figura_1']['width']
     fig_g_lineas.layout.height = param_dims['figura_1']['height']
-    fig_g_lineas.show()
 
     return fig_g_lineas
 
@@ -233,7 +232,5 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
     fig_g_velas_reac.layout.autosize = True
     fig_g_velas_reac.layout.width = param_dims['figura_1']['width']
     fig_g_velas_reac.layout.height = param_dims['figura_1']['height']
-
-    fig_g_velas_reac.show()
 
     return fig_g_velas_reac

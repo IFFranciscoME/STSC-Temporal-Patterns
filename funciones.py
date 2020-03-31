@@ -6,7 +6,7 @@
 # -- Autor: Francisco ME                                                                  -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
-from os import listdir
+from os import listdir, path
 from os.path import isfile, join
 from oandapyV20 import API                                # conexion con broker OANDA
 import oandapyV20.endpoints.instruments as instruments    # informacion de precios historicos
@@ -888,12 +888,74 @@ def f_estadisticas(param_d1, param_d2):
     """
 
     # -- Prueba para re-abrir archivo pickle
-    with open('datos/results_files_r2/' + 'mid_oc_20_1_2000_20_r2', 'rb') as file:
-        results = pickle.load(file)
-        print(results)
+    # with open('datos/results_files_r2/' + 'mid_oc_20_1_2000_20_r2', 'rb') as file:
+    #     results = pickle.load(file)
+    #     print(results)
 
     return 1
+
+
+# -- --------------------------------------------------------------- Tablas de ocurrencia -- #
+# -- ------------------------------------------------------------------------------------ -- #
+# -- tablas de ocurrencia por indicador, tipo de indicador, escenario. para cada ciclo
+
+def f_tablas_ocur(param_carpeta):
+    """
+    Parameters
+    ----------
+    param_carpeta : str : direccion de carpetas para leer archivo
+
+    Returns
+    -------
+    dc_ocurrencias : dict : diccionario con dataframes de resultados de ocurrencias
+
+    Debugging
+    ---------
+    param_carpeta = 'datos/results_files_r3'
+
+    """
+
+    # lista de nombres de archivos en la carpeta
+    abspath = path.abspath(param_carpeta)
+    files = [f for f in listdir(abspath) if isfile(join(abspath, f))]
+    dc_ocurrencias = dict()
+
+    for j in range(0, len(files)):
+        # abrir el archivo
+        with open(abspath + '/' + files[2], 'rb') as file:
+            resultados = pickle.load(file)
+        # dejar como llave el nombre del dataframe
+        llave = list(resultados.keys())[0]
+        len_res = len(resultados[llave])
+        # listas para guardar resultados
+        l_ocur_titulo = list()
+        l_ocur_tipo1 = list()
+        l_ocur_tipo2 = list()
+        l_ocur_tipo3 = list()
+
+        # verificar cantidad de ocurrencias
+        for i in range(0, len_res):
+            tipo_1 = resultados[llave][i]['metricas']['tipo_1']
+            tipo_2 = resultados[llave][i]['metricas']['tipo_2']
+            tipo_3 = resultados[llave][i]['metricas']['tipo_3']
+
+        # guardar resultados
+            if (tipo_1 + tipo_2 + tipo_3) > 0:
+                l_ocur_titulo.append(list(resultados[llave][i]['datos'].keys())[0][:-20])
+                l_ocur_tipo1.append(tipo_1)
+                l_ocur_tipo2.append(tipo_2)
+
+                l_ocur_tipo3.append(tipo_3)
+
+        # actualizar diccionario con dataframes de informacion
+        dc_ocurrencias['df_' + files[j]] = pd.DataFrame({'nombre': l_ocur_titulo,
+                                                         'tipo_1': l_ocur_tipo1,
+                                                         'tipo_2': l_ocur_tipo2,
+                                                         'tipo_3': l_ocur_tipo3})
+
+    return dc_ocurrencias
 
 # -- ----------------------------------------------------- Lista de clases de indicadores -- #
 # -- ------------------------------------------------------------------------------------ -- #
 # -- Una lista para relacionar el indicador con su clase economica.
+
