@@ -888,9 +888,9 @@ def f_estadisticas(param_d1, param_d2):
     """
 
     # -- Prueba para re-abrir archivo pickle
-    # with open('datos/results_files_r2/' + 'mid_oc_20_1_2000_20_r2', 'rb') as file:
-    #     results = pickle.load(file)
-    #     print(results)
+    with open('datos/results_files_r2/' + 'mid_oc_20_1_2000_20_r2', 'rb') as file:
+        results = pickle.load(file)
+        print(results)
 
     return 1
 
@@ -922,7 +922,7 @@ def f_tablas_ocur(param_carpeta):
 
     for j in range(0, len(files)):
         # abrir el archivo
-        with open(abspath + '/' + files[2], 'rb') as file:
+        with open(abspath + '/' + files[j], 'rb') as file:
             resultados = pickle.load(file)
         # dejar como llave el nombre del dataframe
         llave = list(resultados.keys())[0]
@@ -944,14 +944,35 @@ def f_tablas_ocur(param_carpeta):
                 l_ocur_titulo.append(list(resultados[llave][i]['datos'].keys())[0][:-20])
                 l_ocur_tipo1.append(tipo_1)
                 l_ocur_tipo2.append(tipo_2)
-
                 l_ocur_tipo3.append(tipo_3)
 
+        from datos import df_ce
+        df_ce_ocur = f_escenario(p0_datos=df_ce)
+        df_ce_ocur['ind_esc'] = [df_ce_ocur['id'][i] + '_' + df_ce_ocur['esc'][i]
+                                 for i in range(0, len(df_ce_ocur['id']))]
+
+        df_ind_esc = pd.DataFrame(df_ce_ocur.groupby('ind_esc')['esc'].count())
+        df_ind_esc.reset_index(inplace=True, drop=False)
+
+        # ocurrencias totales de indicador_escenario
+        l_ocur_ind_esc = [int(df_ind_esc.loc[df_ind_esc['ind_esc'] == i, 'esc'])
+                          for i in l_ocur_titulo]
+
+        # ocurrencias totales de indicador
+        df_esc_totales = pd.DataFrame(df_ce_ocur.groupby('id')['esc'].count())
+        df_esc_totales.reset_index(inplace=True, drop=False)
+        l_ocur_ind = [df_esc_totales['esc'].loc[
+                          np.where(df_esc_totales['id'] == l_ocur_titulo[i][:-2])[0][0]]
+                      for i in range(0, len(l_ocur_titulo))]
+
         # actualizar diccionario con dataframes de informacion
-        dc_ocurrencias['df_' + files[j]] = pd.DataFrame({'nombre': l_ocur_titulo,
-                                                         'tipo_1': l_ocur_tipo1,
-                                                         'tipo_2': l_ocur_tipo2,
-                                                         'tipo_3': l_ocur_tipo3})
+        dc_ocurrencias['df_' +
+                       files[j]] = pd.DataFrame({'nombre': l_ocur_titulo,
+                                                 'tipo_1': l_ocur_tipo1,
+                                                 'tipo_2': l_ocur_tipo2,
+                                                 'tipo_3': l_ocur_tipo3,
+                                                 'total_ind_esc': l_ocur_ind_esc,
+                                                 'total_ind': l_ocur_ind})
 
     return dc_ocurrencias
 

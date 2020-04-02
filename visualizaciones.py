@@ -234,3 +234,38 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
     fig_g_velas_reac.layout.height = param_dims['figura_1']['height']
 
     return fig_g_velas_reac
+
+
+# -- ------------------------------------------------------- GRÁFICA: velas OHLC Reaccion -- #
+# -- ------------------------------------------------------------------------------------ -- #
+
+def g_barra_ocur(param_theme, param_dims):
+    """
+    Parameters
+    ----------
+    param_theme : dict : diccionario con tema de visualizaciones
+    param_dims : dict : diccionario con tamanos para visualizaciones
+
+    Returns
+    -------
+    fig_g_barra_ocur : plotly : objeto/diccionario tipo plotly para graficar
+
+    Debugging
+    ---------
+    param_data = resultados_ocur[list(resultados_ocur.keys())[0]]
+
+    """
+
+    # param_data.columns
+    animals = ['giraffes', 'orangutans', 'monkeys']
+
+    fig = go.Figure(data=[
+        go.Bar(name='SF Zoo', x=animals, y=[20, 14, 23]),
+        go.Bar(name='LA Zoo', x=animals, y=[12, 18, 29])
+    ])
+    # Change the bar mode
+    fig.update_layout(barmode='stack')
+    fig.show()
+
+    return 1
+
