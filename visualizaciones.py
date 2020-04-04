@@ -252,20 +252,20 @@ def g_barra_ocur(param_theme, param_dims):
 
     Debugging
     ---------
-    param_data = resultados_ocur[list(resultados_ocur.keys())[0]]
+    param_data = dc_tablas['df_mid_oc_30_1_3000_20']
 
     """
 
-    # param_data.columns
-    animals = ['giraffes', 'orangutans', 'monkeys']
-
     fig = go.Figure(data=[
-        go.Bar(name='SF Zoo', x=animals, y=[20, 14, 23]),
-        go.Bar(name='LA Zoo', x=animals, y=[12, 18, 29])
-    ])
+        go.Bar(name='Tipo1',
+               x=list(param_data['nombre'][85:87]), y=list(param_data['tipo_1'][85:87])),
+        go.Bar(name='Tipo1',
+               x=list(param_data['nombre'][85:87]), y=list(param_data['tipo_2'][85:87])),
+        go.Bar(name='Tipo1',
+               x=list(param_data['nombre'][85:87]), y=list(param_data['tipo_3'][85:87]))])
+
     # Change the bar mode
     fig.update_layout(barmode='stack')
     fig.show()
 
     return 1
-
