@@ -235,7 +235,7 @@
     \begin{beamercolorbox}[wd = \paperwidth]{footline}
         \vskip1cm
         \hskip1.5cm
-        \includegraphics[scale = 1.5]{images/logo_iteso_2}
+        \includegraphics[scale = 1.5]{imagenes/logo_iteso_2}
         \vskip1cm
     \end{beamercolorbox}
 }

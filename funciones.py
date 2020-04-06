@@ -866,33 +866,33 @@ def f_ts_clustering(param_pe, param_row, param_ca_data, param_ce_data, param_tip
     return dict_res
 
 
-# -- ------------------------------------------------------ FUNCION: analisis estadistico -- #
+# -- ------------------------------------------------- FUNCION: leer resultados de pickle -- #
 # -- ------------------------------------------------------------------------------------ -- #
-# -- construir la tabla
+# -- Leer del archivo tipo pickle los resultados de la busqueda
 
-def f_estadisticas(param_d1, param_d2):
+def f_leer_resultados(param_carpeta, param_archivo):
     """
     Parameters
     ----------
-    param_d1 :
-    param_d2 :
+    param_carpeta : str : direccion de la carpeta donde esta el archivo a leer
+    param_archivo : str : nombre del archivo .p a leer
 
     Returns
     -------
+    p_results : varios : el contenido del archivo
 
     Debugging
     ---------
-    param_d1 = 0
-    param_d2 = 0
+    param_carpeta = 'datos/results_files_r2/'
+    param_archivo = 'mid_oc_20_1_2000_20_r2'
 
     """
 
-    # -- Prueba para re-abrir archivo pickle
-    with open('datos/results_files_r2/' + 'mid_oc_20_1_2000_20_r2', 'rb') as file:
-        results = pickle.load(file)
-        print(results)
+    # -- Re-abrir archivo pickle
+    with open(param_carpeta + param_archivo, 'rb') as file:
+        p_results = pickle.load(file)
 
-    return 1
+    return p_results
 
 
 # -- --------------------------------------------------------------- Tablas de ocurrencia -- #

@@ -239,10 +239,11 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
 # -- ------------------------------------------------------- GRÁFICA: velas OHLC Reaccion -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
-def g_barra_ocur(param_theme, param_dims):
+def g_barra_ocur(param_data, param_theme, param_dims):
     """
     Parameters
     ----------
+    param_data :
     param_theme : dict : diccionario con tema de visualizaciones
     param_dims : dict : diccionario con tamanos para visualizaciones
 

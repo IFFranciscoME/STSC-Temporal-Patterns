@@ -61,7 +61,9 @@ instpackages <- lapply(pkg, library, character.only=TRUE)
 \begin{frame}
 
 \begin{block}{Introduction}
-  The basic looks like this.
+  Metodolg\'ia \textit{BoxJenkins} para series de tiempo financieras. Modelo lineal 
+  univariado que utiliza informaci\'on end\'ogena de la serie de tiempo para construir un modelo 
+  matem\'atico con el cual realizar predicciones de valores futuros.
 \end{block}
 
 \begin{columns}[onlytextwidth]
@@ -69,7 +71,11 @@ instpackages <- lapply(pkg, library, character.only=TRUE)
 \begin{column}{0.5\textwidth - 1.5cm}
 
     \begin{block}{Method}
-        \lipsum[1]
+    
+      \begin{figure}[H]
+      \includegraphics[scale=1]{imagenes/grafica_1.png}
+      \end{figure}
+    
     \end{block}
 
     \begin{block}{Results}
