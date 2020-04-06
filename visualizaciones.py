@@ -31,9 +31,9 @@ def g_lineas(param_query, param_pattern, param_theme, param_dims):
     Debugging
     ---------
     param_pattern = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
-    param_pattern = param_pattern['df_serie_p']['close']
+    param_pattern = pattern_g2
     param_query = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
-    param_query = param_query['df_serie_q']['close']
+    param_query = query_g2
     param_theme = tema_base
     param_dims = dimensiones_base
 
@@ -174,7 +174,7 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
                        high=param_ohlc['high'],
                        low=param_ohlc['low'],
                        close=param_ohlc['close'],
-                       opacity=0.4))
+                       opacity=0.5))
 
     # Agregar capa de linea extra: Close
     fig_g_velas_reac.add_trace(
