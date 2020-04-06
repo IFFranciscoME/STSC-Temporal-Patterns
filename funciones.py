@@ -920,13 +920,17 @@ def f_tablas_ocur(param_carpeta):
     files = [f for f in listdir(abspath) if isfile(join(abspath, f))]
     dc_ocurrencias = dict()
 
+    # ciclo para hacer proceso de unir informacion de todos los archivos
     for j in range(0, len(files)):
+
         # abrir el archivo
         with open(abspath + '/' + files[j], 'rb') as file:
             resultados = pickle.load(file)
+
         # dejar como llave el nombre del dataframe
         llave = list(resultados.keys())[0]
         len_res = len(resultados[llave])
+
         # listas para guardar resultados
         l_ocur_titulo = list()
         l_ocur_tipo1 = list()
@@ -946,11 +950,11 @@ def f_tablas_ocur(param_carpeta):
                 l_ocur_tipo2.append(tipo_2)
                 l_ocur_tipo3.append(tipo_3)
 
+        # importar data frame de calendario economico original
         from datos import df_ce
         df_ce_ocur = f_escenario(p0_datos=df_ce)
         df_ce_ocur['ind_esc'] = [df_ce_ocur['id'][i] + '_' + df_ce_ocur['esc'][i]
                                  for i in range(0, len(df_ce_ocur['id']))]
-
         df_ind_esc = pd.DataFrame(df_ce_ocur.groupby('ind_esc')['esc'].count())
         df_ind_esc.reset_index(inplace=True, drop=False)
 
