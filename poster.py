@@ -10,21 +10,37 @@ import funciones as fn
 import visualizaciones as vs
 import entradas as en
 
+# -- -------------------------------------------------------------------------- Grafica 1 -- #
+# -- velas con ohlc y series de busqueda de patrones
 
-# grafica 1 : series de tiempo para busqueda de patrones
-pattern = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
-pattern = pattern['df_serie_p']['close']
-query = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
-query = query['df_serie_q']['close']
+# -- -------------------------------------------------------------------------- Grafica 2 -- #
+# -- Series original vs patron encontrado
+
+results = fn.f_leer_resultados(param_carpeta='datos/results_files_r3/',
+                               param_archivo='mid_oc_30_1_3000_20')
+
+# serie patron arbitraria encontrada para graficar = 7
+results_ocur = list(results['ciclo_4'][89]['datos'].keys())
+pattern = results['ciclo_4'][89]['datos'][results_ocur[7]]['df_serie_p']['mid_oc']
+
+# serie query arbitraria encontrada para graficar = 7
+query = results['ciclo_4'][89]['datos'][results_ocur[7]]['df_serie_q']['mid_oc']
+
+# tema de colores a utilizar
 theme = en.tema_base
+
+# dimensiones a utilizar
 dims = en.dimensiones_base
 
+# generar grafica
 grafica_1 = vs.g_lineas(param_query=query, param_pattern=pattern,
                         param_theme=theme, param_dims=dims)
+grafica_1.show()
 
-# grafica 2 : serie origin vs patron encontrado
+# -- -------------------------------------------------------------------------- Grafica 3 -- #
+# -- Ocurrencia de indicador_esc por tipo de patron
 
-# grafica 3 : ocurrencia de indicador_esc por tipo de patron
+# -- -------------------------------------------------------------------------- Tabla 1 -- #
+# -- Ocurrencia de patrones por indicador_escenario
 
-# tabla 1 : Ocurrencia de patrones por indicador_escenario
 dc_tablas = fn.f_tablas_ocur(param_carpeta='datos/results_files_r3')

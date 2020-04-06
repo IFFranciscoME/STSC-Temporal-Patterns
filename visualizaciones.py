@@ -99,13 +99,13 @@ def g_lineas(param_query, param_pattern, param_theme, param_dims):
     fig_g_lineas.update_layout(autosize=False, width=1240, height=400, paper_bgcolor="white",
                                margin=go.layout.Margin(l=55, r=65, b=5, t=5, pad=1))
 
-    # Creacion de titulos Y0 y Y1 como anotaciones
+    # Anotaciones en la grafica (una para cada serie)
     fig_g_lineas.update_layout(annotations=[
-        go.layout.Annotation(x=0, y=0.5, text="Serie Original", textangle=-90,
+        go.layout.Annotation(x=0, y=0.35, text="Serie Original", textangle=-90,
                              xref="paper", yref="paper", showarrow=False,
                              font=dict(size=param_theme['tam_texto_grafica'],
                                        color=param_theme['color_linea_1'])),
-        go.layout.Annotation(x=1, y=0.5, text="Serie Patron Encontrado", textangle=-90,
+        go.layout.Annotation(x=1, y=0.35, text="Serie Patron Encontrado", textangle=-90,
                              xref="paper", yref="paper", showarrow=False,
                              font=dict(size=param_theme['tam_texto_grafica'],
                                        color=param_theme['color_linea_2']))])
