@@ -981,8 +981,41 @@ def f_tablas_ocur(param_carpeta):
     return dc_ocurrencias
 
 
-# -- ----------------------------------------------------- Lista de clases de indicadores -- #
+# -- ----------------------------------------------- Tabla general de info de indicadores -- #
 # -- ------------------------------------------------------------------------------------ -- #
-# -- Una lista para relacionar el indicador con su clase economica.
+# -- Una tabla con todos los indicadores e informacion general para cada uno
 
 
+def ce_tabla_general(param_ce, param_tip):
+    """
+    Parameters
+    ----------
+    param_ce : pd.DataFrame : con datos de calendario economico
+    param_tip : pd.DataFrame : con clasificacion manual de indicadores por tipo
+
+    Returns
+    -------
+    df_tb : pd.DataFrame : tabla general de indicadores
+
+    Debugging
+    ---------
+    param_ce = df_ce
+    param_tip = df_tip
+
+    """
+
+    df_tip = pd.DataFrame(param_tip)
+    df_datos = param_ce.copy()
+
+    df_tb = pd.DataFrame({'id': list(set(df_datos['id']))})
+
+    df_tb['nombre'] = [df_datos['name'][np.where(df_datos['id'] ==
+                                                 df_tb['id'].loc[i])[0][0]]
+                       for i in range(0, len(df_tb['id']))]
+    df_tb['tipo'] = [df_tip['categoria'][np.where(df_tip['nombre'] ==
+                                                  df_tb['nombre'].loc[i])[0][0]]
+                     for i in range(0, len(df_tb['nombre']))]
+    df_tb['pais'] = [df_datos['currency'][np.where(df_datos['id'] == df_tb['id'].loc[i])[0][0]]
+                     for i in range(0, len(df_tb['id']))]
+
+    return df_tb

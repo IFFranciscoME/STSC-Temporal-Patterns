@@ -10,6 +10,9 @@ import funciones as fn
 import visualizaciones as vs
 import entradas as en
 
+from datos import df_ce
+from entradas import ind_tip
+
 # resultados para tomar ejemplo para las graficas
 results = fn.f_leer_resultados(param_carpeta='datos/results_files_r3/',
                                param_archivo='mid_oc_30_1_3000_20')
@@ -59,6 +62,11 @@ grafica_2.show()
 # -- Ocurrencia de indicador_esc por tipo de patron
 
 # -- -------------------------------------------------------------------------- Tabla 1 -- #
+# -- tabla con informacion general de todos los indicadores
+
+tabla_1 = fn.ce_tabla_general(param_ce=df_ce, param_tip=ind_tip)
+
+# -- -------------------------------------------------------------------------- Tabla 2 -- #
 # -- Ocurrencia de patrones por indicador_escenario
 
-dc_tablas = fn.f_tablas_ocur(param_carpeta='datos/results_files_r3')
+tabla_2 = fn.f_tablas_ocur(param_carpeta='datos/results_files_r3')
