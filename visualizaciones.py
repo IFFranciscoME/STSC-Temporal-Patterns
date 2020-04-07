@@ -236,7 +236,7 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
     return fig_g_velas_reac
 
 
-# -- ------------------------------------------------------- GRÁFICA: velas OHLC Reaccion -- #
+# -- -------------------------------------------------------- GRÁFICA: aluvial categorica -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
 def g_aluvial_cat(param_data, param_theme, param_dims):
@@ -249,7 +249,7 @@ def g_aluvial_cat(param_data, param_theme, param_dims):
 
     Returns
     -------
-    fig_g_barra_ocur : plotly : objeto/diccionario tipo plotly para graficar
+    fig_g_aluvial_cat : plotly : objeto/diccionario tipo plotly para graficar
 
     Debugging
     ---------
@@ -259,58 +259,97 @@ def g_aluvial_cat(param_data, param_theme, param_dims):
 
     """
 
+    # generacion de dimension: categoria
     categoria_dim = go.parcats.Dimension(
         values=param_data['categoria'],
         label='categoria')
 
+    # generacion de dimension: pais
     pais_dim = go.parcats.Dimension(
         values=param_data['pais'],
         label='pais')
 
+    # generacion de dimension: frecuencia de ocurrencia
     frecuencia_dim = go.parcats.Dimension(
         values=param_data['frecuencia'],
         label='frecuencia')
 
+    # generacion de dimension: presencia de patrones tipo 1
     tipo_1_dim = go.parcats.Dimension(
         values=param_data['tipo_1'],
         label="tipo_1",
         categoryarray=[0, 1],
         ticktext=['sin patron', 'con patron'])
 
+    # generacion de dimension: presencia de patrones tipo 2
     tipo_2_dim = go.parcats.Dimension(
         values=param_data['tipo_2'],
         label="tipo_2",
         categoryarray=[0, 1],
         ticktext=['sin patron', 'con patron'])
 
+    # generacion de dimension: presencia de patrones tipo 3
     tipo_3_dim = go.parcats.Dimension(
         values=param_data['tipo_3'],
         label="tipo_3",
         categoryarray=[0, 1],
         ticktext=['sin patron', 'con patron'])
 
-    color = param_data['tipo_3']
-    colorscale = [[0, param_theme['color_linea_1']],
-                  [1, param_theme['color_linea_2']]]
+    # vector de colores para todas las lineas
+    colores = [param_theme['color_linea_9'], param_theme['color_linea_2'],
+               param_theme['color_linea_3'], param_theme['color_linea_4'],
+               param_theme['color_linea_5'], param_theme['color_linea_6'],
+               param_theme['color_linea_7'], param_theme['color_linea_8'],
+               param_theme['color_linea_1']]
 
-    fig = go.Figure(data=[go.Parcats(dimensions=[categoria_dim, frecuencia_dim, pais_dim,
-                                                 tipo_1_dim, tipo_2_dim, tipo_3_dim],
-                                     line={'color': color, 'colorscale': colorscale},
-                                     hoveron='color', hoverinfo='count+probability',
-                                     labelfont={'size': 14, 'family': 'Times',
-                                                'color': param_theme['color_texto_ejes']},
-                                     tickfont={'size': 14, 'family': 'Times',
-                                               'color': param_theme['color_texto_ejes']},
-                                     arrangement='perpendicular')])
+    # crear columna de color en los datos de entrada
+    param_data['color'] = ['#ABABAB']*len(param_data['id'])
+
+    for i in range(0, len(param_data['categoria'])):
+        if param_data['categoria'].iloc[i] == 'Tasas de interes':
+            param_data['color'].iloc[i] = colores[0]
+        elif param_data['categoria'].iloc[i] == 'actividad economica':
+            param_data['color'].iloc[i] = colores[3]
+        elif param_data['categoria'].iloc[i] == 'consumo':
+            param_data['color'].iloc[i] = colores[8]
+        elif param_data['categoria'].iloc[i] == 'energia':
+            param_data['color'].iloc[i] = colores[6]
+        elif param_data['categoria'].iloc[i] == 'flujos de capital':
+            param_data['color'].iloc[i] = colores[4]
+        elif param_data['categoria'].iloc[i] == 'inflacion':
+            param_data['color'].iloc[i] = colores[5]
+        elif param_data['categoria'].iloc[i] == 'mercado inmobiliario':
+            param_data['color'].iloc[i] = colores[1]
+        elif param_data['categoria'].iloc[i] == 'mercado laboral':
+            param_data['color'].iloc[i] = colores[7]
+        elif param_data['categoria'].iloc[i] == 'subasta de bonos':
+            param_data['color'].iloc[i] = colores[2]
+
+    color = param_data['color'].tolist()
+
+    # generacion del objeto figura
+    fig_g_aluvial_cat = go.Figure()
+
+    # agregar trazo de grafica tipo aluvial (parallel categories)
+    fig_g_aluvial_cat.add_trace(go.Parcats(
+        dimensions=[categoria_dim, frecuencia_dim, pais_dim,
+                    tipo_1_dim, tipo_2_dim, tipo_3_dim],
+        line={'color': color},
+        hoveron='color', hoverinfo='count+probability',
+        labelfont={'size': 14, 'family': 'Times',
+                   'color': param_theme['color_texto_ejes']},
+        tickfont={'size': 14, 'family': 'Times',
+                  'color': param_theme['color_texto_ejes']},
+        arrangement='perpendicular'))
 
     # layout de margen, titulos y ejes
-    fig.update_layout(
+    fig_g_aluvial_cat.update_layout(
         margin=go.layout.Margin(l=105, r=85, b=20, t=50, pad=20),
         title=dict(x=0.5, text='Patrones encontrados segun <b> Info de Indicador </b>'))
 
     # Formato de tamanos
-    fig.layout.autosize = True
-    fig.layout.width = param_dims['figura_1']['width']
-    fig.layout.height = param_dims['figura_1']['height']
+    fig_g_aluvial_cat.layout.autosize = True
+    fig_g_aluvial_cat.layout.width = param_dims['figura_1']['width']
+    fig_g_aluvial_cat.layout.height = param_dims['figura_1']['height']
 
-    return fig
+    return fig_g_aluvial_cat

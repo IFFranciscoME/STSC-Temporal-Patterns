@@ -34,8 +34,11 @@ tema_base = {'tam_titulo_ejes': 15, 'tam_titulo_prin': 15, 'tam_texto_ejes': 14,
              'color_texto_ejes': 'dark grey', 'color_background_grafica': 'white',
              'color_texto_general': 'dark grey', 'color_texto_tabla': 'dark grey',
              'color_texto_leyenda': 'dark grey',
-             'color_linea_1': 'blue', 'color_linea_2': 'red', 'color_linea_3': 'red',
-             'color_linea_4': 'red', 'color_linea_5': 'red', 'color_linea_6': 'red',
+             'color_linea_1': '#004A94', 'color_linea_2': '#42c29b',
+             'color_linea_3': '#04CBCC', 'color_linea_4': '#047CFB',
+             'color_linea_5': '#418FFB', 'color_linea_6': '#6B6B6B',
+             'color_linea_7': '#339e62', 'color_linea_8': '#ABABAB',
+             'color_linea_9': '#FB5D41',
              'tam_linea_1': 1, 'tam_linea_2': 2, 'tam_linea_3': 3}
 
 # dimensiones para graficas

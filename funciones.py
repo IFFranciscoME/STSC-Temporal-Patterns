@@ -1066,6 +1066,8 @@ def f_tabla_aluvial(param_tabla_1, param_tabla_2):
     param_tabla_2 = tabla_2
 
     """
+    frames = [param_tabla_1, param_tabla_2]
+    prueba = pd.concat(frames)
 
     # reordenar tablas de acuerdo a los valores de id y id_esc
     param_tabla_1.sort_values('id', ascending=True, inplace=True)
@@ -1140,14 +1142,14 @@ def f_tabla_aluvial(param_tabla_1, param_tabla_2):
     todos = list(param_tabla_1['id'])
     no_hay = np.setdiff1d(todos, si_hay).tolist()
 
-    df_nohay = param_tabla_1.loc[[int(np.where(param_tabla_1['id'] == i)[0])
+    df_nohay = param_tabla_1.iloc[[int(np.where(param_tabla_1['id'] == i)[0])
                                     for i in no_hay]]
 
-    df_nohay['tipo_1'] = [0] * len(df_nohay)
-    df_nohay['tipo_2'] = [0] * len(df_nohay)
-    df_nohay['tipo_3'] = [0] * len(df_nohay)
-    df_nohay['tipo_4'] = [1] * len(df_nohay)
-
-    df_aluvial = pd.concat([df_aluvial, df_nohay])
+    frames = [df_aluvial, df_nohay]
+    df_aluvial = pd.concat(frames, axis=0, sort=True)
+    df_aluvial['tipo_1'][np.isnan(df_aluvial['tipo_1'])] = 0
+    df_aluvial['tipo_2'][np.isnan(df_aluvial['tipo_2'])] = 0
+    df_aluvial['tipo_3'][np.isnan(df_aluvial['tipo_3'])] = 0
+    df_aluvial['tipo_4'][np.isnan(df_aluvial['tipo_4'])] = 0
 
     return df_aluvial
