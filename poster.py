@@ -42,7 +42,7 @@ grafica_1 = vs.g_velas_reac(param_timestamp=pattern_g2['timestamp'], param_ohlc=
                             param_theme=theme, param_dims=dims)
 
 # mostrar grafica 1
-grafica_1.show()
+# grafica_1.show()
 
 # -- -------------------------------------------------------------------------- Grafica 2 -- #
 # -- Series original vs patron encontrado
@@ -56,10 +56,7 @@ grafica_2 = vs.g_lineas(param_query=query_g2, param_pattern=pattern_g2,
                         param_theme=theme, param_dims=dims)
 
 # mostrar grafica 2
-grafica_2.show()
-
-# -- -------------------------------------------------------------------------- Grafica 3 -- #
-# -- Ocurrencia de indicador_esc por tipo de patron
+# grafica_2.show()
 
 # -- -------------------------------------------------------------------------- Tabla 1 -- #
 # -- tabla con informacion general de todos los indicadores
@@ -70,3 +67,11 @@ tabla_1 = fn.ce_tabla_general(param_ce=df_ce, param_tip=ind_tip)
 # -- Ocurrencia de patrones por indicador_escenario
 
 tabla_2 = fn.f_tablas_ocur(param_carpeta='datos/results_files_r3')
+tabla_2 = tabla_2['df_mid_oc_30_1_3000_20']
+
+# -- -------------------------------------------------------------------------- Tabla 3 -- #
+# -- para grafica tipo aluvial
+tabla_3 = fn.f_tabla_aluvial(param_tabla_1=tabla_1, param_tabla_2=tabla_2)
+
+# -- -------------------------------------------------------------------------- Grafica 3 -- #
+# -- Ocurrencia de indicador_esc por tipo de patron

@@ -239,11 +239,11 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
 # -- ------------------------------------------------------- GRÁFICA: velas OHLC Reaccion -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
-def g_barra_ocur(param_data, param_theme, param_dims):
+def g_aluvial_cat(param_data, param_theme, param_dims):
     """
     Parameters
     ----------
-    param_data :
+    param_data : pd.DataFrame : data frame con tabla a graficar (tabla 3)
     param_theme : dict : diccionario con tema de visualizaciones
     param_dims : dict : diccionario con tamanos para visualizaciones
 
@@ -253,20 +253,64 @@ def g_barra_ocur(param_data, param_theme, param_dims):
 
     Debugging
     ---------
-    param_data = dc_tablas['df_mid_oc_30_1_3000_20']
+    param_data = tabla_3
+    param_theme = tema_base
+    param_dims = dimensiones_base
 
     """
 
-    fig = go.Figure(data=[
-        go.Bar(name='Tipo1',
-               x=list(param_data['nombre'][85:87]), y=list(param_data['tipo_1'][85:87])),
-        go.Bar(name='Tipo1',
-               x=list(param_data['nombre'][85:87]), y=list(param_data['tipo_2'][85:87])),
-        go.Bar(name='Tipo1',
-               x=list(param_data['nombre'][85:87]), y=list(param_data['tipo_3'][85:87]))])
+    categoria_dim = go.parcats.Dimension(
+        values=param_data['categoria'],
+        label='categoria')
 
-    # Change the bar mode
-    fig.update_layout(barmode='stack')
-    fig.show()
+    pais_dim = go.parcats.Dimension(
+        values=param_data['pais'],
+        label='pais')
 
-    return 1
+    frecuencia_dim = go.parcats.Dimension(
+        values=param_data['frecuencia'],
+        label='frecuencia')
+
+    tipo_1_dim = go.parcats.Dimension(
+        values=param_data['tipo_1'],
+        label="tipo_1",
+        categoryarray=[0, 1],
+        ticktext=['sin patron', 'con patron'])
+
+    tipo_2_dim = go.parcats.Dimension(
+        values=param_data['tipo_2'],
+        label="tipo_2",
+        categoryarray=[0, 1],
+        ticktext=['sin patron', 'con patron'])
+
+    tipo_3_dim = go.parcats.Dimension(
+        values=param_data['tipo_3'],
+        label="tipo_3",
+        categoryarray=[0, 1],
+        ticktext=['sin patron', 'con patron'])
+
+    color = param_data['tipo_3']
+    colorscale = [[0, param_theme['color_linea_1']],
+                  [1, param_theme['color_linea_2']]]
+
+    fig = go.Figure(data=[go.Parcats(dimensions=[categoria_dim, frecuencia_dim, pais_dim,
+                                                 tipo_1_dim, tipo_2_dim, tipo_3_dim],
+                                     line={'color': color, 'colorscale': colorscale},
+                                     hoveron='color', hoverinfo='count+probability',
+                                     labelfont={'size': 14, 'family': 'Times',
+                                                'color': param_theme['color_texto_ejes']},
+                                     tickfont={'size': 14, 'family': 'Times',
+                                               'color': param_theme['color_texto_ejes']},
+                                     arrangement='perpendicular')])
+
+    # layout de margen, titulos y ejes
+    fig.update_layout(
+        margin=go.layout.Margin(l=105, r=85, b=20, t=50, pad=20),
+        title=dict(x=0.5, text='Patrones encontrados segun <b> Info de Indicador </b>'))
+
+    # Formato de tamanos
+    fig.layout.autosize = True
+    fig.layout.width = param_dims['figura_1']['width']
+    fig.layout.height = param_dims['figura_1']['height']
+
+    return fig

@@ -971,7 +971,7 @@ def f_tablas_ocur(param_carpeta):
 
         # actualizar diccionario con dataframes de informacion
         dc_ocurrencias['df_' +
-                       files[j]] = pd.DataFrame({'nombre': l_ocur_titulo,
+                       files[j]] = pd.DataFrame({'id_esc': l_ocur_titulo,
                                                  'tipo_1': l_ocur_tipo1,
                                                  'tipo_2': l_ocur_tipo2,
                                                  'tipo_3': l_ocur_tipo3,
@@ -1000,22 +1000,154 @@ def ce_tabla_general(param_ce, param_tip):
     Debugging
     ---------
     param_ce = df_ce
-    param_tip = df_tip
+    param_tip = ind_tip
 
     """
 
+    # datos para calculos
     df_tip = pd.DataFrame(param_tip)
     df_datos = param_ce.copy()
 
+    # creacion de data frame final
     df_tb = pd.DataFrame({'id': list(set(df_datos['id']))})
 
+    # columna de nombre
     df_tb['nombre'] = [df_datos['name'][np.where(df_datos['id'] ==
                                                  df_tb['id'].loc[i])[0][0]]
                        for i in range(0, len(df_tb['id']))]
-    df_tb['tipo'] = [df_tip['categoria'][np.where(df_tip['nombre'] ==
-                                                  df_tb['nombre'].loc[i])[0][0]]
-                     for i in range(0, len(df_tb['nombre']))]
+
+    # columna de tipo
+    df_tb['categoria'] = [df_tip['categoria'][np.where(df_tip['nombre'] ==
+                                                       df_tb['nombre'].loc[i])[0][0]]
+                          for i in range(0, len(df_tb['nombre']))]
+
+    # columna de pais o economia de la que es el indicador
     df_tb['pais'] = [df_datos['currency'][np.where(df_datos['id'] == df_tb['id'].loc[i])[0][0]]
                      for i in range(0, len(df_tb['id']))]
 
+    # columna de ocurrencias totales de cada indicador
+    df_tb.sort_values('nombre', ascending=True, inplace=True)
+    df_tb['ocurrencias'] = list(df_datos.groupby('id').count()['name'])
+
+    # categorizacion empirica de indicador segun cantidad de observaciones
+    l_categ = list()
+    for r in range(0, len(df_tb['id'])):
+        if 0 < df_tb['ocurrencias'].iloc[r] <= 60:
+            l_categ.append('trimestral')
+        elif 60 < df_tb['ocurrencias'].iloc[r] <= 125:
+            l_categ.append('mensual')
+        elif 125 < df_tb['ocurrencias'].iloc[r] <= 920:
+            l_categ.append('semanal')
+
+    # asignar categoria
+    df_tb['frecuencia'] = l_categ
+
     return df_tb
+
+
+# -- --------------------------------------------------------- Tabla para grafica aluvial -- #
+# -- ------------------------------------------------------------------------------------ -- #
+# -- tabla para grafica aluvial
+
+def f_tabla_aluvial(param_tabla_1, param_tabla_2):
+    """
+    Parameters
+    ----------
+    param_tabla_1 : pd.DataFrame : tabla 1 anteriormente calculada
+    param_tabla_2 : pd.DataFrame : tabla 2 anteriormente calculada
+
+    Returns
+    -------
+    df_aluvial : pd.DataFrame : tabla 3 para visualizaciones
+
+    Debugging
+    ---------
+    param_tabla_1 = tabla_1
+    param_tabla_2 = tabla_2
+
+    """
+
+    # reordenar tablas de acuerdo a los valores de id y id_esc
+    param_tabla_1.sort_values('id', ascending=True, inplace=True)
+    param_tabla_2.sort_values('id_esc', ascending=True, inplace=True)
+
+    # agregar columna de id para mayor facilidad de calculos posteriores a tabla 2
+    param_tabla_2['id'] = [param_tabla_2['id_esc'].iloc[i][0:-2]
+                           for i in range(0, len(param_tabla_2['id_esc']))]
+
+    # tuvieron por lo menos 1 ocurrencia de patron encontrado tipo 1
+    tipo_1 = list(param_tabla_2[param_tabla_2['tipo_1'] != 0].groupby('id').count().index)
+
+    # tuvieron por lo menos 1 ocurrencia de patron encontrado tipo 2
+    tipo_2 = list(param_tabla_2[param_tabla_2['tipo_2'] != 0].groupby('id').count().index)
+
+    # tuvieron por lo menos 1 ocurrencia de patron encontrado tipo 3
+    tipo_3 = list(param_tabla_2[param_tabla_2['tipo_3'] != 0].groupby('id').count().index)
+
+    # listas de control
+    l_tipo_1 = list()
+    l_tipo_2 = list()
+    l_tipo_3 = list()
+
+    # ciclo para llenar listas de control
+    for i in range(0, len(param_tabla_2['id'])):
+        if param_tabla_2['id'].iloc[i] in tipo_1:
+            l_tipo_1.append(1)
+        else:
+            l_tipo_1.append(0)
+
+    for i in range(0, len(param_tabla_2['id'])):
+        if param_tabla_2['id'].iloc[i] in tipo_2:
+            l_tipo_2.append(1)
+        else:
+            l_tipo_2.append(0)
+
+    for i in range(0, len(param_tabla_2['id'])):
+        if param_tabla_2['id'].iloc[i] in tipo_3:
+            l_tipo_3.append(1)
+        else:
+            l_tipo_3.append(0)
+
+    # conjunto de indicadores que tuvieron al menos alguno de los 3 tipos
+    tipos = set(tipo_1 + tipo_2 + tipo_3)
+
+    # dataframe de salida con solo los indicadores que tuvieron al menos 1 tipo
+    df_aluvial = param_tabla_1.loc[param_tabla_1['id'].isin(tipos)]
+    df_aluvial.reset_index(inplace=True, drop=True)
+
+    # creacion de nuevas columnas para indicar con 1 si hubo ese tipo y 0 si no lo hubo
+
+    # al menos 1 de los escenarios del indicador tuvo patron del tipo 1
+    df_aluvial['tipo_1'] = [1 if df_aluvial['id'].iloc[i] in tipo_1 else 0
+                               for i in range(0, len(df_aluvial['id']))]
+
+    # al menos 1 de los escenarios del indicador tuvo patron del tipo 2
+    df_aluvial['tipo_2'] = [1 if df_aluvial['id'].iloc[i] in tipo_2 else 0
+                               for i in range(0, len(df_aluvial['id']))]
+
+    # al menos 1 de los escenarios del indicador tuvo patron del tipo 3
+    df_aluvial['tipo_3'] = [1 if df_aluvial['id'].iloc[i] in tipo_3 else 0
+                               for i in range(0, len(df_aluvial['id']))]
+
+    # por la forma que se buscan, todos tuvieron patrones del tipo 4
+    df_aluvial['tipo_4'] = [1]*len(df_aluvial['id'])
+
+    # reordenar por id
+    df_aluvial.sort_values('id', inplace=True)
+
+    # agregar renglones de indicadores que no tuvieron patrones encontrados
+    si_hay = list(df_aluvial['id'])
+    todos = list(param_tabla_1['id'])
+    no_hay = np.setdiff1d(todos, si_hay).tolist()
+
+    df_nohay = param_tabla_1.loc[[int(np.where(param_tabla_1['id'] == i)[0])
+                                    for i in no_hay]]
+
+    df_nohay['tipo_1'] = [0] * len(df_nohay)
+    df_nohay['tipo_2'] = [0] * len(df_nohay)
+    df_nohay['tipo_3'] = [0] * len(df_nohay)
+    df_nohay['tipo_4'] = [1] * len(df_nohay)
+
+    df_aluvial = pd.concat([df_aluvial, df_nohay])
+
+    return df_aluvial
