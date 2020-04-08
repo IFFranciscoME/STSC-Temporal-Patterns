@@ -38,6 +38,14 @@
 
 <<Ini, include=FALSE, echo=FALSE, eval=FALSE>>=
 
+# Establecer directorio de trabajo donde esta este scritp
+
+# para cuando se hace "RUN" del codigo
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+# para cuando se hace "SOURCE" del codigo
+# setwd(getSrcDirectory()[1])
+
 # -- Remover Objetos de Environment
 rm(list=ls())
 
@@ -46,9 +54,9 @@ knit_hooks$set(inline = function(x) {
 })
 
 # -- Instalar y/o cargar paquetes necesarios
-pkg <- c("downloader","dplyr","fBasics","gridExtra","ggplot2","httr","jsonlite","lubridate",
-         "lattice","moments","matrixStats", "plyr","plotly","plot3D", "reshape2","RCurl", "stats", 
-         "scales", "tseries","XML","xts","xlsx","xtable","zoo")
+pkg <- c("downloader","dplyr","fBasics","gridExtra","ggplot2","httr", "jsonlite","lubridate",
+         "lattice","moments","matrixStats", "plyr","plot3D", "reshape2","RCurl", "stats", 
+         "scales", "tseries","XML","xts","xlsx","xtable", "zoo")
 
 inst <- pkg %in% installed.packages()
 if(length(pkg[!inst]) > 0)
@@ -57,56 +65,45 @@ instpackages <- lapply(pkg, library, character.only=TRUE)
 
 @
 
-\begin{document}
-\begin{frame}
+<<leer_tablas, include=TRUE, echo=FALSE, eval=TRUE>>=
+t_tabla_1 <- read.csv('tablas/t_tabla_1.csv', fill = TRUE)
+t_tabla_1 <- t_tabla_1[, c('id', 'pais', 'ocurrencias')]
+@
 
-\begin{block}{Introduction}
-  Metodolg\'ia \textit{BoxJenkins} para series de tiempo financieras. Modelo lineal 
-  univariado que utiliza informaci\'on end\'ogena de la serie de tiempo para construir un modelo 
-  matem\'atico con el cual realizar predicciones de valores futuros.
-\end{block}
+<<leer_tablas, include=TRUE, echo=FALSE, eval=TRUE>>=
+json_data <- fromJSON(file='datos/resultados.json', flatten=TRUE)
+
+@
+
+\begin{document}
+
+\begin{frame}
 
 \begin{columns}[onlytextwidth]
 
-\begin{column}{0.5\textwidth - 1.5cm}
-
-    \begin{block}{Method}
+  \begin{column}{.6\textwidth - 0.01\textwidth}
+    \begin{block}{Descripci\'on General}
+      Metodolg\'ia \textit{BoxJenkins} para series de tiempo financieras. Modelo lineal 
+      univariado que utiliza informaci\'on end\'ogena de la serie de tiempo para construir un modelo 
+      matem\'atico con el cual realizar predicciones de valores futuros.
+    \end{block}
     
+    \begin{block}{Diagrama General}
       \begin{figure}[H]
-      \includegraphics[scale=1]{imagenes/grafica_1.png}
+        \includegraphics[scale=1]{imagenes/grafica_1.png}
       \end{figure}
-    
     \end{block}
-
-    \begin{block}{Results}
-        \lipsum[2]
-        \unskip
-    \end{block}
-    
 \end{column}
 
-
-\begin{column}{0.5\textwidth - 1.5cm}
-    \begin{block}{Conclusions}
-        \lipsum[4]
-    \end{block}
-
-    \begin{block}{Acknowledgements}
-        \lipsum[5]
-    \end{block}
-
-    \begin{block}{References}
-        \lipsum[6]
-    \end{block}
-
+\begin{column}{.4 \textwidth - 0.01\textwidth}
+  \begin{block}{Tabla General}
+     \Sexpr{kable(t_tabla_1, align = "c")}
+  \end{block}
 \end{column}
+  
 \end{columns}
 
-\begin{textblock}{0.5}(0.5, 0.955)
-    \color{white}
-    \sffamily
-    % \textbf{https://github.com/IFFranciscoME/A1\_Temporal\_Patterns}
-\end{textblock}
+
 
 \end{frame}
 \end{document}

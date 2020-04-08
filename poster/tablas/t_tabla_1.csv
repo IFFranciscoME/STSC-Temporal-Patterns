@@ -1,0 +1,115 @@
+,id,nombre,categoria,pais,ocurrencias,frecuencia
+21,12-Monlation_MEX,12-Month Inflation,inflacion,MEX,104,mensual
+98,1sthallation_MEX,1st half-month Inflation,inflacion,MEX,105,mensual
+35,3-Montuction_USA,3-Month Bill Auction,subasta de bonos,USA,392,semanal
+38,3-Yearuction_USA,3-Year Note Auction,subasta de bonos,USA,91,mensual
+82,30-Yeauction_USA,30-Year Bond Auction,subasta de bonos,USA,96,mensual
+97,4-Weekuction_USA,4-Week Bill Auction,subasta de bonos,USA,391,semanal
+57,6-Montuction_USA,6-Month Bill Auction,subasta de bonos,USA,395,semanal
+23,ADPEmpChange_USA,ADP Employment Change,mercado laboral,USA,120,mensual
+42,APIWeelStock_USA,API Weekly Crude Oil Stock,energia,USA,235,semanal
+109,AccumuuntGDP_MEX,Accumulated Current AccountGDP,actividad economica,MEX,36,trimestral
+83,AveragngsMoM_USA,Average Hourly Earnings MoM,mercado laboral,USA,120,mensual
+0,AveragngsYoY_USA,Average Hourly Earnings YoY,mercado laboral,USA,118,mensual
+80,AveragyHours_USA,Average Weekly Hours,mercado laboral,USA,120,mensual
+47,BakerHgCount_USA,Baker Hughes US Oil Rig Count,energia,USA,235,semanal
+103,BuildiChange_USA,Building Permits Change,mercado inmobiliario,USA,47,trimestral
+73,BuildiitsMoM_USA,Building Permits MoM,mercado inmobiliario,USA,121,mensual
+30,Businetories_USA,Business Inventories,consumo,USA,120,mensual
+4,CFTCGoitions_USA,CFTC Gold NC Net Positions,flujos de capital,USA,205,semanal
+63,CFTCOiitions_USA,CFTC Oil NC Net Positions,flujos de capital,USA,205,semanal
+54,CFTCUSitions_USA,CFTC USD NC Net Positions,flujos de capital,USA,206,semanal
+39,Capacization_USA,Capacity Utilization,consumo,USA,120,mensual
+89,CentrastRate_MEX,Central Bank Interest Rate,Tasas de interes,MEX,67,mensual
+49,ChalleobCuts_USA,Challenger Job Cuts,mercado laboral,USA,96,mensual
+5,ChicagyIndex_USA,Chicago Fed National Activity Index,actividad economica,USA,120,mensual
+6,Chicag'Index_USA,Chicago Purchasing Managers' Index,consumo,USA,100,mensual
+28,ConstringMoM_USA,Construction Spending MoM,mercado inmobiliario,USA,120,mensual
+99,Consumidence_MEX,Consumer Confidence,consumo,MEX,120,mensual
+59,Consumnces.a_MEX,Consumer Confidence s.a,consumo,MEX,120,mensual
+91,ConsumChange_USA,Consumer Credit Change,consumo,USA,120,mensual
+17,Consumores.a_USA,Consumer Price Index Core s.a,consumo,USA,103,mensual
+7,ConsumdexMoM_USA,Consumer Price Index MoM,consumo,USA,104,mensual
+71,ConsumdexYoY_USA,Consumer Price Index YoY,consumo,USA,96,mensual
+86,ConsumrgyMoM_USA,Consumer Price Index ex Food  Energy MoM,consumo,USA,120,mensual
+50,ConsumrgyYoY_USA,Consumer Price Index ex Food  Energy YoY,consumo,USA,120,mensual
+104,Consums.aMoM_USA,Consumer Price Index n.s.a MoM,consumo,USA,96,mensual
+56,ContinClaims_USA,Continuing Jobless Claims,mercado laboral,USA,521,semanal
+1,CoreInlation_MEX,Core Inflation,inflacion,MEX,102,mensual
+93,CorePediture_USA,Core Personal Consumption Expenditure,consumo,USA,239,semanal
+105,CorePeresQoQ_USA,Core Personal Consumption Expenditures QoQ,consumo,USA,116,mensual
+85,Currenccount_USA,Current Account,actividad economica,USA,40,trimestral
+52,"Currennt,QoQ_MEX","Current Account,  QoQ",actividad economica,MEX,36,trimestral
+9,DallassIndex_USA,Dallas Fed Manufacturing Business Index,actividad economica,USA,95,mensual
+72,DurablOrders_USA,Durable Goods Orders,consumo,USA,122,mensual
+92,Durablefense_USA,Durable Goods Orders ex Defense,consumo,USA,15,trimestral
+12,Durabltation_USA,Durable Goods Orders ex Transportation,consumo,USA,122,mensual
+31,EIACruChange_USA,EIA Crude Oil Stocks Change,energia,USA,521,semanal
+27,EIANatChange_USA,EIA Natural Gas Storage Change,energia,USA,408,semanal
+20,EmploytIndex_USA,Employment Cost Index,mercado laboral,USA,35,trimestral
+101,ExistingeMoM_USA,Existing Home Sales Change MoM,mercado inmobiliario,USA,120,mensual
+40,ExistilesMoM_USA,Existing Home Sales MoM,mercado inmobiliario,USA,119,mensual
+90,ExportdexMoM_USA,Export Price Index MoM,actividad economica,USA,105,mensual
+95,ExportdexYoY_USA,Export Price Index YoY,actividad economica,USA,94,mensual
+60,FactorersMoM_USA,Factory Orders MoM,actividad economica,USA,120,mensual
+29,FedIntcision_USA,Fed Interest Rate Decision,Tasas de interes,USA,80,mensual
+75,"Fiscal,pesos_MEX","Fiscal Balance, pesos",actividad economica,MEX,101,mensual
+96,GoodsTalance_USA,Goods Trade Balance,actividad economica,USA,55,trimestral
+8,GrossDalized_USA,Gross Domestic Product Annualized,actividad economica,USA,119,mensual
+87,GrossDeIndex_USA,Gross Domestic Product Price Index,actividad economica,USA,119,mensual
+13,GrossDuctQoQ_MEX,Gross Domestic Product QoQ,actividad economica,MEX,37,trimestral
+113,GrossDuctYoY_MEX,Gross Domestic Product YoY,actividad economica,MEX,37,trimestral
+55,Headlilation_MEX,Headline Inflation,inflacion,MEX,103,mensual
+41,HousinChange_USA,Housing Starts Change,mercado inmobiliario,USA,48,trimestral
+106,HousinrtsMoM_USA,Housing Starts MoM,mercado inmobiliario,USA,120,mensual
+76,IBDTIPismMoM_USA,IBDTIPP Economic Optimism MoM,actividad economica,USA,119,mensual
+44,ISMManingPMI_USA,ISM Manufacturing PMI,actividad economica,USA,93,mensual
+78,ISMManesPaid_USA,ISM Manufacturing Prices Paid,actividad economica,USA,118,mensual
+77,ISMNoningPMI_USA,ISM Non-Manufacturing PMI,actividad economica,USA,120,mensual
+45,ISM-NYsIndex_USA,ISM-NY Business Conditions Index,actividad economica,USA,120,mensual
+15,ImportdexMoM_USA,Import Price Index MoM,actividad economica,USA,120,mensual
+81,IndustputMoM_MEX,Industrial Output MoM,actividad economica,MEX,120,mensual
+24,IndustputYoY_MEX,Industrial Output YoY,actividad economica,MEX,104,mensual
+74,IndustionMoM_USA,Industrial Production MoM,actividad economica,USA,104,mensual
+65,InitiaClaims_USA,Initial Jobless Claims,mercado laboral,USA,520,semanal
+61,LaborFonRate_USA,Labor Force Participation Rate,mercado laboral,USA,72,mensual
+79,MarkitingPMI_USA,Markit Manufacturing PMI,actividad economica,USA,145,semanal
+84,Markitposite_USA,Markit PMI Composite,actividad economica,USA,184,semanal
+34,MarkitcesPMI_USA,Markit Services PMI,actividad economica,USA,134,semanal
+18,MichigtIndex_USA,Michigan Consumer Sentiment Index,actividad economica,USA,240,semanal
+10,Monthltement_USA,Monthly Budget Statement,mercado inmobiliario,USA,120,mensual
+19,NAHBHotIndex_USA,NAHB Housing Market Index,actividad economica,USA,120,mensual
+25,NFIBBumIndex_USA,NFIB Business Optimism Index,actividad economica,USA,95,mensual
+2,NYEmpigIndex_USA,NY Empire State Manufacturing Index,flujos de capital,USA,120,mensual
+53,NetLonCFlows_USA,Net Long-Term TIC Flows,mercado inmobiliario,USA,120,mensual
+69,NewHomngeMoM_USA,New Home Sales Change MoM,mercado inmobiliario,USA,120,mensual
+26,NewHomlesMoM_USA,New Home Sales MoM,mercado laboral,USA,120,mensual
+14,Nonfaryrolls_USA,Nonfarm Payrolls,mercado laboral,USA,79,mensual
+36,Nonfartivity_USA,Nonfarm Productivity,mercado inmobiliario,USA,120,mensual
+16,PendinlesYoY_USA,Pending Home Sales YoY,consumo,USA,88,mensual
+102,Personitures_USA,Personal Consumption Expenditures,consumo,USA,88,mensual
+62,PersoncesQoQ_USA,Personal Consumption Expenditures Prices QoQ,consumo,USA,95,mensual
+110,PersonomeMoM_USA,Personal Income MoM,consumo,USA,237,semanal
+32,Personending_USA,Personal Spending,consumo,USA,120,mensual
+67,PhiladSurvey_USA,Philadelphia Fed Manufacturing Survey,consumo,USA,120,mensual
+51,PrivatingQoQ_MEX,Private Spending QoQ,consumo,MEX,30,trimestral
+100,PrivatingYoY_MEX,Private Spending YoY,consumo,MEX,30,trimestral
+70,ProducdexMoM_USA,Producer Price Index MoM,consumo,USA,120,mensual
+66,ProducdexYoY_USA,Producer Price Index YoY,consumo,USA,120,mensual
+58,ProducrgyMoM_USA,Producer Price Index ex Food  Energy MoM,consumo,USA,119,mensual
+46,ProducrgyYoY_USA,Producer Price Index ex Food  Energy YoY,consumo,USA,119,mensual
+33,RedboodexMoM_USA,Redbook Index MoM,consumo,USA,390,semanal
+22,RedboodexYoY_USA,Redbook Index YoY,consumo,USA,390,semanal
+68,RetaillGroup_USA,Retail Sales Control Group,consumo,USA,60,trimestral
+112,RetaillesMoM_MEX,Retail Sales MoM,consumo,MEX,104,mensual
+94,RetaillesMoM_USA,Retail Sales MoM,consumo,USA,120,mensual
+64,RetaillesYoY_MEX,Retail Sales YoY,mercado inmobiliario,MEX,104,mensual
+48,RetailtosMoM_USA,Retail Sales ex Autos MoM,flujos de capital,USA,120,mensual
+107,SPCasecesYoY_USA,SPCase-Shiller Home Price Indices YoY,actividad economica,USA,120,mensual
+3,TotalNCFlows_USA,Total Net TIC Flows,actividad economica,USA,120,mensual
+88,TradeBalance_USA,Trade Balance,actividad economica,USA,119,mensual
+11,"TradeBncesa,_MEX","Trade Balance sa, ",mercado laboral,MEX,105,mensual
+37,"TradeBlance,_MEX","Trade Balance, ",mercado laboral,MEX,106,mensual
+108,UnemplntRate_USA,Unemployment Rate,mercado laboral,USA,120,mensual
+43,UnitLarCosts_USA,Unit Labor Costs,mercado laboral,USA,79,mensual
+111,Wholestories_USA,Wholesale Inventories,actividad economica,USA,154,semanal

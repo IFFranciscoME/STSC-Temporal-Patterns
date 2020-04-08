@@ -174,7 +174,7 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
                        high=param_ohlc['high'],
                        low=param_ohlc['low'],
                        close=param_ohlc['close'],
-                       opacity=0.5))
+                       opacity=0.4))
 
     # Agregar capa de linea extra: Close
     fig_g_velas_reac.add_trace(

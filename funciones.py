@@ -13,6 +13,7 @@ import oandapyV20.endpoints.instruments as instruments    # informacion de preci
 from datetime import timedelta
 
 import pickle
+import json
 import numpy as np
 import pandas as pd
 import warnings
@@ -1045,6 +1046,41 @@ def ce_tabla_general(param_ce, param_tip):
     return df_tb
 
 
+# -- ------------------------------------------------------------- Tabla general compacta -- #
+# -- ------------------------------------------------------------------------------------ -- #
+# -- tabla general version comparta
+
+def f_tabla_general(param_tabla_1):
+    """
+    Parameters
+    ----------
+    param_tabla_1: pd.DataFrame : tabla de entrada
+
+    Returns
+    -------
+    tabla_4: pd.DataFrame : tabla de salida
+
+    Debugging
+    ---------
+    param_tabla_1 = tabla_1
+
+
+    """
+    tabla_4 = pd.DataFrame({
+        'USA': param_tabla_1[param_tabla_1['pais'] ==
+                             'USA'].groupby('categoria')['id'].count(),
+        'MEX': param_tabla_1[param_tabla_1['pais'] ==
+                             'MEX'].groupby('categoria')['id'].count()})
+
+    tabla_4['USA'][np.isnan(tabla_4['USA'])] = 0
+    tabla_4['MEX'][np.isnan(tabla_4['MEX'])] = 0
+
+    tabla_4.reset_index(inplace=True, drop=False)
+    tabla_4 = tabla_4.rename(columns={"index": "categoria indicador"})
+
+    return tabla_4
+
+
 # -- --------------------------------------------------------- Tabla para grafica aluvial -- #
 # -- ------------------------------------------------------------------------------------ -- #
 # -- tabla para grafica aluvial
@@ -1153,3 +1189,30 @@ def f_tabla_aluvial(param_tabla_1, param_tabla_2):
     df_aluvial['tipo_4'][np.isnan(df_aluvial['tipo_4'])] = 0
 
     return df_aluvial
+
+
+# -- -------------------------------------------------------- Serializacion de resultados -- #
+# -- ------------------------------------------------------------------------------------ -- #
+# -- serializar resultados para exportarse como JSON
+
+def f_serial_result(param_objeto, param_nombre):
+    """
+    Parameters
+    ----------
+    param_objeto : dict : objeto cargado tipo dict
+    param_nombre : str : nombre del archivo serializado json a escribir
+
+    Returns
+    -------
+
+    Debugging
+    ---------
+    param_objeto = results
+    param_nombre = 'ejemplo.json'
+
+    """
+
+    dato = json.dumps(param_objeto, default=pd.DataFrame.to_json)
+
+    with open(param_nombre, 'w') as json_file:
+        json.dump(dato, json_file)
