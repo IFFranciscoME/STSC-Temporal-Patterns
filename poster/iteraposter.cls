@@ -1,10 +1,10 @@
 
-% -- --------------------------------------------------------------------------------------------------- -- %
-% -- Proyecto:                                                                                           -- %
-% -- Codigo:                                                                                             -- %
-% -- Repositorio:                                                                                        -- %
-% -- Autor:                                                                                              -- %
-% -- --------------------------------------------------------------------------------------------------- -- %
+% -- ------------------------------------------------------------------------------------ -- %
+% -- Proyecto:                                                                            -- %
+% -- Codigo:                                                                              -- %
+% -- Repositorio:                                                                         -- %
+% -- Autor:                                                                               -- %
+% -- ------------------------------------------------------------------------------------ -- %
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Class options                        %
@@ -150,10 +150,10 @@
 \setbeamercolor{alerted text}{fg = 1_iterawhite}
 
 \setbeamercolor{block title}{fg = 1_iterawhite, bg = 1_iteragrey3}
-\setbeamercolor{block body} {fg = 1_iteragrey4, bg = 1_iteragrey1}
+\setbeamercolor{block body} {fg = 1_iteragrey4, bg = 1_iterawhite1}
 
-\setbeamercolor{block title example}{fg = 1_iterawhite, bg = 1_iterawhite}
-\setbeamercolor{block body example} {fg = 1_iteragrey4, bg = 1_iterawhite}
+\setbeamercolor{block title highlighted}{fg = 1_iterawhite, bg = 1_iterawhite}
+\setbeamercolor{block body highlighted} {fg = 1_iteragrey4, bg = 1_iterawhite}
 
 \setbeamercolor{block title alerted}{fg = 1_iterawhite, bg = 1_iterawhite}
 \setbeamercolor{block body alerted} {fg = 1_iteragrey4, bg = 1_iterawhite}
@@ -180,7 +180,7 @@
                                     series = \bfseries,
                                     size   = \large}
                                     
-\setbeamerfont{block title example}{family = \sffamily,
+\setbeamerfont{block title highlighted}{family = \sffamily,
                                     series = \bfseries,
                                     size   = \large}
 
@@ -188,7 +188,7 @@
                            series = \normalfont,
                            size   = \normalsize}
                            
-\setbeamerfont{block body example}{family = \rmfamily,
+\setbeamerfont{block body highlighted}{family = \rmfamily,
                                    series = \normalfont,
                                    size   = \normalsize}
                                    
@@ -204,7 +204,8 @@
 
 \setbeamertemplate{headline}
 {
-    \begin{beamercolorbox}[wd = \paperwidth, leftskip  = 3cm, rightskip = 3cm plus 20cm]{headline}
+    \begin{beamercolorbox}[wd = \paperwidth, leftskip  = 3cm,
+                           rightskip = 3cm plus 20cm]{headline}
         \vskip.5cm
         \usebeamerfont{title in headline}
         \usebeamercolor{title in headline}
@@ -282,20 +283,20 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\setbeamertemplate{block example begin}
+\setbeamertemplate{block highlighted begin}
 {
-    \setbeamercolor{itemize item}  {fg = block title example.bg}
-    \setbeamercolor{item projected}{fg = block title example.fg,
-                                    bg = block title example.bg}
+    \setbeamercolor{itemize item}  {fg = block title highlighted.bg}
+    \setbeamercolor{item projected}{fg = block title highlighted.fg,
+                                    bg = block title highlighted.bg}
     \setbeamercolor{description item}{fg = structure}
 
     \begin{beamercolorbox}[ht        = 3.2 ex,
                            dp        = 1.3 ex,
                            leftskip  = 2 ex,
                            rightskip = 2 ex]
-                          {block title example}
+                          {block title highlighted}
 
-        \usebeamerfont*{block title example}
+        \usebeamerfont*{block title highlighted}
         \insertblocktitle
 
     \end{beamercolorbox}
@@ -306,9 +307,9 @@
                            leftskip  = 2 ex,
                            rightskip = 2 ex,
                            vmode]
-                          {block body example}
+                          {block body highlighted}
 
-        \usebeamerfont{block example body}
+        \usebeamerfont{block highlighted body}
         \vskip2ex
         \begin{minipage}{\textwidth-4ex}
              \setlength{\parskip}{1.5ex}
@@ -316,7 +317,7 @@
 }
 
 
-\setbeamertemplate{block example end}
+\setbeamertemplate{block highlighted end}
 {
         \end{minipage}
     \vskip0.2ex

@@ -24,7 +24,7 @@
 \author {
   Msc. Juan Francisco Mu\~noz Elguez\'abal \inst{1}
   \and
-  Dr. Riemann Ruiz Cruz \inst{2}
+  Dr. Riemann Ru\'iz Cruz \inst{2}
   }
 
 \institute {
@@ -37,6 +37,7 @@
 
 
 <<Ini, include=FALSE, echo=FALSE, eval=FALSE>>=
+options(scipen = 50)
 
 # Establecer directorio de trabajo donde esta este scritp
 
@@ -70,8 +71,37 @@ t_tabla_1 <- read.csv('tablas/t_tabla_1.csv', fill = TRUE)
 t_tabla_1 <- t_tabla_1[, c('id', 'pais', 'ocurrencias')]
 @
 
-<<leer_tablas, include=TRUE, echo=FALSE, eval=TRUE>>=
-json_data <- fromJSON(file='datos/resultados.json', flatten=TRUE)
+<<leer_json, include=TRUE, echo=FALSE, eval=TRUE>>=
+json_data_1 <- jsonlite::fromJSON(txt='datos/mid_oc_30_1_3000_20.json')
+parsed <- jsonlite::parse_json(json_data_1)
+
+df <- jsonlite::fromJSON(parsed$ciclo_4[[4]]$datos$`Markitposite_USA_D_2016-01-26_14:45:00`$df_serie_p[1])
+df_data <- data.frame(matrix(unlist(df), nrow=31, byrow=F))
+colnames(df_data) <- names(df)
+df_data <- df_data[, c('timestamp', 'open', 'high', 'low', 'close', 'mid_oc', 'mid_hl')]
+@
+
+<<pruebas_estadisticas, include=F, echo=F, eval=F>>=
+
+# datos para pruebas
+datos <- df_data$mid_oc
+
+# prueba de raiz unitaria
+r_d <- adf.test(x = datos) # p.value > 0.05 == unit-root
+
+# prueba fac
+r_acf  <- acf(df_data$mid_oc)
+
+# prueba facp
+r_pacf <- pacf(datos)
+
+# prueba heterocedasticidad
+r_garch <- garch(x=datos, order = c(1,1))
+predict(garch(x=datos, order = c(1,1)), 2)
+
+# ajuste de modelo
+
+# pruebas a residuales de
 
 @
 
