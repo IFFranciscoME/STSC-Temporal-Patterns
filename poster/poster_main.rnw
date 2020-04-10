@@ -1,4 +1,3 @@
-
 % -- --------------------------------------------------------------------------------------------------- -- %
 % -- Proyecto:                                                                                           -- %
 % -- Archivo: reporte.rnw                                                                                -- %
@@ -55,8 +54,8 @@ knit_hooks$set(inline = function(x) {
 })
 
 # -- Instalar y/o cargar paquetes necesarios
-pkg <- c("downloader","dplyr","fBasics","gridExtra","ggplot2","httr", "jsonlite","lubridate",
-         "lattice","moments","matrixStats", "plyr","plot3D", "reshape2","RCurl", "stats", 
+pkg <- c("downloader", "dplyr", "fBasics","gridExtra", "ggplot2","httr","kableExtra", "jsonlite","lubridate",
+         "lattice","moments", "matrixStats", "plyr","plot3D", "reshape2","RCurl", "stats", 
          "scales", "tseries","XML","xts","xlsx","xtable", "zoo")
 
 inst <- pkg %in% installed.packages()
@@ -69,6 +68,12 @@ instpackages <- lapply(pkg, library, character.only=TRUE)
 <<leer_tablas, include=TRUE, echo=FALSE, eval=TRUE>>=
 t_tabla_1 <- read.csv('tablas/t_tabla_1.csv', fill = TRUE)
 t_tabla_1 <- t_tabla_1[, c('id', 'pais', 'ocurrencias')]
+t_tabla_4 <- read.csv('tablas/t_tabla_4.csv', fill = TRUE)
+t_tabla_4 <- t_tabla_4[, c('categoria', 'usa', 'mex', 'total')] 
+
+k_tabla_4 <- kable(t_tabla_4, align = "c", format.args = list(decimal.mark = ",",
+                                                              big.mark = "'"))
+
 @
 
 <<leer_json, include=TRUE, echo=FALSE, eval=TRUE>>=
@@ -111,7 +116,7 @@ predict(garch(x=datos, order = c(1,1)), 2)
 
 \begin{columns}[onlytextwidth]
 
-  \begin{column}{.6\textwidth - 0.01\textwidth}
+  \begin{column}{.7\textwidth - 0.01\textwidth}
     \begin{block}{Descripci\'on General}
       Metodolg\'ia \textit{BoxJenkins} para series de tiempo financieras. Modelo lineal 
       univariado que utiliza informaci\'on end\'ogena de la serie de tiempo para construir un modelo 
@@ -125,14 +130,14 @@ predict(garch(x=datos, order = c(1,1)), 2)
     \end{block}
 \end{column}
 
-\begin{column}{.4 \textwidth - 0.01\textwidth}
+\begin{column}{.3 \textwidth - 0.01\textwidth}
   \begin{block}{Tabla General}
-     \Sexpr{kable(t_tabla_1, align = "c")}
+  \centering
+     \Sexpr{k_tabla_4}
   \end{block}
 \end{column}
   
 \end{columns}
-
 
 
 \end{frame}

@@ -1,4 +1,3 @@
-
 % -- ------------------------------------------------------------------------------------ -- %
 % -- Proyecto:                                                                            -- %
 % -- Codigo:                                                                              -- %
@@ -270,6 +269,7 @@
         \begin{minipage}{\textwidth-2ex}
              \setlength{\parskip}{1.5ex}
              \setlength{\abovecaptionskip}{1ex}
+             
 }
 
 

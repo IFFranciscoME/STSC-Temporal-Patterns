@@ -1067,16 +1067,24 @@ def f_tabla_general(param_tabla_1):
 
     """
     tabla_4 = pd.DataFrame({
-        'USA': param_tabla_1[param_tabla_1['pais'] ==
+        'usa': param_tabla_1[param_tabla_1['pais'] ==
                              'USA'].groupby('categoria')['id'].count(),
-        'MEX': param_tabla_1[param_tabla_1['pais'] ==
+        'mex': param_tabla_1[param_tabla_1['pais'] ==
                              'MEX'].groupby('categoria')['id'].count()})
 
-    tabla_4['USA'][np.isnan(tabla_4['USA'])] = 0
-    tabla_4['MEX'][np.isnan(tabla_4['MEX'])] = 0
+    tabla_4['usa'][np.isnan(tabla_4['usa'])] = 0
+    tabla_4['mex'][np.isnan(tabla_4['mex'])] = 0
 
     tabla_4.reset_index(inplace=True, drop=False)
-    tabla_4 = tabla_4.rename(columns={"index": "categoria indicador"})
+    
+    tabla_4 = tabla_4.rename(columns={"index": "categoria"})
+    tabla_4 = pd.concat((tabla_4,
+                        pd.DataFrame({'categoria': 'total',
+                                      'usa': tabla_4['usa'].sum(),
+                                      'mex': tabla_4['mex'].sum()}, index=[0])),
+                        axis=0)
+
+    tabla_4['total'] = list(tabla_4[['usa', 'mex']].sum(axis=1))
 
     return tabla_4
 
