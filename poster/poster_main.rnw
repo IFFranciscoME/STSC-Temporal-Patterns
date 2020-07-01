@@ -35,7 +35,7 @@
 % -- --------------------------------------------------------------------------- Comienzo de codigo en R -- %
 
 
-<<Ini, include=FALSE, echo=FALSE, eval=FALSE>>=
+<< eval=FALSE, echo=FALSE, include=FALSE>>=
 options(scipen = 50)
 
 # Establecer directorio de trabajo donde esta este scritp
