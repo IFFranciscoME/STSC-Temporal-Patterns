@@ -46,3 +46,21 @@ PUNTO 4) Establecer mi expertise
 afirmaciones, esto suele ser una descripcion breve de los datos utilizados, sin tener que ir a detalle
 en la metodologia (eso iria en la seccion de metodos)
 - Mencionar el material que se analizo para generar los argumentos establecidos en el trabajo
+
+PUNTO 5) Definir terminos
+- definir los terminos clave que seran utilizados en el trabajo
+
+OTRAS SUGERENCIAS:
+
+- Especificar que se esta resolviendo, de manera simple
+- por que es un problema interesante
+- una nocion supervisial de como se resuelve
+- por que mi aproximacion es logica
+- cuales son los principales resultados teoricos o practicos
+- la notacion explicada en la introduccion debe de explicar:
+- - la configuracion del problema/situacion
+- - los datos de entrada
+- - los datos de salida
+- - el problema que se esta resolviendo
+- la definicion del problema debe de ser lo mas pronto posible
+- explicar la estructura del trabajo explicitamente
