@@ -1,7 +1,7 @@
 
 research log
 
-|            Activity         |       Type             | TimeDate (HH.MM day.month.year) | Time (hours) | Cumulative Time (Hours) | 
-| --------------------------- | ---------------------- | ------------------------------- | ------------ | ----------------------- |
-| writing & organizing ideas  | General layout         |                08.00 26.06.2020 |          2.5 |                     2.5 |
-|                             |                        |                                 |              |                         |
+|            Activity         |       Type                | TimeDate (HH.MM day.month.year) | Time (hours) | Cumulative Time (Hours) | 
+| --------------------------- | ------------------------- | ------------------------------- | ------------ | ----------------------- |
+|  Ideas for introduction     | Organizing content        |                18.00 01.07.2020 |          2.5 |                     2.5 |
+|  Reconfiguracion general    | Organizacion de contenido |                18:30 02.07.2020 |          3.0 |                     5.5 |
