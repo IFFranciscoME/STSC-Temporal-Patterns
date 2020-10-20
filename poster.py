@@ -24,8 +24,8 @@ dims = en.dimensiones_base
 
 # -------------------------------------------------------------------- datos para ejemplo -- #
 results_ocur = list(results['ciclo_4'][89]['datos'].keys())
-# serie patron arbitraria encontrada para graficar = 7
-pattern = results['ciclo_4'][89]['datos'][results_ocur[7]]['df_serie_p']
+# serie patron arbitraria encontrada para graficar = 6
+pattern = results['ciclo_4'][89]['datos'][results_ocur[3]]['df_serie_p']
 # serie query arbitraria encontrada para graficar = 7
 query = results['ciclo_4'][89]['datos'][results_ocur[7]]['df_serie_q']
 
@@ -36,14 +36,14 @@ query = results['ciclo_4'][89]['datos'][results_ocur[7]]['df_serie_q']
 pattern_g2 = pattern.reset_index(inplace=False, drop=True)
 
 # generacion de grafica 1
-grafica_1 = vs.g_velas_reac(param_timestamp=pattern_g2['timestamp'], param_ohlc=pattern_g2,
-                            param_serie1=pattern_g2['close'],
-                            param_serie2=pattern_g2['mid_oc'],
-                            param_serie3=pattern_g2['mid_hl'],
+grafica_1 = vs.g_velas_reac(param_timestamp=pattern_g2['timestamp'],
+                            param_ohlc=pattern_g2,
+                            param_serie1=pattern_g2['mid_oc'],
+                            param_serie2=pattern_g2['mid_hl'],
                             param_theme=theme, param_dims=dims)
 
 # mostrar grafica 1
-# grafica_1.show()
+grafica_1.show()
 
 # -- -------------------------------------------------------------------------- Grafica 2 -- #
 # -- Series original vs patron encontrado
@@ -57,7 +57,7 @@ grafica_2 = vs.g_lineas(param_query=query_g2, param_pattern=pattern_g2,
                         param_theme=theme, param_dims=dims)
 
 # mostrar grafica 2
-# grafica_2.show()
+grafica_2.show()
 
 # -- ---------------------------------------------------------------------------- Tabla 1 -- #
 # -- tabla con informacion general de todos los indicadores
@@ -81,7 +81,7 @@ tabla_3 = fn.f_tabla_aluvial(param_tabla_1=tabla_1, param_tabla_2=tabla_2)
 grafica_3 = vs.g_aluvial_cat(param_data=tabla_3, param_theme=theme, param_dims=dims)
 
 # mostrar grafica 3
-# grafica_3.show()
+grafica_3.show()
 
 # -- ---------------------------------------------------------------------------- Tabla 4 -- #
 # -- Tablas auxiliares generales
@@ -93,9 +93,9 @@ tabla_4.to_csv(r'poster/tablas/t_tabla_4.csv')
 # -- Escribir un archivo tipo JSON serializando los datos
 
 # resultados para tomar ejemplo para las graficas
-res_pickle = fn.f_leer_resultados(param_carpeta='datos/results_files_r3/',
-                                  param_archivo='mid_oc_30_1_3000_20')
+# res_pickle = fn.f_leer_resultados(param_carpeta='datos/results_files_r3/',
+#                                   param_archivo='mid_oc_30_1_3000_20')
 
 # funcion que serializa y escribe JSON
-fn.f_serial_result(param_objeto=res_pickle,
-                   param_nombre='poster/datos/mid_oc_30_1_3000_20.json')
+# fn.f_serial_result(param_objeto=res_pickle,
+#                    param_nombre='poster/datos/mid_oc_30_1_3000_20.json')

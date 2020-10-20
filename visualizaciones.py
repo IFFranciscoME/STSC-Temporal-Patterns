@@ -50,26 +50,26 @@ def g_lineas(param_query, param_pattern, param_theme, param_dims):
     y0_ticks_n = 5
     y0_ticks_vals = np.arange(min(p1_y0), max(p1_y0), (max(p1_y0) - min(p1_y0)) / y0_ticks_n)
     y0_ticks_vals = np.append(y0_ticks_vals, max(p1_y0))
-    y0_ticks_text = [str("%.4f" % i) for i in y0_ticks_vals]
+    y0_ticks_text = [str("%.2f" % i) for i in y0_ticks_vals]
 
     # Determinar los valores y los textos para el eje y1
     y1_ticks_n = 5
     y1_ticks_vals = np.arange(min(p1_y1), max(p1_y1), (max(p1_y1) - min(p1_y1)) / y1_ticks_n)
     y1_ticks_vals = np.append(y1_ticks_vals, max(p1_y1))
-    y1_ticks_text = [str("%.4f" % i) for i in y1_ticks_vals]
+    y1_ticks_text = [str("%.2f" % i) for i in y1_ticks_vals]
 
     # Crear objeto figura
     fig_g_lineas = go.Figure()
 
     # agregar serie 0
     fig_g_lineas.add_trace(
-        go.Scatter(y=p1_y0, name="Serie original",
+        go.Scatter(y=p1_y0, name="original",
                    line=dict(color=param_theme['color_linea_1'],
                              width=param_theme['tam_linea_2'])))
 
     # agregar serie 1
     fig_g_lineas.add_trace(
-        go.Scatter(y=p1_y1, name="Serie patron encontrado", yaxis="y2",
+        go.Scatter(y=p1_y1, name="patron", yaxis="y2",
                    line=dict(color=param_theme['color_linea_2'],
                              width=param_theme['tam_linea_2'], dash='dash')))
 
@@ -88,34 +88,25 @@ def g_lineas(param_query, param_pattern, param_theme, param_dims):
                     showgrid=True,
                     overlaying="y", side="right"))
 
-    # actualizar layout de leyenda
-    fig_g_lineas.update_layout(
-        legend=go.layout.Legend(x=.2, y=-.2,
-                                font=dict(size=param_theme['tam_texto_leyenda'],
-                                          color=param_theme['color_texto_leyenda'])),
-        legend_orientation="h")
-
-    # medidas de imagen y margenes
-    fig_g_lineas.update_layout(autosize=False, width=1240, height=400, paper_bgcolor="white",
-                               margin=go.layout.Margin(l=55, r=65, b=5, t=5, pad=1))
-
     # Anotaciones en la grafica (una para cada serie)
-    fig_g_lineas.update_layout(annotations=[
-        go.layout.Annotation(x=0, y=0.35, text="Serie Original", textangle=-90,
-                             xref="paper", yref="paper", showarrow=False,
-                             font=dict(size=param_theme['tam_texto_grafica'],
-                                       color=param_theme['color_linea_1'])),
-        go.layout.Annotation(x=1, y=0.35, text="Serie Patron Encontrado", textangle=-90,
-                             xref="paper", yref="paper", showarrow=False,
-                             font=dict(size=param_theme['tam_texto_grafica'],
-                                       color=param_theme['color_linea_2']))])
+    # fig_g_lineas.update_layout(annotations=[
+    #     go.layout.Annotation(x=0, y=0.35, text="Serie Original", textangle=-90,
+    #                          xref="paper", yref="paper", showarrow=False,
+    #                          font=dict(size=param_theme['tam_texto_grafica'],
+    #                                    color=param_theme['color_linea_1'])),
+    #     go.layout.Annotation(x=1, y=0.35, text="Serie Patron Encontrado", textangle=-90,
+    #                          xref="paper", yref="paper", showarrow=False,
+    #                          font=dict(size=param_theme['tam_texto_grafica'],
+    #                                    color=param_theme['color_linea_2']))])
 
     # Formato para titulo
-    fig_g_lineas.update_layout(margin=go.layout.Margin(l=50, r=50, b=20, t=50, pad=20),
-                               title=dict(x=0.5, text='<b> Serie Original </b> - '
-                                                      '<i> Patron Encontrado </i>'),
-                               legend=go.layout.Legend(x=.3, y=-.15, orientation='h',
-                                                       font=dict(size=15)))
+    fig_g_lineas.update_layout(margin=go.layout.Margin(l=0, r=0, b=0, t=0, pad=0),
+                               title=None,
+                               legend=go.layout.Legend(x=.57, y=.14, orientation='h',
+                                                       bordercolor=param_theme['color_texto_leyenda'],
+                                                       borderwidth=1,
+                                                       font=dict(size=12)))
+
     # Formato de tamanos
     fig_g_lineas.layout.autosize = True
     fig_g_lineas.layout.width = param_dims['figura_1']['width']
@@ -127,8 +118,7 @@ def g_lineas(param_query, param_pattern, param_theme, param_dims):
 # -- ------------------------------------------------------- GRÁFICA: velas OHLC Reaccion -- #
 # -- ------------------------------------------------------------------------------------ -- #
 
-def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_serie3,
-                 param_theme, param_dims):
+def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_theme, param_dims):
     """
     Parameters
     ----------
@@ -136,7 +126,6 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
     param_ohlc : pd.DataFrame : columnas 'open', 'high', 'low', 'close'
     param_serie1 : pd.Series / np.array : datos a graficar
     param_serie2 : pd.Series / np.array : datos a graficar
-    param_serie3 : pd.Series / np.array : datos a graficar
     param_theme : dict : diccionario con tema de visualizaciones
     param_dims : dict : diccionario con tamanos para visualizaciones
 
@@ -149,9 +138,8 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
     param_ohlc = results['ciclo_3'][0]['datos']['ConsumrgyMoM_USA_A_2015-12-15_13:30:00']
     param_ohlc = param_ohlc['df_serie_q']
     param_timestamp = param_ohlc['timestamp']
-    param_serie1 = param_ohlc['close']
-    param_serie2 = param_ohlc['mid_hl']
-    param_serie3 = param_ohlc['mid_oc']
+    param_serie1 = param_ohlc['mid_hl']
+    param_serie2 = param_ohlc['mid_oc']
 
     param_theme = tema_base
     param_dims = dimensiones_base
@@ -168,27 +156,23 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
 
     # agregar capa de figura de velas japonesas (candlestick)
     fig_g_velas_reac.add_trace(
-        go.Candlestick(name='ohlc',
-                       x=param_ohlc['timestamp'],
-                       open=param_ohlc['open'],
-                       high=param_ohlc['high'],
-                       low=param_ohlc['low'],
-                       close=param_ohlc['close'],
-                       opacity=0.4))
-
-    # Agregar capa de linea extra: Close
-    fig_g_velas_reac.add_trace(
-        go.Scatter(x=param_timestamp, y=param_serie1, name='close',
-                   line=dict(color=param_theme['color_linea_1'], width=2, dash='dash')))
+            go.Candlestick(name='OHLC',
+                           x=param_ohlc['timestamp'],
+                           open=round(param_ohlc['open'], 4),
+                           high=round(param_ohlc['high'], 4),
+                           low=round(param_ohlc['low'], 4),
+                           close=round(param_ohlc['close'], 4),
+                           increasing_line_color='gray', decreasing_line_color='gray',
+                           opacity=0.4))
 
     # Agregar capa de linea extra: mid hl
     fig_g_velas_reac.add_trace(
-        go.Scatter(x=param_timestamp, y=param_serie2, name='mid hl',
-                   line=dict(color=param_theme['color_linea_2'], width=2, dash='dash')))
+        go.Scatter(x=param_timestamp, y=param_serie1, name='OC',
+                   line=dict(color=param_theme['color_linea_1'], width=2, dash='dash')))
 
     # Agregar capa de linea extra: mid oc
     fig_g_velas_reac.add_trace(
-        go.Scatter(x=param_timestamp, y=param_serie3, name='mid oc',
+        go.Scatter(x=param_timestamp, y=param_serie2, name='HL',
                    line=dict(color=param_theme['color_linea_3'], width=2, dash='dash')))
 
     # linea vertical
@@ -197,8 +181,8 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
 
     # layout de margen, titulos y ejes
     fig_g_velas_reac.update_layout(
-        margin=go.layout.Margin(l=50, r=50, b=20, t=50, pad=20),
-        title=dict(x=0.5, text='Reaccion del precio durante <b> Indicador Comunicado </b>'),
+        margin=go.layout.Margin(l=1, r=1, b=1, t=0, pad=0),
+        title=None,
         xaxis=dict(title_text='Hora del dia', rangeslider=dict(visible=False)),
         yaxis=dict(title_text='Precio del EurUsd'), shapes=lineas)
 
@@ -224,14 +208,15 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
 
     # Formato de leyenda
     fig_g_velas_reac.update_layout(
-        legend=go.layout.Legend(x=.3, y=-.15, orientation='h',
+        legend=go.layout.Legend(x=.76, y=.17, orientation='h',
+                                bordercolor=param_theme['color_texto_leyenda'], borderwidth=1,
                                 font=dict(size=param_theme['tam_texto_leyenda'],
                                           color=param_theme['color_texto_leyenda'])))
 
     # Formato de tamanos
     fig_g_velas_reac.layout.autosize = True
-    fig_g_velas_reac.layout.width = param_dims['figura_1']['width']
-    fig_g_velas_reac.layout.height = param_dims['figura_1']['height']
+    fig_g_velas_reac.layout.width = param_dims['figura_2']['width']
+    fig_g_velas_reac.layout.height = param_dims['figura_2']['height']
 
     return fig_g_velas_reac
 
@@ -344,12 +329,12 @@ def g_aluvial_cat(param_data, param_theme, param_dims):
 
     # layout de margen, titulos y ejes
     fig_g_aluvial_cat.update_layout(
-        margin=go.layout.Margin(l=105, r=85, b=20, t=50, pad=20),
-        title=dict(x=0.5, text='Patrones encontrados segun <b> Info de Indicador </b>'))
+        margin=go.layout.Margin(l=100, r=5, b=5, t=25, pad=0),
+        title=None)
 
     # Formato de tamanos
     fig_g_aluvial_cat.layout.autosize = True
-    fig_g_aluvial_cat.layout.width = param_dims['figura_1']['width']
-    fig_g_aluvial_cat.layout.height = param_dims['figura_1']['height']
+    fig_g_aluvial_cat.layout.width = param_dims['figura_3']['width']
+    fig_g_aluvial_cat.layout.height = param_dims['figura_3']['height']
 
     return fig_g_aluvial_cat

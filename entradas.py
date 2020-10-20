@@ -42,9 +42,9 @@ tema_base = {'tam_titulo_ejes': 15, 'tam_titulo_prin': 15, 'tam_texto_ejes': 14,
              'tam_linea_1': 1, 'tam_linea_2': 2, 'tam_linea_3': 3}
 
 # dimensiones para graficas
-dimensiones_base = {'figura_1': {'width': 840, 'height': 520},
-                    'figura_2': {'width': 480, 'height': 480},
-                    'figura_3': {'width': 480, 'height': 480}}
+dimensiones_base = {'figura_1': {'width': 510, 'height': 340},  # tamano 1 cuadro de .33
+                    'figura_2': {'width': 1085, 'height': 340},  # tamano 2 cuadros de .66
+                    'figura_3': {'width': 1085, 'height': 340}}
 
 
 # -- ----------------------------------------------------- Lista de clases de indicadores -- #

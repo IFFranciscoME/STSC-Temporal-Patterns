@@ -71,9 +71,9 @@
 \vskip4cm
 
 \author {
-  Msc. Juan Francisco Mu\~noz Elguez\'abal \inst{1}
+  Juan Francisco Mu\~noz Elguez\'abal \inst{1}
   \and
-  Dr. Riemann Ru\'iz Cruz \inst{2}
+  Riemann Ru\'iz Cruz \inst{2}
   }
 
 \institute {
@@ -84,6 +84,7 @@
 
 % -- --------------------------------------------------------------------------- Comienzo de codigo en R -- %
 
+% -- Reunion con Diana y Juan Diego para hablar del proceso de generacion del regresor.
 
 
 
@@ -98,26 +99,92 @@
 
 \begin{frame}
 
-\begin{columns}[onlytextwidth]
+% -- -------------------------------------------------------------------------------------- 1er Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
 
-  \begin{column}{.7\textwidth - 0.01\textwidth}
-    \begin{block}{Descripci\'on General}
-      Metodolg\'ia \textit{BoxJenkins} para series de tiempo financieras. Modelo lineal 
-      univariado que utiliza informaci\'on end\'ogena de la serie de tiempo para construir un modelo 
-      matem\'atico con el cual realizar predicciones de valores futuros.
-    \end{block}
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.75 \textwidth - 0.01 \textwidth}
+    \begin{block}{Hip\'otesis - Experimento}
     
-    \begin{block}{Diagrama General}
+    \textbf{Hip\'otesis: } \\
+      Existe un conjunto de condiciones bajo las cuales, la ocurrencia de evento ex\'ogeno a una serie de
+      tiempo financiera, provoca la presencia de patrones temporales observables en la misma serie.
+      
+    \textbf{Experimento: } \\
+      Comunicado de indicadores macroecon\'omicos de M\'exico y USA, como candidatos de eventos generadores
+      de patrones temporales en la serie de tiempo intrad\'ia del del tipo de cambio USD/MXN.
+      
+    \end{block}
+  \end{column}
+
+
+\begin{column}{.25 \textwidth - 0.01 \textwidth}
+  \begin{block}{Informacion general}
+        
+    \begin{itemize}
+      \item 10 a\~nos de informaci\'on.
+      \item 2010-01-01 al 2020-01-03
+      \item 14.5 Millones de precios.
+      \item 36,000 comunicados de indicadores.
+      \item indicadores econ\'omicos de \textit{factset}.
+      \item precios del broker regulado \textit{Oanda}.
+    \end{itemize}
+      
+  \end{block}
+\end{column}
+\end{columns}
+
+% -- -------------------------------------------------------------------------------------- 2do Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
+
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.5 \textwidth - 0.01 \textwidth}
+    \begin{block}{Definiciones}
+    
+      Sea el proceso $\left\{ S_{T} \right\}_{T=1}^{n}$,
+      como los precios $OHLC_{T}: \left\{ Open_{T}, High_{T}, Low_{T}, Close_{T} \right\}$ de cada $n$
+      minuto $burs\'atil$ de los \'ultimos 10 a\~nos.
+      De los cuales se extraen ventanas de tama\~no $m$, de tal manera que
+      $\left\{ OHLC_{t} \right\}_{t=1}^{m} $, para $m = 30$.
+
+      \begin{itemize}
+        \item \textbf{micro-volatilidades:} $\rightarrow$ $HL_{t} = High_{t} - Low_{t}$
+        \item \textbf{micro-rendimientos:} $\rightarrow$ $OC_{t} = Open_{t} - Close_{t}$
+      \end{itemize}
+      
+      Sea el proceso $\left\{ I_{t} \right\}_{t=1}^{k}$ como el comunicado de un indicador macroecon\'omico
+      que sucede $k$ veces, tal que, con $OHLC_{k}
+      \left\{ Open_{t=1:m}^{k}, High_{t=1:m}^{k}, Low_{t=1:m}^{k}, Close_{t=1:m}^{k} \right\}$
+      se definen las series de tiempo $OC_{t=1:m}^{k}$ y $HL_{1:m}^{k}$ como \textit{motifs} para encontrar en
+      $OHLC_{T}$
+
+    \end{block}
+  \end{column}
+
+  \begin{column}{.5 \textwidth - 0.01\textwidth}
+    \begin{block}{Ej: Ventana $k=1$ de $m=30$ Precios OHLC}
       \begin{figure}[H]
         \includegraphics[scale=1]{imagenes/grafica_1.png}
       \end{figure}
     \end{block}
-\end{column}
+  \end{column}
+  
+\end{columns}
 
-\begin{column}{.3 \textwidth - 0.01\textwidth}
-  \begin{block}{Tabla General}
-  \centering
-     
+
+
+% -- -------------------------------------------------------------------------------------- 3er Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
+
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.25 \textwidth - 0.01 \textwidth}
+    \begin{block}{Categor\'ias}
+      \centering
+      \small
+      
 \begin{tabular}{c|c|c|c}
 \hline
 categoria & usa & mex & total\\
@@ -145,11 +212,82 @@ total & 94 & 20 & 114\\
 \end{tabular}
 
 
-  \end{block}
-\end{column}
+      \normalsize
+    \end{block}
+  \end{column}
+
+  \begin{column}{.5 \textwidth - 0.01 \textwidth}
+    \begin{block}{Indicadores}
+      Grafica 
+    \end{block}
+  \end{column}
   
+  \begin{column}{.25 \textwidth - 0.01 \textwidth}
+    \begin{block}{Indicadores}
+      Preguntas
+    \end{block}
+  \end{column}
+
 \end{columns}
 
+% -- -------------------------------------------------------------------------------------- 4to Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
+
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.33 \textwidth - 0.01 \textwidth}
+    \begin{block}{Similitud entre series de tiempo}
+      \begin{equation}
+        \hat{x} = \frac{x_{i}-\mu_{x}}{\sigma_{x}} , \hat{y} = \frac{y_{i}-\mu_{y}}{\sigma_{y}}
+      \end{equation}
+      \begin{equation}
+        d(x,y) = \sqrt{\sum_{i=1}^{n}(\hat{x_{i}} -\hat{y_{i}})^{2})}
+      \end{equation}
+      \end{block}
+  \end{column}
+
+  \begin{column}{.33 \textwidth - 0.01 \textwidth}
+    \begin{block}{Algoritmo MASS}
+      Algoritmo
+    \end{block}
+  \end{column}
+  
+  \begin{column}{.33 \textwidth - 0.01 \textwidth}
+    \begin{block}{Complejidad}
+      algoritmo
+    \end{block}
+  \end{column}
+
+\end{columns}
+
+% -- -------------------------------------------------------------------------------------- 4to Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
+
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.25 \textwidth - 0.01 \textwidth}
+    \begin{block}{Resultados 1}
+      \begin{figure}[H]
+        \includegraphics[scale=1]{imagenes/grafica_2.png}
+      \end{figure}
+      \end{block}
+  \end{column}
+
+  \begin{column}{.25 \textwidth - 0.01 \textwidth}
+    \begin{block}{Resultados 3}
+      
+    \end{block}
+  \end{column}
+  
+  \begin{column}{.50 \textwidth - 0.01 \textwidth}
+    \begin{block}{Resultados 3}
+      \begin{figure}[H]
+        \includegraphics[scale=1]{imagenes/grafica_3.png}
+      \end{figure}
+    \end{block}
+  \end{column}
+  
+\end{columns}
 
 \end{frame}
 \end{document}

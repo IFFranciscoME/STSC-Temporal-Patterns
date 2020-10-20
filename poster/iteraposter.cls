@@ -173,19 +173,19 @@
 
 \setbeamerfont{block title}{family = \sffamily,
                             series = \bfseries,
-                            size   = \large}
+                            size   = \normalfont}
                             
 \setbeamerfont{block title alerted}{family = \sffamily,
                                     series = \bfseries,
                                     size   = \large}
                                     
 \setbeamerfont{block title highlighted}{family = \sffamily,
-                                    series = \bfseries,
-                                    size   = \large}
+                                        series = \bfseries,
+                                        size   = \large}
 
 \setbeamerfont{block body}{family = \rmfamily,
-                           series = \normalfont,
-                           size   = \normalsize}
+                           series = \small,
+                           size   = \small}
                            
 \setbeamerfont{block body highlighted}{family = \rmfamily,
                                    series = \normalfont,
@@ -222,7 +222,7 @@
           \def\beamer@andinst{\quad}
           \insertinstitute
         }
-        \vskip3cm
+        \vskip1cm
     \end{beamercolorbox}
     \vskip1cm
 }
@@ -235,7 +235,7 @@
     \begin{beamercolorbox}[wd = \paperwidth]{footline}
         \vskip1cm
         \hskip1.5cm
-        \includegraphics[scale = 1.5]{imagenes/logo_iteso_2}
+        \includegraphics[scale = .75]{imagenes/logo_iteso_2}
         \vskip1cm
     \end{beamercolorbox}
 }
@@ -265,11 +265,10 @@
                           {block body}
 
         \usebeamerfont{block body}
-        \vskip2ex
+        \vskip1ex
         \begin{minipage}{\textwidth-2ex}
              \setlength{\parskip}{1.5ex}
-             \setlength{\abovecaptionskip}{1ex}
-             
+             \setlength{\abovecaptionskip}{.1ex}
 }
 
 
