@@ -1,10 +1,10 @@
 
-# -- ------------------------------------------------------------------------------------ -- #
-# -- Proyecto: Temporal Patterns                                                          -- #
-# -- Codigo: principal.py - secuencia principal de codigo para el proyecto                -- #
-# -- Repositorio: https://github.com/IFFranciscoME/Temporal_Patterns                      -- #
-# -- Autor: Francisco ME                                                                  -- #
-# -- ------------------------------------------------------------------------------------ -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
+# -- Proyecto: Temporal Patterns                                                                         -- #
+# -- Codigo: principal.py - secuencia principal de codigo para el proyecto                               -- #
+# -- Repositorio: https://github.com/IFFranciscoME/Temporal_Patterns                                     -- #
+# -- Autor: Francisco ME                                                                                 -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
 
 from datos import df_precios, df_ce
 from entradas import parametros_stsc
