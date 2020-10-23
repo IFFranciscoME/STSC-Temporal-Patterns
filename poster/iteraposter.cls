@@ -82,8 +82,8 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
-\setbeamertemplate{qed symbol}{\(\blacksquare\)}
-\setbeamertemplate{itemize items}{\color{itemize item.fg}\(\blacksquare\)}
+\setbeamertemplate{qed symbol}{\(\circ\)}
+\setbeamertemplate{itemize items}{\color{itemize item.fg}\(\circ\)}
 
 \setlength{\labelsep}{3ex}
 \setlength{\leftmargini}{18ex}
@@ -173,7 +173,7 @@
 
 \setbeamerfont{block title}{family = \sffamily,
                             series = \bfseries,
-                            size   = \normalfont}
+                            size   = \small}
                             
 \setbeamerfont{block title alerted}{family = \sffamily,
                                     series = \bfseries,
@@ -233,10 +233,9 @@
 {
     \leavevmode
     \begin{beamercolorbox}[wd = \paperwidth]{footline}
-        \vskip1cm
+        \vskip.5cm
         \hskip1.5cm
-        \includegraphics[scale = .75]{imagenes/logo_iteso_2}
-        \vskip1cm
+        \vskip.5cm
     \end{beamercolorbox}
 }
 
@@ -248,7 +247,7 @@
   \setbeamercolor{item projected}{fg = block title.fg, bg = block title.bg}
   \setbeamercolor{description item}{fg = structure}
 
-  \begin{beamercolorbox}[ht = 3.2 ex, dp = 1.3 ex,
+  \begin{beamercolorbox}[ht = 2.4 ex, dp = 1 ex,
                          leftskip = 2 ex, rightskip = 2 ex]{block title}
 
         \usebeamerfont*{block title}

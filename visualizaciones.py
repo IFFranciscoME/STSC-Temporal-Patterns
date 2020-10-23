@@ -102,7 +102,7 @@ def g_lineas(param_query, param_pattern, param_theme, param_dims):
     # Formato para titulo
     fig_g_lineas.update_layout(margin=go.layout.Margin(l=0, r=0, b=0, t=0, pad=0),
                                title=None,
-                               legend=go.layout.Legend(x=.57, y=.14, orientation='h',
+                               legend=go.layout.Legend(x=.8, y=.17, orientation='h',
                                                        bordercolor=param_theme['color_texto_leyenda'],
                                                        borderwidth=1,
                                                        font=dict(size=12)))
@@ -167,7 +167,7 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
 
     # Agregar capa de linea extra: mid hl
     fig_g_velas_reac.add_trace(
-        go.Scatter(x=param_timestamp, y=param_serie1, name='OC',
+        go.Scatter(x=param_timestamp, y=param_serie1, name='CO',
                    line=dict(color=param_theme['color_linea_1'], width=2, dash='dash')))
 
     # Agregar capa de linea extra: mid oc
@@ -200,10 +200,7 @@ def g_velas_reac(param_timestamp, param_ohlc, param_serie1, param_serie2, param_
     # Anotaciones
     fig_g_velas_reac.update_layout(
         annotations=[go.layout.Annotation(x=f_i, y=0.95, xref="x", yref="paper",
-                                          showarrow=False, text="Indicador",
-                                          font=dict(size=15, color='red')),
-                     go.layout.Annotation(x=f_i, y=0.90, xref="x", yref="paper",
-                                          showarrow=False, text="Comunicado",
+                                          showarrow=False, text="Indicador Comunicado",
                                           font=dict(size=15, color='red'))])
 
     # Formato de leyenda
@@ -329,7 +326,7 @@ def g_aluvial_cat(param_data, param_theme, param_dims):
 
     # layout de margen, titulos y ejes
     fig_g_aluvial_cat.update_layout(
-        margin=go.layout.Margin(l=100, r=5, b=5, t=25, pad=0),
+        margin=go.layout.Margin(l=100, r=25, b=5, t=25, pad=10),
         title=None)
 
     # Formato de tamanos

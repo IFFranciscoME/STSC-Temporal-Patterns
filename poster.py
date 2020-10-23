@@ -70,10 +70,12 @@ tabla_1.to_csv(r'poster/tablas/t_tabla_1.csv')
 
 tabla_2 = fn.f_tablas_ocur(param_carpeta='datos/results_files_r3')
 tabla_2 = tabla_2['df_mid_hl_30_1_3000_20']
+tabla_2.to_csv(r'poster/tablas/t_tabla_2.csv')
 
 # -- ---------------------------------------------------------------------------- Tabla 3 -- #
 # -- para grafica tipo aluvial
 tabla_3 = fn.f_tabla_aluvial(param_tabla_1=tabla_1, param_tabla_2=tabla_2)
+tabla_3.to_csv(r'poster/tablas/t_tabla_3.csv')
 
 # -- -------------------------------------------------------------------------- Grafica 3 -- #
 # -- Ocurrencia de indicador_esc por tipo de patron
