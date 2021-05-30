@@ -1,0 +1,113 @@
+,indicador,A,B,C,D,T
+0,Monthly Budget Statement,40,22,26,32,120
+1,Gross Domestic Product Price Index,72,8,8,31,119
+2,Import Price Index MoM,40,24,25,31,120
+3,CFTC Gold NC Net Positions,106,3,0,94,205
+4,6-Month Bill Auction,246,0,0,149,395
+5,Goods Trade Balance,22,1,3,29,55
+6,"Fiscal Balance, pesos",50,1,0,50,101
+7,Retail Sales MoM,92,21,21,90,224
+8,IBDTIPP Economic Optimism MoM,50,16,1,52,119
+9,Michigan Consumer Sentiment Index,116,20,5,99,240
+10,Trade Balance,46,7,16,50,119
+11,Average Hourly Earnings MoM,54,18,6,42,120
+12,Producer Price Index MoM,47,14,24,35,120
+13,NFIB Business Optimism Index,42,13,4,36,95
+14,Producer Price Index YoY,48,14,20,38,120
+15,Unit Labor Costs,32,9,7,31,79
+16,Initial Jobless Claims,200,53,64,203,520
+17,Continuing Jobless Claims,213,32,63,213,521
+18,Employment Cost Index,21,0,2,12,35
+19,Markit Manufacturing PMI,93,8,6,77,184
+20,Chicago Fed National Activity Index,49,5,2,44,100
+21,Housing Starts MoM,57,10,5,48,120
+22,Pending Home Sales YoY,37,5,3,43,88
+23,Business Inventories,57,4,26,33,120
+24,CFTC USD NC Net Positions,110,2,0,92,206
+25,Consumer Price Index ex Food  Energy MoM,66,19,9,26,120
+26,Housing Starts Change,19,5,3,21,48
+27,Gross Domestic Product YoY,14,2,1,20,37
+28,Consumer Confidence s.a,51,0,0,53,104
+29,Average Weekly Hours,87,7,1,25,120
+30,Consumer Confidence,51,0,0,52,103
+31,Dallas Fed Manufacturing Business Index,49,3,3,40,95
+32,Consumer Price Index YoY,57,12,20,31,120
+33,API Weekly Crude Oil Stock,115,0,0,120,235
+34,Current Account,16,6,7,11,40
+35,Wholesale Inventories,79,6,14,55,154
+36,New Home Sales MoM,51,13,7,49,120
+37,Private Spending YoY,13,0,0,17,30
+38,EIA Crude Oil Stocks Change,213,39,63,206,521
+39,Markit PMI Composite,67,6,5,56,134
+40,Personal Income MoM,56,16,13,35,120
+41,Baker Hughes US Oil Rig Count,128,0,0,107,235
+42,Redbook Index MoM,249,0,0,141,390
+43,Core Personal Consumption Expenditures QoQ,67,5,11,33,116
+44,Fed Interest Rate Decision,77,0,3,0,80
+45,Headline Inflation,53,7,4,39,103
+46,Labor Force Participation Rate,45,4,2,21,72
+47,Consumer Price Index MoM,43,20,28,29,120
+48,Industrial Production MoM,49,10,8,53,120
+49,Private Spending QoQ,16,0,0,14,30
+50,Personal Spending,41,13,17,24,95
+51,"Current Account,  QoQ",18,2,1,15,36
+52,Unemployment Rate,60,4,6,50,120
+53,Building Permits Change,20,2,5,20,47
+54,Gross Domestic Product Annualized,51,18,19,31,119
+55,CFTC Oil NC Net Positions,93,2,0,108,205
+56,Export Price Index MoM,48,12,10,35,105
+57,Accumulated Current AccountGDP,20,0,0,16,36
+58,ISM Manufacturing Prices Paid,55,8,9,46,118
+59,Gross Domestic Product QoQ,16,3,1,17,37
+60,Chicago Purchasing Managers' Index,51,8,13,48,120
+61,Factory Orders MoM,42,21,26,31,120
+62,Consumer Price Index ex Food  Energy YoY,76,7,6,31,120
+63,Capacity Utilization,48,23,5,44,120
+64,Total Net TIC Flows,53,2,5,60,120
+65,"Trade Balance, ",48,4,3,50,105
+66,1st half-month Inflation,53,7,4,41,105
+67,30-Year Bond Auction,42,0,0,54,96
+68,Consumer Price Index Core s.a,79,14,0,3,96
+69,Producer Price Index ex Food  Energy YoY,58,10,20,31,119
+70,3-Year Note Auction,53,0,0,38,91
+71,ADP Employment Change,51,9,24,36,120
+72,"Trade Balance sa, ",58,1,1,46,106
+73,NY Empire State Manufacturing Index,48,17,4,51,120
+74,Building Permits MoM,58,9,7,47,121
+75,SPCase-Shiller Home Price Indices YoY,50,18,16,36,120
+76,Construction Spending MoM,37,23,10,50,120
+77,Central Bank Interest Rate,59,0,3,5,67
+78,Producer Price Index ex Food  Energy MoM,61,5,20,33,119
+79,Consumer Price Index n.s.a MoM,32,33,7,24,96
+80,Personal Consumption Expenditures Prices QoQ,57,4,3,24,88
+81,Challenger Job Cuts,42,0,0,54,96
+82,Industrial Output MoM,45,5,5,49,104
+83,Philadelphia Fed Manufacturing Survey,52,8,11,49,120
+84,Existing Home Sales MoM,50,13,4,53,120
+85,New Home Sales Change MoM,48,14,15,43,120
+86,Core Personal Consumption Expenditure,148,14,26,51,239
+87,Export Price Index YoY,44,3,4,43,94
+88,Personal Consumption Expenditures,120,17,25,75,237
+89,Existing Home Sales Change MoM,42,15,17,45,119
+90,ISM Non-Manufacturing PMI,55,9,7,49,120
+91,NAHB Housing Market Index,64,13,3,40,120
+92,Core Inflation,42,6,13,41,102
+93,Durable Goods Orders,48,14,23,37,122
+94,Net Long-Term TIC Flows,59,4,6,51,120
+95,Retail Sales Control Group,28,4,2,26,60
+96,Nonfarm Payrolls,51,14,17,38,120
+97,4-Week Bill Auction,229,0,1,161,391
+98,ISM-NY Business Conditions Index,45,0,0,48,93
+99,3-Month Bill Auction,237,0,0,155,392
+100,ISM Manufacturing PMI,58,6,11,45,120
+101,Industrial Output YoY,48,2,1,53,104
+102,EIA Natural Gas Storage Change,154,37,55,162,408
+103,Nonfarm Productivity,34,12,13,20,79
+104,Markit Services PMI,71,4,4,66,145
+105,Durable Goods Orders ex Transportation,39,22,14,47,122
+106,Consumer Credit Change,57,4,13,46,120
+107,12-Month Inflation,49,4,7,44,104
+108,Retail Sales YoY,54,2,3,45,104
+109,Redbook Index YoY,218,0,0,172,390
+110,Retail Sales ex Autos MoM,50,16,11,43,120
+111,Average Hourly Earnings YoY,62,16,4,36,118

@@ -1,0 +1,389 @@
+% -- --------------------------------------------------------------------------------------------------- -- %
+% -- Proyecto:                                                                                           -- %
+% -- Archivo: reporte.rnw                                                                                -- %
+% -- Repositorio: https://github.com/IFFranciscoME/A1_Temporal_Patterns                                  -- %
+% -- Autor: Francisco ME                                                                                 -- %
+% -- --------------------------------------------------------------------------------------------------- -- %
+
+\documentclass{iteraposter}
+
+\usepackage{lipsum}                                % Dummy text
+\usepackage[absolute, overlay]{textpos}            % Figure placement
+\setlength{\TPHorizModule}{\paperwidth}
+\setlength{\TPVertModule}{\paperheight}
+
+
+\title{Clustering subsecuencial de series de tiempo: Evidencia de patrones temporales en el
+       tipo de cambio USD/MXN.}
+
+\vskip4cm
+
+\author {
+  Juan Francisco Mu\~noz Elguez\'abal \inst{1}
+  \and
+  Riemann Ru\'iz Cruz \inst{2}
+  }
+
+\institute {
+  \inst{1} Msc. Ciencia de Datos - ITESO
+  \and
+  \inst{2} Departamento de Matem\'aticas y F\'isca - ITESO
+  }
+
+% -- --------------------------------------------------------------------------- Comienzo de codigo en R -- %
+
+% -- Reunion con Diana y Juan Diego para hablar del proceso de generacion del regresor.
+
+<< eval=FALSE, echo=FALSE, include=FALSE>>=
+options(scipen = 50)
+
+# Establecer directorio de trabajo donde esta este scritp
+
+# para cuando se hace "RUN" del codigo
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+# para cuando se hace "SOURCE" del codigo
+# setwd(getSrcDirectory()[1])
+
+# -- Remover Objetos de Environment
+rm(list=ls())
+
+# -- Instalar y/o cargar paquetes necesarios
+pkg <- c("downloader", "dplyr", "fBasics","gridExtra", "ggplot2", "knitr","kableExtra", "jsonlite","lubridate",
+         "lattice","moments", "matrixStats", "plyr","plot3D", "reshape2","RCurl", "stats", 
+         "scales", "tseries","XML","xts", "xtable", "zoo")
+
+inst <- pkg %in% installed.packages()
+if(length(pkg[!inst]) > 0)
+  install.packages(pkg[!inst])
+instpackages <- lapply(pkg, library, character.only=TRUE)
+
+knit_hooks$set(inline = function(x) {
+  prettyNum(x, big.mark=",")
+})
+
+@
+
+<<leer_tablas, include=TRUE, echo=FALSE, eval=TRUE>>=
+
+# -- tabla de conteo total de indicadores
+t_tabla_4 <- read.csv('tablas/t_tabla_4.csv', fill = TRUE)
+t_tabla_4 <- t_tabla_4[, c('categoria', 'usa', 'mex', 'total')]
+k_tabla_4 <- kable(t_tabla_4, 
+                   align = "lccc", format.args = list(decimal.mark = ",", big.mark = "'", font_size=1))
+
+# -- tabla de patrones encontrados
+t_tabla_2 <- read.csv('tablas/t_tabla_2.csv')
+
+# -- Reacomodo de tablas para presentacion de ejemplos que abonen a explicar el resultado
+# -- para resultados con mid_oc_30_1_3000_20
+
+# (1: t_tabla_2) Seleccionar de patrones encontrados:
+# -- APIWeelStock_USA_D, APIWeelStock_USA_A
+# -- InitiaClaims_USA_A, InitiaClaims_USA_B, InitiaClaims_USA_C, InitiaClaims_USA_D
+
+t_tabla_2 <- t_tabla_2[t_tabla_2$id_esc == 'APIWeelStock_USA_D' |  
+                       t_tabla_2$id_esc == 'APIWeelStock_USA_A' |
+                       t_tabla_2$id_esc == 'InitiaClaims_USA_A' |
+                       t_tabla_2$id_esc == 'InitiaClaims_USA_B' |
+                       t_tabla_2$id_esc == 'InitiaClaims_USA_C' |
+                       t_tabla_2$id_esc == 'InitiaClaims_USA_D',
+                       c('id_esc', 'tipo_1', 'tipo_2', 'tipo_3', 'total_ind_esc', 'total_ind')]
+
+row.names(t_tabla_2) = NULL
+
+k_tabla_2 <- kable(t_tabla_2, format="latex", row.names = NA,
+                   align = "c", format.args = list(font_size=1))
+
+# (2: t_tabla_ind_2) Dejar tabla ARRIBA 
+# API Weekly Crude Oil Stock y Initial Jobless Claims
+
+# -- tabla de conteo de escenarios por indicador
+t_tabla_ind_2 <- read.csv('tablas/t_ind_2.csv', fill = TRUE)
+# t_tabla_ind_2 <- t_tabla_ind_2[, 2:(length(t_tabla_ind_2[1,]))]
+
+t_tabla_ind_2 <- t_tabla_ind_2[t_tabla_ind_2$indicador == 'API Weekly Crude Oil Stock' |  
+                               t_tabla_ind_2$indicador == 'Initial Jobless Claims',
+                               c('indicador', 'A', 'B', 'C', 'D', 'T')]
+
+row.names(t_tabla_ind_2) = NULL
+
+k_tabla_ind_2 <- kable(t_tabla_ind_2, format="latex", row.names = NA, 
+                   align = "c", format.args = list(font_size=7))
+
+# (3: t_tabla_ind_3) Dejar tabla ABAJO
+# API Weekly Crude Oil Stock y Initial Jobless Claims
+
+# -- tabla de pruebas anova a respuestas segun escenarios para cada indicador
+t_tabla_ind_3 <- read.csv('tablas/t_ind_3.csv', fill = TRUE)
+# t_tabla_ind_3 <- t_tabla_ind_3[, c('name', 'esc', 'obs', 'grp', 'anova_hl', 'anova_co')]
+
+t_tabla_ind_3 <- t_tabla_ind_3[t_tabla_ind_3$name == 'API Weekly Crude Oil Stock' |  
+                               t_tabla_ind_3$name == 'Initial Jobless Claims', ]
+
+t_tabla_ind_3 <- t_tabla_ind_3[, c('name', 'esc', 'obs', 'anova_hl', 'anova_co')]
+
+row.names(t_tabla_ind_3) = NULL
+
+k_tabla_ind_3 <- kable(t_tabla_ind_3,
+                   align = "lcccc", format.args = list(font_size=7))
+
+@
+
+<<leer_json, include=TRUE, echo=FALSE, eval=TRUE>>=
+json_data_1 <- jsonlite::fromJSON(txt='datos/mid_oc_30_1_3000_20.json')
+parsed <- jsonlite::parse_json(json_data_1)
+
+df <- jsonlite::fromJSON(parsed$ciclo_4[[4]]$datos$`Markitposite_USA_D_2016-01-26_14:45:00`$df_serie_p[1])
+df_data <- data.frame(matrix(unlist(df), nrow=31, byrow=F))
+colnames(df_data) <- names(df)
+df_data <- df_data[, c('timestamp', 'open', 'high', 'low', 'close', 'mid_oc', 'mid_hl')]
+@
+
+<<pruebas_estadisticas, include=F, echo=F, eval=F>>=
+
+# datos para pruebas
+datos <- df_data$mid_oc
+
+# prueba de raiz unitaria
+r_d <- adf.test(x = datos) # p.value > 0.05 == unit-root
+
+# prueba fac
+r_acf  <- acf(df_data$mid_oc)
+
+# prueba facp
+r_pacf <- pacf(datos)
+
+# prueba heterocedasticidad
+r_garch <- garch(x=datos, order = c(1,1))
+predict(garch(x=datos, order = c(1,1)), 2)
+
+# ajuste de modelo
+
+# pruebas a residuales de
+
+@
+
+\begin{document}
+
+\begin{frame}
+
+% -- -------------------------------------------------------------------------------------- 1er Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
+
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.75 \textwidth - 0.01 \textwidth}
+    \begin{block}{Hip\'otesis - Experimento}
+    
+    \textbf{Hip\'otesis: } \\
+      Existe un conjunto de condiciones bajo las cuales, la ocurrencia de evento ex\'ogeno a una serie de
+      tiempo financiera, provoca la presencia de patrones temporales observables en la misma serie, y por
+      lo tanto, evidencia de rechazo de la \textit{Hip\'otesis del Mercado Eficiente}.
+      
+    \textbf{Experimento: } \\
+      Comunicado de indicadores macroecon\'omicos de M\'exico y USA, como candidatos de eventos generadores
+      de patrones temporales en la serie de tiempo intrad\'ia del del tipo de cambio USD/MXN.
+      
+    \end{block}
+  \end{column}
+
+
+\begin{column}{.25 \textwidth - 0.01 \textwidth}
+  \begin{block}{Informacion general}
+        
+    \begin{itemize}
+      \item 10 a\~nos de informaci\'on.
+      \item 2010-01-01 al 2020-01-03
+      \item 14.5 Millones de precios.
+      \item 36,000 comunicados de indicadores.
+      \item indicadores econ\'omicos de \textit{factset}.
+      \item precios del broker regulado \textit{Oanda}.
+    \end{itemize}
+      
+  \end{block}
+\end{column}
+\end{columns}
+
+% -- -------------------------------------------------------------------------------------- 2do Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
+
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.5 \textwidth - 0.01 \textwidth}
+    \begin{block}{Definiciones}
+    
+      Sea $\left\{ S_{T} \right\}_{T=1}^{n}$,
+      los precios $OHLC_{T}: \left\{ Open_{T}, High_{T}, Low_{T}, Close_{T} \right\}$ de cada $n$
+      minuto $burs\'atil$ de los \'ultimos 10 a\~nos.
+      De los cuales se extraen ventanas de tama\~no $m$, de tal manera que
+      $\left\{ OHLC_{t} \right\}_{t=1}^{m} $, para $m = 30$.
+
+      \begin{itemize}
+        \item \textbf{micro-volatilidades:} $\rightarrow$ $HL_{t} = High_{t} - Low_{t}$
+        \item \textbf{micro-tendencias:} $\rightarrow$ $CO_{t} = Close_{t} - Open_{t}$
+      \end{itemize}
+      
+      Sea el proceso $\left\{ I_{t} \right\}_{t=1}^{k}$ como el comunicado de un indicador macroecon\'omico
+      que sucede $k$ veces, tal que, con $OHLC_{k}
+      \left\{ Open_{t=1:m}^{k}, High_{t=1:m}^{k}, Low_{t=1:m}^{k}, Close_{t=1:m}^{k} \right\}$
+      se definen las series de tiempo $CO_{t=1:m}^{k}$ y $HL_{1:m}^{k}$ como \textit{motifs} para encontrar en
+      $OHLC_{T}$
+
+    \end{block}
+  \end{column}
+
+  \begin{column}{.5 \textwidth - 0.01\textwidth}
+    \begin{block}{e.g: Ventana $k=1$ de $m=30$ Precios OHLC}
+      \begin{figure}[H]
+        \includegraphics[scale=1]{imagenes/grafica_1.png}
+      \end{figure}
+    \end{block}
+  \end{column}
+  
+\end{columns}
+
+
+
+% -- -------------------------------------------------------------------------------------- 3er Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
+
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.25 \textwidth - 0.01 \textwidth}
+    \begin{block}{Tipos de indicadores}
+      \centering
+      \Sexpr{k_tabla_4}
+    \end{block}
+  \end{column}
+  
+  \begin{column}{.25 \textwidth - 0.01 \textwidth}
+    \begin{block}{Indicadores}
+      $\left\{ I_{t} \right\}_{t=1}^{k} = \left\{a_{t}, c_{t}, p_{t} \right\}$
+      el comunicado de un indicador econ\'omico $I$, con informaci\'on en $t$ de
+      $actual_t$, $consenso_t$, $previo_t$. 
+      
+      $I_{t} = \left\{a, b, c, d \right\} \forall \left\{ I_{t} \right\}_{t=1}^{k}$ como la 
+      categorizaci\'on de un comunicado de acuerdo a 4 posibles resultados:
+      
+      \begin{itemize}
+        \item a: $a_{t} > c_{t} > p_{t}$
+        \item b: $a_{t} > c_{t} \leq p_{t}$
+        \item c: $a_{t} \leq c_{t} > p_{t}$
+        \item d: $a_{t} \leq c_{t} \leq p_{t}$
+      \end{itemize}
+    
+      
+    \end{block}
+  \end{column}
+  
+  \begin{column}{.5 \textwidth - 0.01 \textwidth}
+    \begin{block}{e.g. Ocurrencias e invarianza en reacciones por escenario}
+      \centering
+      \Sexpr{k_tabla_ind_2}
+      ANOVA $\rightarrow h0:$ varianza constante
+      \Sexpr{k_tabla_ind_3}
+    \end{block}
+  \end{column}
+
+
+\end{columns}
+
+% -- -------------------------------------------------------------------------------------- 4to Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
+
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.5 \textwidth - 0.01 \textwidth}
+    \begin{block}{Similitud entre series de tiempo}
+      
+      Sean $x_{t}, y_{t}$ dos series de tiempo de longitud $m$, se define $d(x,y)$ como la
+      distancia euclideana z-normalizada, y $corr(x,y)$ como la correlaci\'on entre estas
+      
+      \begin{equation*}
+        \hat{x} = \frac{x_{i}-\mu_{x}}{\sigma_{x}} \quad , \quad
+        \hat{y} = \frac{y_{i}-\mu_{y}}{\sigma_{y}} \quad , \quad
+        d(x,y) = \sqrt{\sum_{i=1}^{m}(\hat{x_{i}} -\hat{y_{i}})^{2})}
+      \end{equation*}
+
+      \begin{equation*}
+        corr(x,y) = \frac{\sum_{i=1}^{m} x_{i} y_{i} - m \mu_{x} \mu_{y}}{m \sigma_{x} \sigma_{y}}
+        \quad \rightarrow \quad
+        \color{blue}{d\left(\hat{x}, \hat{y} \right) = \sqrt{2m(1 - corr(x, y))}}
+      \end{equation*}
+      
+      $d\left(\hat{x}, \hat{y} \right) \implies$ Si se minimiza la distancia se maximiza la correlaci\'on. \\
+      $d\left(\hat{x}, \hat{y} \right) = \left[0, m_{p} \right]$ 
+      donde $m_{p} \in \left\{0, \mathbb{R}^{+} \right\}$.
+      
+      \end{block}
+  \end{column}
+
+  \begin{column}{.25 \textwidth - 0.01 \textwidth}
+    \begin{block}{Algoritmo MASS}
+      Busca una serie \textit{query} de tama\~no $m$ en una serie de tiempo \textit{principal} de tama\~no $n$.
+      \begin{itemize}
+        \item Implementa una convoluci\'on de productos punto m\'oviles con $O(nlogn)$.
+        \item Normalizaci\'on \textit{just in time}.
+        \item Transformada R\'apida de Fourier para convoluciones eficientes.
+        \item Costo computacional no depende de $m$ (libre de efectos de dimensionalidad)
+      \end{itemize}
+    \end{block}
+  \end{column}
+  
+  \begin{column}{.25 \textwidth - 0.01 \textwidth}
+    \begin{block}{Complejidad}
+      \begin{figure}[H]
+        \includegraphics[scale=.8]{imagenes/image_1_MASS(ON).png}
+      \end{figure}
+    \end{block}
+  \end{column}
+
+\end{columns}
+
+% -- -------------------------------------------------------------------------------------- 4to Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
+
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.5 \textwidth - 0.01 \textwidth}
+    \begin{block}{Resultados 1}
+      \centering
+      \small
+        \Sexpr{k_tabla_2}
+      \normalsize
+    \end{block}
+  \end{column}
+      
+  \begin{column}{.5 \textwidth - 0.01 \textwidth}
+    \begin{block}{Resultados 3}
+      \begin{figure}[H]
+        \includegraphics[scale=1]{imagenes/grafica_3.png}
+      \end{figure}
+    \end{block}
+  \end{column}
+  
+\end{columns}
+
+% -- -------------------------------------------------------------------------------------- 4to Renglon -- %
+% -- -------------------------------------------------------------------------------------- ----------- -- %
+
+\begin{columns}[onlytextwidth]
+  
+  \begin{column}{.3 \textwidth - 0.01 \textwidth}
+    \begin{block}{Resultados 1}
+      \begin{figure}[H]
+        \includegraphics[scale=.5]{imagenes/grafica_2.png}
+      \end{figure}
+    \end{block}
+  \end{column}
+  
+  \begin{column}{.7 \textwidth - 0.01 \textwidth}
+    \begin{block}{Resultados 1}
+      Texto breve con algunas conclusiones.
+      \end{block}
+  \end{column}
+\end{columns}
+
+\end{frame}
+\end{document}
