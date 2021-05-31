@@ -1,26 +1,29 @@
 
-# -- ------------------------------------------------------------------------------------ -- #
-# -- Proyecto: Temporal Patterns                                                          -- #
-# -- Codigo: poster.py - generacion de datos de salida para uso en poster                 -- #
-# -- Repositorio: https://github.com/IFFranciscoME/Temporal_Patterns                      -- #
-# -- Autor: Francisco ME                                                                  -- #
-# -- ------------------------------------------------------------------------------------ -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
+# -- Subsequential Time Series Clustering: Evidence of Temporal Patterns in UsdMxn Exchange Rate         -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
+# -- Description: Code repositories (Python, R and LaTeX for research poster                             -- #
+# -- Script: poster.py : python script with functions to produce results and write files for poster      -- #
+# -- Author: IFFranciscoME - if.francisco.me@gmail.com                                                   -- #
+# -- license: GPL-3.0 License                                                                            -- #
+# -- Repository: https://github.com/IFFranciscoME/STSC-Temporal-Patterns                                 -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
 
-import funciones as fn
-import visualizaciones as vs
-import entradas as en
+import functions as fn
+import visualizations as vs
+import execution as ex
 
-from datos import df_ce
-from entradas import ind_tip
+from data import df_ce
+from execution import ind_tip
 
 # resultados para tomar ejemplo para las graficas
 results = fn.f_leer_resultados(param_carpeta='datos/results_files_r3/',
                                param_archivo='mid_oc_30_1_3000_20')
 
 # tema de colores a utilizar
-theme = en.tema_base
+theme = ex.tema_base
 # dimensiones a utilizar
-dims = en.dimensiones_base
+dims = ex.dimensiones_base
 
 # -------------------------------------------------------------------- datos para ejemplo -- #
 results_ocur = list(results['ciclo_4'][89]['datos'].keys())

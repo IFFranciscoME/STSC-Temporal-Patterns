@@ -1,10 +1,13 @@
 
-# -- ------------------------------------------------------------------------------------ -- #
-# -- Proyecto: Temporal Patterns                                                          -- #
-# -- Codigo: entrada.py - diccionarios con informacion de entrada                         -- #
-# -- Repositorio: https://github.com/IFFranciscoME/Temporal_Patterns                      -- #
-# -- Autor: Francisco ME                                                                  -- #
-# -- ------------------------------------------------------------------------------------ -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
+# -- Subsequential Time Series Clustering: Evidence of Temporal Patterns in UsdMxn Exchange Rate         -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
+# -- Description: Code repositories (Python, R and LaTeX for research poster                             -- #
+# -- Script: execution.py : python script for execution of main.py                                       -- #
+# -- Author: IFFranciscoME - if.francisco.me@gmail.com                                                   -- #
+# -- license: GPL-3.0 License                                                                            -- #
+# -- Repository: https://github.com/IFFranciscoME/STSC-Temporal-Patterns                                 -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
 
 # parametros generales
 parametros_stsc = {'data_series': ['mid_oc', 'mid_oc', 'mid_oc', 'mid_oc', 'mid_oc',

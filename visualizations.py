@@ -1,16 +1,18 @@
 
-# -- ------------------------------------------------------------------------------------ -- #
-# -- Proyecto: Temporal Patterns                                                          -- #
-# -- Codigo: visualizaciones.py - funciones para visualizaciones en el proyecto           -- #
-# -- Repositorio: https://github.com/IFFranciscoME/Temporal_Patterns                      -- #
-# -- Autor: Francisco ME                                                                  -- #
-# -- ------------------------------------------------------------------------------------ -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
+# -- Subsequential Time Series Clustering: Evidence of Temporal Patterns in UsdMxn Exchange Rate         -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
+# -- Description: Code repositories (Python, R and LaTeX for research poster                             -- #
+# -- Script: visualizations.py : python script with data visualization functions                         -- #
+# -- Author: IFFranciscoME - if.francisco.me@gmail.com                                                   -- #
+# -- license: GPL-3.0 License                                                                            -- #
+# -- Repository: https://github.com/IFFranciscoME/STSC-Temporal-Patterns                                 -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
 
 import plotly.graph_objs as go                   # objetos de imagenes para funcion principal
 import plotly.io as pio                          # renderizador para visualizar imagenes
 import numpy as np                               # funciones numericas
 pio.renderers.default = "browser"                # render de imagenes para correr en script
-
 
 # -- --------------------------------------------------- GRÁFICA: lineas series de tiempo -- #
 # -- ------------------------------------------------------------------------------------ -- #

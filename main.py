@@ -1,17 +1,20 @@
 
 # -- --------------------------------------------------------------------------------------------------- -- #
-# -- Proyecto: Temporal Patterns                                                                         -- #
-# -- Codigo: principal.py - secuencia principal de codigo para el proyecto                               -- #
-# -- Repositorio: https://github.com/IFFranciscoME/Temporal_Patterns                                     -- #
-# -- Autor: Francisco ME                                                                                 -- #
+# -- Subsequential Time Series Clustering: Evidence of Temporal Patterns in UsdMxn Exchange Rate         -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
+# -- Description: Code repositories (Python, R and LaTeX for research poster                             -- #
+# -- Script: main.py : python script with the main functionality                                         -- #
+# -- Author: IFFranciscoME - if.francisco.me@gmail.com                                                   -- #
+# -- license: GPL-3.0 License                                                                            -- #
+# -- Repository: https://github.com/IFFranciscoME/STSC-Temporal-Patterns                                 -- #
 # -- --------------------------------------------------------------------------------------------------- -- #
 
-from datos import df_precios, df_ce
-from entradas import parametros_stsc
+from data import df_precios, df_ce
+from execution import parametros_stsc
 
 from multiprocessing import cpu_count
 import multiprocessing as mp
-import funciones as fn
+import functions as fn
 import pickle
 import time
 import warnings
