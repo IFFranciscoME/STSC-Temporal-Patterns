@@ -11,7 +11,7 @@ This is the official repositorio of the research poster Clustering Subsecuencial
 Poster
 -------------
 
-.. image:: 'https://github.com/IFFranciscoME/STSC-Temporal-Patterns/blob/master/poster/figures/Poster_ES.jpg'
+.. image:: 'https://github.com/IFFranciscoME/STSC-Temporal-Patterns/blob/master/poster/figures/Poster_ES.png'
         :target: https://github.com/IFFranciscoME/STSC-Temporal-Patterns/
         :alt: Contributors
 
