@@ -12,8 +12,8 @@ Poster
 -------------
 
 .. image:: 'https://github.com/IFFranciscoME/STSC-Temporal-Patterns/raw/master/poster/figures/Poster_ES.png'
-        :target: https://github.com/IFFranciscoME/STSC-Temporal-Patterns/
-        :alt: Contributors
+        :target: https://github.com/IFFranciscoME/STSC-Temporal-Patterns/raw/master/poster/figures/Poster_ES.png
+        :alt: Final version of poster
 
 -------------
 Documentation
