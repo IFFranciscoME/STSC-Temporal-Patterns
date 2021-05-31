@@ -16,15 +16,34 @@ Poster
         :alt: Final version of poster
         :align: center
 
------------------
-General Structure
------------------
+-------------------------------
+General Elements of the Project
+-------------------------------
 
 There are three types of content in this repository.
 
 1. Data scraping, preparation and clustering: **Python**
 2. Data analysis, synthesis and presentation: **R**
 3. Tables, Figures, Formulas within the beamer poster: **LaTeX**
+
+Project Execution
+-----------------
+
+In order to conduct a wide list of experiments variations with all *candidate trigger events* searching within all the historical prices, it was necessary to perform a parallelization of the project, mainly in the process where the *MASS* algorithm was used to search for subsequential patterns. 
+
+MASS Algorithm
+--------------
+
+This work was aimed at testing the capabilities of the *Mueen's Algorithm for Similarity Search* (`MASS`_), we acknowledge the work of the original authors which can be consulted for further technical details.
+
+.. _MASS: https://www.cimat.mx/en/https://www.cs.unm.edu/~mueen/FastestSimilaritySearch.html
+
+mass-ts
+-------
+
+The python implementation that was utilized for this work is the `MASS-TS`_ python package, which can be found and installed at https://pypi.org/project/mass-ts/
+
+.. `_MASS-TS`: https://github.com/matrix-profile-foundation/mass-ts
 
 -----------------
 Reproduce Results
