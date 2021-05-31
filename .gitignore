@@ -1,8 +1,24 @@
-# Propios del proyecto
-datos/price_files/EUR_USD_M1.csv
-datos/price_files/USD_MXN_M1.csv
+
+# ------------------------- Added manually ------------------------ #
+# ----------------------------------------------------------------- #
+
+# -- Exclude pycharm project folder
 .idea/
-backup/
+
+# -- Exclude vscode workspace folder
+stsc_tp_workspace.code-workspace
+
+# -- Exclude vscode settings folder
+.vscode/
+
+# -- Exclude virtual environment
+stsc_tp_venv/
+
+# -- Exclude files folder (sometimes is useful not to exclude it)
+# files/
+
+# ----------------------------------------------------------------- #
+# ----------------------------------------------------------------- #
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
