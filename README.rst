@@ -2,9 +2,9 @@
 Subsequential Time Series Clustering: Evidence of Temporal Patterns in Exchange Rate
 ====================================================================================
 
-This is the official repositorio of the research poster Clustering Subsecuencial de Series de Tiempo: Evidencia de Patrones Temporales en el tipo de cambio USD/MXN", originally presented in its spanish version at the `Escuela de Probabilidad y Estadística 2020`_. Its an academic event organized by `CIMAT`_ (A government-funded research institute which literally means Center of Mathematical Research).
+This is the official repositorio of the research poster Clustering Subsecuencial de Series de Tiempo: Evidencia de Patrones Temporales en el tipo de cambio USD/MXN", originally presented in its spanish version at the Escuela de Probabilidad y Estadística 2020 (`EPE2020`_). Its an academic event organized by `CIMAT`_ (A government-funded research institute which literally means Center of Mathematical Research).
 
-.. _CIMAT: https://www.cimat.mx/en
+.. _CIMAT: https://www.cimat.mx/en/
 .. _EPE2020: https://epe2020.eventos.cimat.mx/
 
 -------------
@@ -16,17 +16,11 @@ Poster
         :alt: Final version of poster
         :align: center
 
--------------
-Documentation
--------------
-
-- Github repository: https://github.com/IFFranciscoME/STSC-Temporal-Patterns
-
 -----------------
 Reproduce Results
 -----------------
 
-- Cloning repository
+- Clone repository
   
 Clone entire github project
 
