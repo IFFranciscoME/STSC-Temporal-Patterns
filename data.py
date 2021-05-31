@@ -1,12 +1,15 @@
 
-# -- ------------------------------------------------------------------------------------ -- #
-# -- Proyecto: Temporal Patterns                                                          -- #
-# -- Codigo: datos.py - descarga de los datos necesarios para el proyecto                 -- #
-# -- Repositorio: https://github.com/IFFranciscoME/Temporal_Patterns                      -- #
-# -- Autor: Francisco ME                                                                  -- #
-# -- ------------------------------------------------------------------------------------ -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
+# -- Subsequential Time Series Clustering: Evidence of Temporal Patterns in UsdMxn Exchange Rate         -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
+# -- Description: Code repositories (Python, R and LaTeX for research poster                             -- #
+# -- Script: data.py : python script for data collection                                                 -- #
+# -- Author: IFFranciscoME - if.francisco.me@gmail.com                                                   -- #
+# -- license: GPL-3.0 License                                                                            -- #
+# -- Repository: https://github.com/IFFranciscoME/STSC-Temporal-Patterns                                 -- #
+# -- --------------------------------------------------------------------------------------------------- -- #
 
-import entradas as ent
+import execution as ent
 import pandas as pd
 import re
 
@@ -48,7 +51,7 @@ import re
 archivos = list()
 # ciclo para leer los archivos
 for a in ent.years:
-    nombre_a = 'datos/price_files/' + ent.archivo + '_' + str(a) + '.csv'
+    nombre_a = 'files/financial/' + ent.archivo + '_' + str(a) + '.csv'
     # print(nombre_a)
     archivos.append(pd.read_csv(nombre_a))
 
@@ -97,7 +100,7 @@ df_precios = df_precios.reset_index(inplace=False, drop=True)
 # -- ------------------------------------------------------------------------------------ -- #
 # -- leer un csv en y guardar en un DataFrame
 
-df_ce = pd.read_csv('datos/econ_files/' + 'ECON_USD_MXN' + '.csv')
+df_ce = pd.read_csv('files/economic/' + 'ECON_USD_MXN' + '.csv')
 
 lista = list()
 # Convertir a tipo datetime
